@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card } from '@/components/ui/card'
@@ -6,8 +6,12 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import { Eye, EyeOff } from 'lucide-react'
 import { postWaitlistStep1, postWaitlistStep2 } from '@/services/api'
+import { signUpWithCognito, toFriendlyCognitoError, confirmSignUp, resendConfirmationCode } from '@/auth/cognito'
+import { getRuntimeAuthConfig } from '@/auth/config'
+import { useAuth } from '@/auth'
 
 export function Waitlist() {
+  const auth = useAuth()
   const [step, setStep] = useState(1)
   const [formData, setFormData] = useState({
     name: '',
@@ -34,6 +38,22 @@ export function Waitlist() {
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [loading, setLoading] = useState(false)
   const successRef = useRef<HTMLDivElement>(null)
+  const [showSignin, setShowSignin] = useState(false)
+  const [signinData, setSigninData] = useState({ email: '', password: '' })
+  const [confirmCode, setConfirmCode] = useState('')
+  const [confirming, setConfirming] = useState(false)
+  const [confirmError, setConfirmError] = useState('')
+
+  useEffect(() => {
+    if (auth.user) {
+      setFormData((prev) => ({
+        ...prev,
+        name: prev.name || (auth.user?.name as string) || '',
+        email: prev.email || (auth.user?.email as string) || '',
+        phone: prev.phone || (auth.user?.phone_number as string) || '',
+      }))
+    }
+  }, [auth.user])
 
   const handleStep1Submit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -54,16 +74,16 @@ export function Waitlist() {
         phone: formData.phone.trim(),
       })
       if (!ok) {
-        if (status === 409 && data.canContinue && data.userId) {
-          setUserId(data.userId)
+        if (status === 409 && (data as any).canContinue && (data as any).userId) {
+          setUserId((data as any).userId)
           setStep(2)
         } else {
-          setErrors({ email: data.error || 'Failed to save information' })
+          setErrors({ email: (data as any).error || 'Failed to save information' })
         }
         setLoading(false)
         return
       }
-      setUserId(data.userId)
+      setUserId((data as any).userId)
       setStep(2)
     } catch (error) {
       setErrors({ email: 'Network error. Please try again.' })
@@ -79,7 +99,16 @@ export function Waitlist() {
     if (!formData.city.trim()) newErrors.city = 'City is required'
     if (!formData.state.trim()) newErrors.state = 'State is required'
     if (!formData.pincode.trim()) newErrors.pincode = 'Pincode is required'
-    if (formData.password.length < 8) newErrors.password = 'Password must be at least 8 characters'
+    const pw = formData.password
+    const strongPw =
+      pw.length >= 8 &&
+      /[A-Z]/.test(pw) &&
+      /[a-z]/.test(pw) &&
+      /[0-9]/.test(pw) &&
+      /[^A-Za-z0-9]/.test(pw)
+    if (!strongPw) {
+      newErrors.password = 'Use 8+ chars with upper, lower, number, and symbol'
+    }
     if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = 'Passwords do not match'
     if (!formData.privacyPolicy) newErrors.privacyPolicy = 'You must accept the Privacy Policy'
     if (!formData.termsOfService) newErrors.termsOfService = 'You must accept the Terms of Service'
@@ -110,15 +139,75 @@ export function Waitlist() {
         marketingConsent: formData.marketingConsent,
       } as any)
       if (!ok) {
-        setErrors({ email: data.error || 'Failed to save information' })
+        setErrors({ email: (data as any).error || 'Failed to save information' })
         setLoading(false)
         return
       }
+      // Create Cognito user without Hosted UI
+      try {
+        const cfg = getRuntimeAuthConfig()
+        const addressParts = [
+          formData.addressLine1.trim(),
+          formData.addressLine2.trim(),
+          formData.city.trim(),
+          formData.state.trim(),
+          formData.pincode.trim(),
+        ].filter(Boolean)
+        const fullAddress = addressParts.join(', ')
+        const userAttributes: Record<string, string> = {}
+        if (cfg.addressAttrName) {
+          userAttributes[cfg.addressAttrName] = fullAddress
+        }
+
+        const doSignup = async (attrs: Record<string, string>) =>
+        await signUpWithCognito({
+          email: formData.email.trim(),
+          password: formData.password,
+          name: formData.name.trim(),
+          phone: formData.phone.trim(),
+            userAttributes: attrs,
+        })
+
+        try {
+          await doSignup(userAttributes)
+        } catch (err: any) {
+          const msg = String(err?.message || '')
+          const code = err?.name
+          // If pool does not have the standard "address" attribute enabled, retry without it
+          if (code === 'InvalidParameterException' && /address/i.test(msg) && /not defined/i.test(msg)) {
+            await doSignup({})
+          } else {
+            throw err
+          }
+        }
+      } catch (err: any) {
+        // Log full error for diagnostics
+        // eslint-disable-next-line no-console
+        console.error('Cognito SignUp error:', err)
+        if (err?.name === 'UsernameExistsException') {
+          setStep(3)
+          setErrors({
+            email:
+              'An account with this email already exists. If unverified, enter the code below. Otherwise, try signing in.',
+          })
+          setLoading(false)
+          return
+        } else {
+        const message = toFriendlyCognitoError(err)
+        setErrors({ email: message })
+        setLoading(false)
+        return
+        }
+      }
+      // Move to confirmation step
+      setStep(3)
       setReferralCode(data.referralCode)
-      setSubmitted(true)
-      setTimeout(() => {
-        successRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
-      }, 100)
+      try {
+        window.localStorage.setItem('cjv_referral_code', data.referralCode || '')
+      } catch {
+        // ignore storage failures
+      }
+      return
     } catch (error) {
       setErrors({ email: 'Network error. Please try again.' })
     } finally {
@@ -136,9 +225,59 @@ export function Waitlist() {
     if (errors[name]) setErrors({ ...errors, [name]: '' })
   }
 
+  const handleSigninChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSigninData({ ...signinData, [e.target.name]: e.target.value })
+  }
+
+  const handleSigninSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!signinData.email || !signinData.password) {
+      setErrors({ email: 'Please enter email and password to sign in' })
+      return
+    }
+    try {
+      await auth.signIn(signinData.email.trim(), signinData.password)
+    } catch (err: any) {
+      setErrors({ email: toFriendlyCognitoError(err) })
+    }
+  }
+
   const copyReferralMessage = () => {
     const message = `Join me on Project Chiranjiv - India's first free full-genome sequencing platform! Use my referral code ${referralCode} to skip the queue. https://chiranjiv.com`
     navigator.clipboard.writeText(message)
+  }
+
+  const handleConfirmSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setConfirmError('')
+    if (!confirmCode.trim()) {
+      setConfirmError('Enter the verification code sent to your email')
+      return
+    }
+    setConfirming(true)
+    try {
+      await confirmSignUp(formData.email.trim(), confirmCode.trim())
+      // Auto sign-in after confirmation
+      await auth.signIn(formData.email.trim(), formData.password)
+      setSubmitted(true)
+      setTimeout(() => {
+        successRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      }, 100)
+    } catch (err: any) {
+      setConfirmError(toFriendlyCognitoError(err))
+    } finally {
+      setConfirming(false)
+    }
+  }
+
+  const handleResendCode = async () => {
+    setConfirmError('')
+    try {
+      await resendConfirmationCode(formData.email.trim())
+      setConfirmError('Verification code resent. Please check your email.')
+    } catch (err: any) {
+      setConfirmError(toFriendlyCognitoError(err))
+    }
   }
 
   return (
@@ -154,29 +293,68 @@ export function Waitlist() {
             </p>
           </div>
           <Card className="p-6 sm:p-8 bg-card border-border shadow-xl">
-            {!submitted ? (
+            {auth.user ? (
+              <div className="mb-6 rounded-md border border-border p-4 bg-muted/30">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="space-y-1 text-sm">
+                    <div className="font-medium text-foreground">Signed in</div>
+                    <div className="text-muted-foreground">Name: {auth.user?.name || '—'}</div>
+                    <div className="text-muted-foreground">Email: {auth.user?.email || '—'}</div>
+                    <div className="text-muted-foreground">Phone: {auth.user?.phone_number || '—'}</div>
+                  </div>
+                  <Button variant="outline" onClick={auth.signOut}>Sign out</Button>
+                </div>
+              </div>
+            ) : !submitted ? (
               <>
                 {step === 1 && (
-                  <form onSubmit={handleStep1Submit} className="space-y-4 sm:space-y-6">
-                    <div>
-                      <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">Full Name *</label>
-                      <Input id="name" name="name" type="text" value={formData.name} onChange={handleChange} placeholder="Enter your full name" className={`w-full ${errors.name ? 'border-red-500' : ''}`} />
-                      {errors.name && <p className="text-xs text-red-500 mt-1">{errors.name}</p>}
-                    </div>
-                    <div>
-                      <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">Email Address *</label>
-                      <Input id="email" name="email" type="email" value={formData.email} onChange={handleChange} placeholder="your.email@example.com" className={`w-full ${errors.email ? 'border-red-500' : ''}`} />
-                      {errors.email && <p className="text-xs text-red-500 mt-1">{errors.email}</p>}
-                    </div>
-                    <div>
-                      <label htmlFor="phone" className="block text-sm font-medium text-foreground mb-2">Phone Number *</label>
-                      <Input id="phone" name="phone" type="tel" value={formData.phone} onChange={handleChange} placeholder="+91 98765 43210" className={`w-full ${errors.phone ? 'border-red-500' : ''}`} />
-                      {errors.phone && <p className="text-xs text-red-500 mt-1">{errors.phone}</p>}
-                    </div>
-                    <Button type="submit" size="lg" className="w-full bg-primary text-primary-foreground hover:bg-primary/90" disabled={loading}>
-                      {loading ? 'Saving...' : 'Continue'}
-                    </Button>
-                  </form>
+                  !showSignin ? (
+                    <form onSubmit={handleStep1Submit} className="space-y-4 sm:space-y-6">
+                      <div>
+                        <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">Full Name *</label>
+                        <Input id="name" name="name" type="text" value={formData.name} onChange={handleChange} placeholder="Enter your full name" className={`w-full ${errors.name ? 'border-red-500' : ''}`} />
+                        {errors.name && <p className="text-xs text-red-500 mt-1">{errors.name}</p>}
+                      </div>
+                      <div>
+                        <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">Email Address *</label>
+                        <Input id="email" name="email" type="email" value={formData.email} onChange={handleChange} placeholder="your.email@example.com" className={`w-full ${errors.email ? 'border-red-500' : ''}`} />
+                        {errors.email && <p className="text-xs text-red-500 mt-1">{errors.email}</p>}
+                      </div>
+                      <div>
+                        <label htmlFor="phone" className="block textsm font-medium text-foreground mb-2">Phone Number *</label>
+                        <Input id="phone" name="phone" type="tel" value={formData.phone} onChange={handleChange} placeholder="+91 98765 43210" className={`w-full ${errors.phone ? 'border-red-500' : ''}`} />
+                        {errors.phone && <p className="text-xs text-red-500 mt-1">{errors.phone}</p>}
+                      </div>
+                      <Button type="submit" size="lg" className="w-full bg-primary text-primary-foreground hover:bg-primary/90" disabled={loading}>
+                        {loading ? 'Saving...' : 'Continue'}
+                      </Button>
+                      <div className="text-center">
+                        <Button type="button" variant="outline" onClick={() => setShowSignin(true)} className="bg-transparent">
+                          Already have an account? Sign in
+                        </Button>
+                      </div>
+                    </form>
+                  ) : (
+                    <form onSubmit={handleSigninSubmit} className="space-y-4 sm:space-y-6">
+                      <div>
+                        <label htmlFor="signinEmail" className="block text-sm font-medium text-foreground mb-2">Email</label>
+                        <Input id="signinEmail" name="email" type="email" value={signinData.email} onChange={handleSigninChange} placeholder="your.email@example.com" className="w-full" />
+                      </div>
+                      <div>
+                        <label htmlFor="signinPassword" className="block text-sm font-medium text-foreground mb-2">Password</label>
+                        <Input id="signinPassword" name="password" type="password" value={signinData.password} onChange={handleSigninChange} placeholder="Your password" className="w-full" />
+                      </div>
+                      <Button type="submit" className="w-full">
+                        Sign in
+                      </Button>
+                      {auth.user && <p className="text-xs text-green-600">Signed in</p>}
+                      <div className="text-center">
+                        <Button type="button" variant="outline" onClick={() => setShowSignin(false)} className="bg-transparent">
+                          New here? Sign up
+                        </Button>
+                      </div>
+                    </form>
+                  )
                 )}
                 {step === 2 && (
                   <form onSubmit={handleFinalSubmit} className="space-y-4 sm:space-y-6">
@@ -281,6 +459,25 @@ export function Waitlist() {
                       <Button type="button" variant="outline" onClick={() => setStep(1)} className="flex-1" disabled={loading}>Back</Button>
                       <Button type="submit" size="lg" className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90" disabled={loading}>
                         {loading ? 'Saving...' : 'Join Waitlist'}
+                      </Button>
+                    </div>
+                  </form>
+                )}
+                {step === 3 && (
+                  <form onSubmit={handleConfirmSubmit} className="space-y-4 sm:space-y-6">
+                    <div className="space-y-2">
+                      <h3 className="text-lg font-semibold text-foreground">Verify your email</h3>
+                      <p className="text-sm text-muted-foreground">We sent a 6-digit code to {formData.email}. Enter it below to confirm your account.</p>
+                    </div>
+                    <div>
+                      <label htmlFor="verificationCode" className="block text-sm font-medium text-foreground mb-2">Verification Code</label>
+                      <Input id="verificationCode" name="verificationCode" type="text" value={confirmCode} onChange={(e) => setConfirmCode(e.target.value)} placeholder="Enter the 6-digit code" className={`w-full ${confirmError ? 'border-red-500' : ''}`} />
+                      {confirmError && <p className="text-xs text-red-500 mt-1">{confirmError}</p>}
+                    </div>
+                    <div className="flex gap-3 pt-2">
+                      <Button type="button" variant="outline" onClick={handleResendCode} disabled={confirming}>Resend Code</Button>
+                      <Button type="submit" className="bg-primary text-primary-foreground hover:bg-primary/90" disabled={confirming}>
+                        {confirming ? 'Confirming...' : 'Confirm Account'}
                       </Button>
                     </div>
                   </form>
