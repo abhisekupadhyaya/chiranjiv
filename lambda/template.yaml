@@ -1,0 +1,79 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Chiranjiv Waitlist API (AWS SAM, Python)
+
+Globals:
+  Function:
+    Runtime: python3.12
+    Timeout: 10
+    MemorySize: 256
+    Environment:
+      Variables:
+        STAGE: !Ref StageName
+        DATABASE_URL: !Ref DatabaseUrl
+        CORS_ORIGIN: !Ref CorsOrigin
+  Api:
+    Cors:
+      AllowOrigin: "'*'"
+      AllowHeaders: "'Content-Type'"
+      AllowMethods: "'OPTIONS,POST'"
+
+Parameters:
+  StageName:
+    Type: String
+    Default: dev
+  DatabaseUrl:
+    Type: String
+    Default: ''
+    Description: Postgres connection string (e.g., postgresql://user:pass@host/db?sslmode=require)
+  CorsOrigin:
+    Type: String
+    Default: '*'
+    Description: Allowed CORS origin (e.g., https://localhost:5173)
+
+Resources:
+  HttpApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      StageName: !Ref StageName
+      CorsConfiguration:
+        AllowOrigins:
+          - !Ref CorsOrigin
+        AllowHeaders:
+          - Content-Type
+        AllowMethods:
+          - OPTIONS
+          - POST
+
+  WaitlistStep1Function:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .
+      Handler: waitlist_step1.handler
+      Events:
+        PostStep1:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /waitlist/step1
+            Method: POST
+
+  WaitlistStep2Function:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .
+      Handler: waitlist_step2.handler
+      Events:
+        PostStep2:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /waitlist/step2
+            Method: POST
+
+Outputs:
+  ApiEndpoint:
+    Description: API endpoint URL
+    Value: !Sub 'https://${HttpApi}.execute-api.${AWS::Region}.amazonaws.com/${StageName}'
+
+
