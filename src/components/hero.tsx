@@ -29,8 +29,7 @@ export function Hero() {
             </span>
           </h1>
           <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-8 sm:mb-12 max-w-2xl mx-auto text-pretty leading-relaxed">
-            Become a Founding Genome Member. The first participants receive ₹1.5 L worth of genome sequencing and
-            reports at no cost. Invite friends to rise in the queue and secure your early access.
+            Join NOW to receive ₹1.5 L worth of Genome sequencing and DNA-based reports designed to optimize your health, wellness, and food choices.
           </p>
           <div className="flex items-center justify-center">
             <Button

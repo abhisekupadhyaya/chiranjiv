@@ -43,87 +43,103 @@ export function Navigation() {
   }, [location.pathname])
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-background/80 backdrop-blur-lg border-b border-border' : 'bg-transparent'}`}>
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-20">
-          <Link to="/" className="flex items-center gap-2">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center">
-              <img src="/favicon.ico" alt="Chiranjiv Logo" width={48} height={48} className="w-full h-full object-contain" />
+    <nav className="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+      {/* Pill-shaped container for desktop, full-width for mobile */}
+      <div 
+        className={`
+          transition-all duration-300 ease-out
+          ${scrolled 
+            ? 'md:mx-auto md:max-w-6xl md:mt-4 md:rounded-full liquid-glass-nav glass-border-refractive md:shadow-lg' 
+            : 'md:mx-auto md:max-w-6xl md:mt-4 md:rounded-full md:bg-transparent'
+          }
+          w-full md:w-auto
+        `}
+      >
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 md:px-6">
+          <div className={`flex items-center justify-between transition-all duration-300 ${scrolled ? 'h-14 sm:h-16 md:h-14' : 'h-16 sm:h-20 md:h-14'}`}>
+            <Link to="/" className="flex items-center gap-2 transition-opacity duration-200 hover:opacity-80">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center">
+                <img src="/favicon.ico" alt="Chiranjiv Logo" width={48} height={48} className="w-full h-full object-contain" />
+              </div>
+              <span className="text-lg sm:text-xl font-bold text-foreground tracking-tight letter-spacing-tight">Chiranjiv</span>
+            </Link>
+            {/* Desktop navigation */}
+            <div className="hidden md:flex items-center gap-6 lg:gap-8">
+              <DropdownMenu>
+                <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium tracking-tight text-muted-foreground hover:text-foreground transition-all duration-200 nav-link-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-md px-2 py-1">
+                  About Us
+                  <ChevronDown className="w-4 h-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-48 glass-backdrop rounded-xl border-border/50 shadow-xl p-2 gap-1">
+                  <DropdownMenuItem asChild>
+                    <Link to="/mission" className="cursor-pointer dropdown-item-hover rounded-lg px-3 py-2 text-sm font-medium transition-all duration-150">Master Plan</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/blog" className="cursor-pointer dropdown-item-hover rounded-lg px-3 py-2 text-sm font-medium transition-all duration-150">Blog</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/team" className="cursor-pointer dropdown-item-hover rounded-lg px-3 py-2 text-sm font-medium transition-all duration-150">Team</Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <Link to="/faq" className="text-sm font-medium tracking-tight text-muted-foreground hover:text-foreground transition-all duration-200 nav-link-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-md px-2 py-1">FAQ</Link>
+              <button onClick={() => handleHashNavigation('#how-it-works')} className="text-sm font-medium tracking-tight text-muted-foreground hover:text-foreground transition-all duration-200 nav-link-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-md px-2 py-1">How It Works</button>
+              <button onClick={() => handleHashNavigation('#why-chiranjiv')} className="text-sm font-medium tracking-tight text-muted-foreground hover:text-foreground transition-all duration-200 nav-link-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-md px-2 py-1">Why Us</button>
             </div>
-            <span className="text-lg sm:text-xl font-bold text-foreground">Chiranjiv</span>
-          </Link>
-          {/* Desktop navigation */}
-          <div className="hidden md:flex items-center gap-8">
-            <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-                About Us
-                <ChevronDown className="w-4 h-4" />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-48">
-                <DropdownMenuItem asChild>
-                  <Link to="/mission" className="cursor-pointer">Master Plan</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link to="/blog" className="cursor-pointer">Blog</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link to="/team" className="cursor-pointer">Team</Link>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <Link to="/faq" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">FAQ</Link>
-            <button onClick={() => handleHashNavigation('#how-it-works')} className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">How It Works</button>
-            <button onClick={() => handleHashNavigation('#why-chiranjiv')} className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Why Us</button>
-          </div>
-          {/* Right actions: CTA and Mobile Menu */}
-          <div className="flex items-center gap-2">
-            <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90" onClick={() => handleHashNavigation('#waitlist')}>
-              Join Waitlist
-            </Button>
-            <Dialog.Root open={open} onOpenChange={setOpen}>
-              <Dialog.Trigger
-                aria-label="Open menu"
-                className="md:hidden inline-flex items-center justify-center p-2 rounded-md border border-border text-foreground hover:bg-muted/50 focus:outline-none focus:ring-2 focus:ring-primary/50"
+            {/* Right actions: CTA and Mobile Menu */}
+            <div className="flex items-center gap-2">
+              <Button 
+                size="sm" 
+                className="bg-primary text-primary-foreground hover:bg-primary/90 btn-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background" 
+                onClick={() => handleHashNavigation('#waitlist')}
               >
-                <Menu className="w-5 h-5" />
-              </Dialog.Trigger>
-              <Dialog.Portal>
-                <Dialog.Overlay className="fixed inset-0 bg-black/40 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
-                <Dialog.Content className="fixed inset-y-0 left-0 w-80 max-w-[85vw] bg-background border-r border-border shadow-xl p-6 flex flex-col gap-4 outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:slide-in-from-left data-[state=closed]:slide-out-to-left">
-                  <div className="flex items-center justify-between">
-                    <span className="text-base font-semibold">Menu</span>
-                    <Dialog.Close
-                      aria-label="Close menu"
-                      className="inline-flex items-center justify-center p-2 rounded-md border border-border text-foreground hover:bg-muted/50 focus:outline-none focus:ring-2 focus:ring-primary/50"
-                    >
-                      <X className="w-5 h-5" />
-                    </Dialog.Close>
-                  </div>
-                  <div className="h-px bg-border my-2" />
-                  <div className="flex flex-col gap-2">
-                    <Link to="/mission" className="px-2 py-2 rounded-md hover:bg-muted/50" aria-current={location.pathname === '/mission' ? 'page' : undefined}>
+                Join Waitlist
+              </Button>
+              <Dialog.Root open={open} onOpenChange={setOpen}>
+                <Dialog.Trigger
+                  aria-label="Open menu"
+                  className="md:hidden inline-flex items-center justify-center p-2 rounded-lg border border-border/50 text-foreground hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-200 nav-link-hover"
+                >
+                  <Menu className="w-5 h-5" />
+                </Dialog.Trigger>
+                <Dialog.Portal>
+                  <Dialog.Overlay className="fixed inset-0 bg-black/50 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
+                  <Dialog.Content className="fixed inset-y-0 left-0 w-80 max-w-[85vw] glass-backdrop border-r border-border/50 shadow-2xl p-6 flex flex-col gap-4 outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:slide-in-from-left data-[state=closed]:slide-out-to-left">
+                    <div className="flex items-center justify-between">
+                      <span className="text-base font-semibold tracking-tight">Menu</span>
+                      <Dialog.Close
+                        aria-label="Close menu"
+                        className="inline-flex items-center justify-center p-2 rounded-lg border border-border/50 text-foreground hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-200 nav-link-hover"
+                      >
+                        <X className="w-5 h-5" />
+                      </Dialog.Close>
+                    </div>
+                    <div className="h-px bg-border/50 my-2" />
+                    <div className="flex flex-col gap-1">
+                    <Link to="/mission" className="px-3 py-2.5 text-sm font-medium tracking-tight rounded-lg hover:bg-muted/50 nav-link-hover transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background" aria-current={location.pathname === '/mission' ? 'page' : undefined}>
                       Master Plan
                     </Link>
-                    <Link to="/blog" className="px-2 py-2 rounded-md hover:bg-muted/50" aria-current={location.pathname.startsWith('/blog') ? 'page' : undefined}>
+                    <Link to="/blog" className="px-3 py-2.5 text-sm font-medium tracking-tight rounded-lg hover:bg-muted/50 nav-link-hover transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background" aria-current={location.pathname.startsWith('/blog') ? 'page' : undefined}>
                       Blog
                     </Link>
-                    <Link to="/team" className="px-2 py-2 rounded-md hover:bg-muted/50" aria-current={location.pathname === '/team' ? 'page' : undefined}>
+                    <Link to="/team" className="px-3 py-2.5 text-sm font-medium tracking-tight rounded-lg hover:bg-muted/50 nav-link-hover transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background" aria-current={location.pathname === '/team' ? 'page' : undefined}>
                       Team
                     </Link>
-                    <Link to="/faq" className="px-2 py-2 rounded-md hover:bg-muted/50" aria-current={location.pathname === '/faq' ? 'page' : undefined}>
+                    <Link to="/faq" className="px-3 py-2.5 text-sm font-medium tracking-tight rounded-lg hover:bg-muted/50 nav-link-hover transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background" aria-current={location.pathname === '/faq' ? 'page' : undefined}>
                       FAQ
                     </Link>
-                    <button onClick={() => { handleHashNavigation('#how-it-works'); setOpen(false); }} className="px-2 py-2 rounded-md hover:bg-muted/50 text-left">How It Works</button>
-                    <button onClick={() => { handleHashNavigation('#why-chiranjiv'); setOpen(false); }} className="px-2 py-2 rounded-md hover:bg-muted/50 text-left">Why Us</button>
-                  </div>
-                  <div className="mt-auto pt-4">
-                    <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90" onClick={() => { handleHashNavigation('#waitlist'); setOpen(false); }}>
-                      Join Waitlist
-                    </Button>
-                  </div>
-                </Dialog.Content>
-              </Dialog.Portal>
-            </Dialog.Root>
+                    <button onClick={() => { handleHashNavigation('#how-it-works'); setOpen(false); }} className="px-3 py-2.5 text-sm font-medium tracking-tight rounded-lg hover:bg-muted/50 nav-link-hover text-left transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background">How It Works</button>
+                    <button onClick={() => { handleHashNavigation('#why-chiranjiv'); setOpen(false); }} className="px-3 py-2.5 text-sm font-medium tracking-tight rounded-lg hover:bg-muted/50 nav-link-hover text-left transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background">Why Us</button>
+                    </div>
+                    <div className="mt-auto pt-4">
+                      <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 btn-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background" onClick={() => { handleHashNavigation('#waitlist'); setOpen(false); }}>
+                        Join Waitlist
+                      </Button>
+                    </div>
+                  </Dialog.Content>
+                </Dialog.Portal>
+              </Dialog.Root>
+            </div>
           </div>
         </div>
       </div>
