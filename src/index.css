@@ -197,6 +197,26 @@
   50% { transform: scale(1.02); }
 }
 
+@keyframes bounce-subtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+@keyframes slide-in-from-bottom {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes scale-in {
+  0% { opacity: 0; transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
 @layer utilities {
   .animate-float { animation: float 8s ease-in-out infinite; }
   .animate-rotate-slow { animation: rotate-slow 60s linear infinite; }
@@ -208,6 +228,50 @@
   .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
   .animate-nav-glow { animation: nav-glow 3s ease-in-out infinite; }
   .animate-nav-scale { animation: nav-scale 2s ease-in-out infinite; }
+  .animate-bounce-subtle { animation: bounce-subtle 2s ease-in-out infinite; }
+  
+  /* Gamification animations */
+  .animate-in {
+    animation: fade-in 0.5s ease-out;
+  }
+  .slide-in-from-bottom-4 {
+    animation: slide-in-from-bottom 0.7s ease-out;
+  }
+  .duration-700 {
+    animation-duration: 700ms;
+  }
+  .duration-1000 {
+    transition-duration: 1000ms;
+  }
+  .duration-1500 {
+    transition-duration: 1500ms;
+  }
+  
+  /* Scrollbar styling */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+  .scrollbar-thumb-primary\/20 {
+    scrollbar-color: oklch(0.52 0.13 155 / 0.2) transparent;
+  }
+  .scrollbar-track-transparent {
+    scrollbar-color: transparent transparent;
+  }
+  
+  /* Custom scrollbar for webkit browsers */
+  .scrollbar-thin::-webkit-scrollbar {
+    height: 6px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: oklch(0.52 0.13 155 / 0.2);
+    border-radius: 3px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: oklch(0.52 0.13 155 / 0.3);
+  }
 
   /* Enhanced Liquid Glass Navigation Effect */
   .liquid-glass-nav {
@@ -335,6 +399,32 @@
   .nav-link-hover:active {
     transform: translateY(0);
     transition-duration: 100ms;
+  }
+
+  /* Glass Input Effect */
+  .glass-input {
+    background: oklch(1 0 0 / 0.5);
+    backdrop-filter: blur(8px) saturate(150%);
+    -webkit-backdrop-filter: blur(8px) saturate(150%);
+    border: 1px solid oklch(0.92 0.01 155 / 0.3);
+    transition: all 0.3s ease;
+  }
+
+  .glass-input:focus {
+    background: oklch(1 0 0 / 0.6);
+    border-color: oklch(0.52 0.13 155 / 0.5);
+    box-shadow: 0 0 0 3px oklch(0.52 0.13 155 / 0.1), 0 4px 12px oklch(0 0 0 / 0.08);
+  }
+
+  .dark .glass-input {
+    background: oklch(0.145 0 0 / 0.5);
+    border: 1px solid oklch(0.269 0 0 / 0.3);
+  }
+
+  .dark .glass-input:focus {
+    background: oklch(0.145 0 0 / 0.6);
+    border-color: oklch(0.62 0.13 155 / 0.5);
+    box-shadow: 0 0 0 3px oklch(0.62 0.13 155 / 0.1), 0 4px 12px oklch(0 0 0 / 0.2);
   }
 
   /* Button Glow Effect */

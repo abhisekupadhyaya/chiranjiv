@@ -3,7 +3,7 @@ import { DnaHelix } from '@/components/dna-helix'
 
 export function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 sm:pt-32 pb-20 sm:pb-28 hero-section">
+    <section className="relative min-h-screen flex items-end justify-center overflow-hidden pt-24 sm:pt-32 pb-16 sm:pb-20 hero-section">
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5" />
       <div className="absolute inset-0 opacity-10">
         <DnaHelix />
