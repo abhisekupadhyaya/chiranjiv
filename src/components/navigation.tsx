@@ -44,24 +44,27 @@ export function Navigation() {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
-      {/* Pill-shaped container for desktop, full-width for mobile */}
+      {/* Pill-shaped container for all screen sizes */}
       <div 
         className={`
+          mx-4 sm:mx-6 md:mx-auto
+          max-w-md sm:max-w-2xl md:max-w-6xl
+          mt-2 sm:mt-3 md:mt-4
+          rounded-full
           transition-all duration-300 ease-out
           ${scrolled 
-            ? 'md:mx-auto md:max-w-6xl md:mt-4 md:rounded-full liquid-glass-nav glass-border-refractive md:shadow-lg' 
-            : 'md:mx-auto md:max-w-6xl md:mt-4 md:rounded-full md:bg-transparent'
+            ? 'liquid-glass-nav glass-border-refractive shadow-lg' 
+            : 'bg-transparent'
           }
-          w-full md:w-auto
         `}
       >
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 md:px-6">
-          <div className={`flex items-center justify-between transition-all duration-300 ${scrolled ? 'h-14 sm:h-16 md:h-14' : 'h-16 sm:h-20 md:h-14'}`}>
-            <Link to="/" className="flex items-center gap-2 transition-opacity duration-200 hover:opacity-80">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center">
+        <div className="px-3 sm:px-4 md:px-6">
+          <div className={`flex items-center justify-between transition-all duration-300 ${scrolled ? 'h-12 sm:h-14 md:h-14' : 'h-14 sm:h-16 md:h-14'}`}>
+            <Link to="/" className="flex items-center gap-1.5 sm:gap-2 transition-opacity duration-200 hover:opacity-80">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center">
                 <img src="/favicon.ico" alt="Chiranjiv Logo" width={48} height={48} className="w-full h-full object-contain" />
               </div>
-              <span className="text-lg sm:text-xl font-bold text-foreground tracking-tight letter-spacing-tight">Chiranjiv</span>
+              <span className="text-base sm:text-lg md:text-xl font-bold text-foreground tracking-tight letter-spacing-tight">Chiranjiv</span>
             </Link>
             {/* Desktop navigation */}
             <div className="hidden md:flex items-center gap-6 lg:gap-8">
@@ -72,7 +75,7 @@ export function Navigation() {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" className="w-48 glass-backdrop rounded-xl border-border/50 shadow-xl p-2 gap-1">
                   <DropdownMenuItem asChild>
-                    <Link to="/mission" className="cursor-pointer dropdown-item-hover rounded-lg px-3 py-2 text-sm font-medium transition-all duration-150">Master Plan</Link>
+                    <Link to="/mission" className="cursor-pointer dropdown-item-hover rounded-lg px-3 py-2 text-sm font-medium transition-all duration-150">Mission</Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <Link to="/blog" className="cursor-pointer dropdown-item-hover rounded-lg px-3 py-2 text-sm font-medium transition-all duration-150">Blog</Link>
@@ -87,24 +90,25 @@ export function Navigation() {
               <button onClick={() => handleHashNavigation('#why-chiranjiv')} className="text-sm font-medium tracking-tight text-muted-foreground hover:text-foreground transition-all duration-200 nav-link-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-md px-2 py-1">Why Us</button>
             </div>
             {/* Right actions: CTA and Mobile Menu */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 sm:gap-2">
               <Button 
                 size="sm" 
-                className="bg-primary text-primary-foreground hover:bg-primary/90 btn-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background" 
+                className="bg-primary text-primary-foreground hover:bg-primary/90 btn-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background text-xs sm:text-sm px-3 sm:px-4 whitespace-nowrap" 
                 onClick={() => handleHashNavigation('#waitlist')}
               >
-                Join Waitlist
+                <span className="hidden sm:inline">Join Waitlist</span>
+                <span className="inline sm:hidden">Join</span>
               </Button>
               <Dialog.Root open={open} onOpenChange={setOpen}>
                 <Dialog.Trigger
                   aria-label="Open menu"
                   className="md:hidden inline-flex items-center justify-center p-2 rounded-lg border border-border/50 text-foreground hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-200 nav-link-hover"
                 >
-                  <Menu className="w-5 h-5" />
+                  <Menu className="w-4 h-4 sm:w-5 sm:h-5" />
                 </Dialog.Trigger>
                 <Dialog.Portal>
-                  <Dialog.Overlay className="fixed inset-0 bg-black/50 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
-                  <Dialog.Content className="fixed inset-y-0 left-0 w-80 max-w-[85vw] glass-backdrop border-r border-border/50 shadow-2xl p-6 flex flex-col gap-4 outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:slide-in-from-left data-[state=closed]:slide-out-to-left">
+                  <Dialog.Overlay className="fixed inset-0 z-[100] bg-black/50 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
+                  <Dialog.Content className="fixed inset-y-0 left-0 z-[101] w-80 max-w-[85vw] glass-backdrop border-r border-border/50 shadow-2xl p-6 flex flex-col gap-4 outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:slide-in-from-left data-[state=closed]:slide-out-to-left">
                     <div className="flex items-center justify-between">
                       <span className="text-base font-semibold tracking-tight">Menu</span>
                       <Dialog.Close
@@ -117,7 +121,7 @@ export function Navigation() {
                     <div className="h-px bg-border/50 my-2" />
                     <div className="flex flex-col gap-1">
                     <Link to="/mission" className="px-3 py-2.5 text-sm font-medium tracking-tight rounded-lg hover:bg-muted/50 nav-link-hover transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background" aria-current={location.pathname === '/mission' ? 'page' : undefined}>
-                      Master Plan
+                      Mission
                     </Link>
                     <Link to="/blog" className="px-3 py-2.5 text-sm font-medium tracking-tight rounded-lg hover:bg-muted/50 nav-link-hover transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background" aria-current={location.pathname.startsWith('/blog') ? 'page' : undefined}>
                       Blog

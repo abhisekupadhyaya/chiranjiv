@@ -157,9 +157,29 @@
   100% { transform: rotate(360deg); }
 }
 
+@keyframes rotate-dynamic {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 @keyframes sphere-pulse {
   0%, 100% { transform: scale(1); opacity: 0.9; }
   50% { transform: scale(1.05); opacity: 1; }
+}
+
+@keyframes sphere-pulse-dynamic {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50% { transform: scale(1.15); opacity: 1; }
+}
+
+@keyframes particle-flow {
+  0%, 100% { opacity: 0.9; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+@keyframes particle-glow {
+  0%, 100% { opacity: 0; transform: scale(0.5); }
+  50% { opacity: 1; transform: scale(1.5); }
 }
 
 @keyframes pulse-glow {
@@ -180,7 +200,11 @@
 @layer utilities {
   .animate-float { animation: float 8s ease-in-out infinite; }
   .animate-rotate-slow { animation: rotate-slow 60s linear infinite; }
+  .animate-rotate-dynamic { animation: rotate-dynamic 35s linear infinite; }
   .animate-sphere-pulse { animation: sphere-pulse 3s ease-in-out infinite; }
+  .animate-sphere-pulse-dynamic { animation: sphere-pulse-dynamic 2.5s ease-in-out infinite; }
+  .animate-particle-flow { animation: particle-flow 2s ease-in-out infinite; }
+  .animate-particle-glow { animation: particle-glow 3s ease-in-out infinite; }
   .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
   .animate-nav-glow { animation: nav-glow 3s ease-in-out infinite; }
   .animate-nav-scale { animation: nav-scale 2s ease-in-out infinite; }
@@ -395,6 +419,79 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
+  }
+
+  /* Hero Typography Utilities - Raycast-inspired */
+  .hero-headline {
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "liga" 1, "kern" 1;
+  }
+
+  @media (min-width: 640px) {
+    .hero-headline {
+      letter-spacing: -0.03em;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero-headline {
+      letter-spacing: -0.035em;
+    }
+  }
+
+  .hero-tagline {
+    font-size: 1.125rem;
+    letter-spacing: 0.01em;
+    line-height: 1.7;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  @media (min-width: 768px) {
+    .hero-tagline {
+      font-size: 1.25rem;
+      line-height: 1.65;
+    }
+  }
+
+  .hero-body {
+    font-size: 0.875rem;
+    letter-spacing: 0;
+    line-height: 1.6;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  @media (min-width: 640px) {
+    .hero-body {
+      font-size: 1rem;
+    }
+  }
+
+  /* Letter spacing utilities for different contexts */
+  .letter-spacing-tighter {
+    letter-spacing: -0.035em;
+  }
+
+  .letter-spacing-tight-headline {
+    letter-spacing: -0.025em;
+  }
+
+  .letter-spacing-comfortable {
+    letter-spacing: 0.01em;
+  }
+
+  /* Enhanced font rendering for hero section */
+  .hero-section {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "liga" 1, "kern" 1;
   }
 }
 
