@@ -1,4 +1,5 @@
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
+import { ArrowLeft } from 'lucide-react'
 import { BlogPost as Post } from '@/components/blog-post'
 
 export default function BlogPost() {
@@ -100,14 +101,32 @@ Chiranjiv's mission is to write that missing chapter — with India's diversity 
 **Your DNA. Your Future. Free Forever.**`,
     }
     return (
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl pt-28 pb-16">
-        <Post title={blogPost.title} date={blogPost.date} content={blogPost.content} />
+      <div className="pt-24 sm:pt-32 pb-16 sm:pb-24">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
+          <Link
+            to="/blog"
+            className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8 group"
+          >
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            <span className="font-medium">Back to Blog</span>
+          </Link>
+          <Post title={blogPost.title} date={blogPost.date} content={blogPost.content} />
+        </div>
       </div>
     )
   }
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl pt-28 pb-16">
-      <h1 className="text-2xl font-semibold">Post not found</h1>
+    <div className="pt-24 sm:pt-32 pb-16 sm:pb-24">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+        <Link
+          to="/blog"
+          className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8 group"
+        >
+          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+          <span className="font-medium">Back to Blog</span>
+        </Link>
+        <h1 className="text-2xl font-semibold text-foreground">Post not found</h1>
+      </div>
     </div>
   )
 }

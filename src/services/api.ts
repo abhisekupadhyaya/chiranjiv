@@ -1,58 +1,125 @@
-/* API networking temporarily disabled for local development */
+// AWS Lambda API Base URL
+const API_BASE_URL = 'https://e92h9q3h03.execute-api.us-east-2.amazonaws.com/default'
 
-export async function postWaitlistStep1(input: { name: string; email: string; phone: string }) {
-  /* Temporarily disabled network call
-  const url = buildUrl('/waitlist/step1')
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(input),
-  })
-  const data = await safeParseJson(res)
-  if (!res.ok && res.status === 404) {
-    console.error('Waitlist step1 endpoint not found (404). URL:', url, 'Check VITE_API_BASE_URL or routing.')
-    if (!data?.error) {
-      data.error = 'Service unavailable. Please try again later.'
-    }
-  }
-  return { ok: res.ok, status: res.status, data }
-  */
-  void input
-  return { ok: true, status: 200, data: { userId: 'mock-user-123' } }
+// TypeScript interfaces for API request/response types
+export interface WaitlistSignupRequest {
+  id: string
+  name: string
+  email: string
+  phone: string
+  address: string
+  age: number
+  consentPrivacyPolicy?: string | null
+  consentTermsOfService?: string | null
+  consentDataUsagePolicy?: string | null
+  consentResearchContact?: string | null
+  consentMarketing?: string | null
+  referralCode?: string
 }
 
-export async function postWaitlistStep2(input: {
-  userId: string
-  password: string
-  addressLine1: string
-  addressLine2?: string | null
-  city: string
-  state: string
-  pincode: string
-  privacyPolicy: boolean
-  termsOfService: boolean
-  dataUsagePolicy: boolean
-  researchConsent?: boolean
-  marketingConsent?: boolean
-}) {
-  /* Temporarily disabled network call
-  const url = buildUrl('/waitlist/step2')
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(input),
-  })
-  const data = await safeParseJson(res)
-  if (!res.ok && res.status === 404) {
-    console.error('Waitlist step2 endpoint not found (404). URL:', url, 'Check VITE_API_BASE_URL or routing.')
-    if (!data?.error) {
-      data.error = 'Service unavailable. Please try again later.'
+export interface WaitlistSignupResponse {
+  message: string
+  item: {
+    id: string
+    createdAt: number
+    name: string
+    email: string
+    phone: string
+    address: string
+    age: number
+    consentPrivacyPolicy?: string
+    consentTermsOfService?: string
+    consentDataUsagePolicy?: string
+    consentResearchContact?: string
+    consentMarketing?: string
+    referralCode: string
+    usedReferralCode?: string
+    referredBy?: string
+    isDummy: boolean
+    referralsCount: number
+    referredUserIds: string[]
+  }
+  referralCode: string
+}
+
+export interface WaitlistRankResponse {
+  id: string
+  rank: number
+  totalUsers: number
+  referralsCount: number
+  referralCode: string
+}
+
+export async function postWaitlistSignup(input: WaitlistSignupRequest): Promise<{
+  ok: boolean
+  status: number
+  data: WaitlistSignupResponse | { error: string }
+}> {
+  try {
+    const res = await fetch(`${API_BASE_URL}/chiranjiv-waitlist-signup`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(input),
+    })
+    
+    let data: WaitlistSignupResponse | { error: string }
+    try {
+      data = await res.json()
+    } catch {
+      data = { error: 'Invalid response from server' }
+    }
+    
+    if (!res.ok) {
+      if (!('error' in data)) {
+        data = { error: 'Failed to complete signup' }
+      }
+    }
+    
+    return { ok: res.ok, status: res.status, data }
+  } catch (error) {
+    console.error('Waitlist signup error:', error)
+    return {
+      ok: false,
+      status: 500,
+      data: { error: 'Network error. Please try again.' },
     }
   }
-  return { ok: res.ok, status: res.status, data }
-  */
-  void input
-  return { ok: true, status: 200, data: { referralCode: 'REF-CODE-1234' } }
+}
+
+export async function getWaitlistRank(userId: string): Promise<{
+  ok: boolean
+  status: number
+  data: WaitlistRankResponse | { error: string }
+}> {
+  try {
+    const res = await fetch(`${API_BASE_URL}/chiranjiv-waitlist-rank`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: userId }),
+    })
+    
+    let data: WaitlistRankResponse | { error: string }
+    try {
+      data = await res.json()
+    } catch {
+      data = { error: 'Invalid response from server' }
+    }
+    
+    if (!res.ok) {
+      if (!('error' in data)) {
+        data = { error: 'Failed to fetch rank' }
+      }
+    }
+    
+    return { ok: res.ok, status: res.status, data }
+  } catch (error) {
+    console.error('Waitlist rank error:', error)
+    return {
+      ok: false,
+      status: 500,
+      data: { error: 'Network error. Please try again.' },
+    }
+  }
 }
 
 

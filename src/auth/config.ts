@@ -11,13 +11,6 @@ type RuntimeAuthConfig = {
   addressAttrName?: string
 }
 
-function getWindowOrigin(): string {
-  if (typeof window !== 'undefined' && window.location?.origin) {
-    return window.location.origin
-  }
-  return ''
-}
-
 export function getRuntimeAuthConfig(): RuntimeAuthConfig {
   const authority =
     import.meta.env.VITE_OIDC_AUTHORITY ||

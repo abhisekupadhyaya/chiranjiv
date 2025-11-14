@@ -7,6 +7,8 @@ import BlogPost from './pages/BlogPost'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import TermsOfService from './pages/TermsOfService'
 import DataUsagePolicy from './pages/DataUsagePolicy'
+import Team from './pages/Team'
+import FAQ from './pages/FAQ'
 import { Layout } from '@/components/layout'
 
 function App() {
@@ -17,9 +19,11 @@ function App() {
         <Route path="/mission" element={<Mission />} />
         <Route path="/blog" element={<BlogIndex />} />
         <Route path="/blog/:slug" element={<BlogPost />} />
-        <Route path="/privacy/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/privacy/terms-of-service" element={<TermsOfService />} />
-        <Route path="/privacy/data-usage-policy" element={<DataUsagePolicy />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-of-service" element={<TermsOfService />} />
+        <Route path="/data-usage-policy" element={<DataUsagePolicy />} />
+        <Route path="/team" element={<Team />} />
+        <Route path="/faq" element={<FAQ />} />
       </Route>
     </Routes>
   )

@@ -13,30 +13,30 @@ export default function BlogIndex() {
     },
   ]
   return (
-    <main className="pt-32 pb-20">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-        <div className="mb-12">
-          <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-4 text-balance">Chiranjiv Blog</h1>
-          <p className="text-lg text-muted-foreground text-pretty">
-            Insights on genomics, ancestry, and the future of personalized health in India.
+    <main className="pt-24 sm:pt-32 pb-16 sm:pb-24">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+        <div className="text-center mb-12 sm:mb-16">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-4 text-balance">Chiranjiv Blog</h1>
+          <p className="text-lg sm:text-xl text-muted-foreground text-balance max-w-2xl mx-auto">
+            Insights on genomics, ancestry, and the future of personalized health in India
           </p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="max-w-4xl mx-auto space-y-8">
           {posts.map((post) => (
-            <Link key={post.slug} to={`/blog/${post.slug}`} className="group h-full">
-              <article className="h-full flex flex-col bg-card border border-border rounded-xl p-6 sm:p-8 hover:border-primary/50 transition-all duration-300 hover:shadow-lg">
-                <div className="flex items-center gap-3 text-sm text-muted-foreground mb-3">
-                  <time>{post.date}</time>
+            <Link key={post.slug} to={`/blog/${post.slug}`} className="group block">
+              <article className="bg-card border border-border rounded-2xl p-8 sm:p-10 hover:border-primary/50 transition-all duration-300 hover:shadow-xl">
+                <div className="flex items-center gap-3 text-sm text-muted-foreground mb-4">
+                  <time className="font-medium">{post.date}</time>
                   <span>•</span>
                   <span>{post.readTime}</span>
                 </div>
-                <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors text-balance">
+                <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors text-balance leading-tight">
                   {post.title}
                 </h2>
-                <p className="text-muted-foreground mb-4 text-pretty flex-1">{post.excerpt}</p>
-                <div className="flex items-center gap-2 text-primary font-medium">
-                  Read more
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                <p className="text-base sm:text-lg text-muted-foreground mb-6 leading-relaxed">{post.excerpt}</p>
+                <div className="flex items-center gap-2 text-primary font-semibold">
+                  Read full article
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
                 </div>
               </article>
             </Link>

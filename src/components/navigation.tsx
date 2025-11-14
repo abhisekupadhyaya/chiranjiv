@@ -2,13 +2,34 @@ import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { ChevronDown, Menu, X } from 'lucide-react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import * as Dialog from '@radix-ui/react-dialog'
 
 export function Navigation() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const location = useLocation()
+  const navigate = useNavigate()
+
+  const handleHashNavigation = (hash: string) => {
+    const hashId = hash.replace('#', '')
+    if (location.pathname === '/') {
+      // Already on home page, just scroll to the element
+      const element = document.getElementById(hashId)
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    } else {
+      // Navigate to home page with hash - Home component will handle scrolling
+      navigate(`/${hash}`)
+      // Also set window.location.hash as fallback for immediate scroll
+      setTimeout(() => {
+        if (window.location.pathname === '/') {
+          window.location.hash = hash
+        }
+      }, 50)
+    }
+  }
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20)
@@ -35,7 +56,7 @@ export function Navigation() {
           <div className="hidden md:flex items-center gap-8">
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-                Mission
+                About Us
                 <ChevronDown className="w-4 h-4" />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start" className="w-48">
@@ -45,32 +66,19 @@ export function Navigation() {
                 <DropdownMenuItem asChild>
                   <Link to="/blog" className="cursor-pointer">Blog</Link>
                 </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <a href="#how-it-works" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">How It Works</a>
-            <a href="#why-chiranjiv" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Why Us</a>
-            <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-                Privacy
-                <ChevronDown className="w-4 h-4" />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-56">
                 <DropdownMenuItem asChild>
-                  <Link to="/privacy/privacy-policy" className="cursor-pointer">Privacy Policy</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link to="/privacy/terms-of-service" className="cursor-pointer">Terms of Service</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link to="/privacy/data-usage-policy" className="cursor-pointer">Data Usage Policy</Link>
+                  <Link to="/team" className="cursor-pointer">Team</Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
+            <Link to="/faq" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">FAQ</Link>
+            <button onClick={() => handleHashNavigation('#how-it-works')} className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">How It Works</button>
+            <button onClick={() => handleHashNavigation('#why-chiranjiv')} className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Why Us</button>
           </div>
           {/* Right actions: CTA and Mobile Menu */}
           <div className="flex items-center gap-2">
-            <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90">
-              <a href="#waitlist">Join Waitlist</a>
+            <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90" onClick={() => handleHashNavigation('#waitlist')}>
+              Join Waitlist
             </Button>
             <Dialog.Root open={open} onOpenChange={setOpen}>
               <Dialog.Trigger
@@ -99,22 +107,18 @@ export function Navigation() {
                     <Link to="/blog" className="px-2 py-2 rounded-md hover:bg-muted/50" aria-current={location.pathname.startsWith('/blog') ? 'page' : undefined}>
                       Blog
                     </Link>
-                    <a href="#how-it-works" className="px-2 py-2 rounded-md hover:bg-muted/50">How It Works</a>
-                    <a href="#why-chiranjiv" className="px-2 py-2 rounded-md hover:bg-muted/50">Why Us</a>
-                    <div className="h-px bg-border my-2" />
-                    <Link to="/privacy/privacy-policy" className="px-2 py-2 rounded-md hover:bg-muted/50" aria-current={location.pathname === '/privacy/privacy-policy' ? 'page' : undefined}>
-                      Privacy Policy
+                    <Link to="/team" className="px-2 py-2 rounded-md hover:bg-muted/50" aria-current={location.pathname === '/team' ? 'page' : undefined}>
+                      Team
                     </Link>
-                    <Link to="/privacy/terms-of-service" className="px-2 py-2 rounded-md hover:bg-muted/50" aria-current={location.pathname === '/privacy/terms-of-service' ? 'page' : undefined}>
-                      Terms of Service
+                    <Link to="/faq" className="px-2 py-2 rounded-md hover:bg-muted/50" aria-current={location.pathname === '/faq' ? 'page' : undefined}>
+                      FAQ
                     </Link>
-                    <Link to="/privacy/data-usage-policy" className="px-2 py-2 rounded-md hover:bg-muted/50" aria-current={location.pathname === '/privacy/data-usage-policy' ? 'page' : undefined}>
-                      Data Usage Policy
-                    </Link>
+                    <button onClick={() => { handleHashNavigation('#how-it-works'); setOpen(false); }} className="px-2 py-2 rounded-md hover:bg-muted/50 text-left">How It Works</button>
+                    <button onClick={() => { handleHashNavigation('#why-chiranjiv'); setOpen(false); }} className="px-2 py-2 rounded-md hover:bg-muted/50 text-left">Why Us</button>
                   </div>
                   <div className="mt-auto pt-4">
-                    <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90" asChild>
-                      <a href="#waitlist" onClick={() => setOpen(false)}>Join Waitlist</a>
+                    <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90" onClick={() => { handleHashNavigation('#waitlist'); setOpen(false); }}>
+                      Join Waitlist
                     </Button>
                   </div>
                 </Dialog.Content>

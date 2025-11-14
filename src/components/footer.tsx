@@ -1,4 +1,29 @@
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+
 export function Footer() {
+  const location = useLocation()
+  const navigate = useNavigate()
+
+  const handleHashNavigation = (hash: string) => {
+    const hashId = hash.replace('#', '')
+    if (location.pathname === '/') {
+      // Already on home page, just scroll to the element
+      const element = document.getElementById(hashId)
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    } else {
+      // Navigate to home page with hash - Home component will handle scrolling
+      navigate(`/${hash}`)
+      // Also set window.location.hash as fallback for immediate scroll
+      setTimeout(() => {
+        if (window.location.pathname === '/') {
+          window.location.hash = hash
+        }
+      }, 50)
+    }
+  }
+
   return (
     <footer className="bg-muted/30 border-t border-border py-8 sm:py-12">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -28,10 +53,10 @@ export function Footer() {
           <div>
             <h3 className="font-semibold text-foreground mb-3">Legal</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><a href="#" className="hover:text-foreground transition-colors">Privacy Policy</a></li>
-              <li><a href="#" className="hover:text-foreground transition-colors">Terms of Service</a></li>
-              <li><a href="#" className="hover:text-foreground transition-colors">Data Protection</a></li>
-              <li><a href="#" className="hover:text-foreground transition-colors">Contact Us</a></li>
+              <li><Link to="/privacy-policy" className="hover:text-foreground transition-colors">Privacy Policy</Link></li>
+              <li><Link to="/terms-of-service" className="hover:text-foreground transition-colors">Terms of Service</Link></li>
+              <li><Link to="/data-usage-policy" className="hover:text-foreground transition-colors">Data Protection</Link></li>
+              <li><button onClick={() => handleHashNavigation('#waitlist')} className="text-sm text-muted-foreground hover:text-foreground transition-colors text-left">Contact Us</button></li>
             </ul>
           </div>
         </div>
