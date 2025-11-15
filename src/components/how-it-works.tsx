@@ -1,44 +1,167 @@
 import { Card } from '@/components/ui/card'
-import { UserPlus, Package, BarChart3 } from 'lucide-react'
 
 const steps = [
-  { number: '01', title: 'Join the Waitlist', description: 'Sign up now to secure your spot. Refer friends to climb the ranks and get early access.', icon: (
-    <UserPlus className="w-8 h-8" />
-  )},
-  { number: '02', title: 'Receive Your Kit', description: 'Get your free at-home DNA collection kit delivered when you reach the top spots in Q1 2026.', icon: (
-    <Package className="w-8 h-8" />
-  )},
-  { number: '03', title: 'Get Your Results', description: 'Access your comprehensive reports and personalized recommendations through the app.', icon: (
-    <BarChart3 className="w-8 h-8" />
-  )},
+  {
+    number: '01',
+    title: 'Join the Waitlist',
+    description:
+      'Sign up now to secure your spot. Refer friends to climb the ranks and get early access.',
+  },
+  {
+    number: '02',
+    title: 'Receive Your Kit',
+    description:
+      'Get your free at-home DNA collection kit delivered when you reach the top spots in Q1 2026.',
+  },
+  {
+    number: '03',
+    title: 'Get Your Results',
+    description:
+      'Access your comprehensive reports and personalized recommendations through the app.',
+  },
 ]
 
 export function HowItWorks() {
   return (
-    <section id="how-it-works" className="py-16 sm:py-24 lg:py-32 bg-muted/30">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section
+      id="how-it-works"
+      className="relative py-16 sm:py-24 lg:py-32 overflow-hidden"
+    >
+      {/* Background gradient + floating orbs (shared visual language) */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5" />
+      <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl animate-float" />
+      <div
+        className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-float"
+        style={{ animationDelay: '2s' }}
+      />
+      <div
+        className="absolute top-1/2 right-1/3 w-72 h-72 bg-accent/10 rounded-full blur-3xl animate-float"
+        style={{ animationDelay: '4s' }}
+      />
+
+      <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-16">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 text-balance">How It Works</h2>
-          <p className="text-base sm:text-lg text-muted-foreground text-pretty leading-relaxed">Three simple steps to unlock your genetic insights</p>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-extralight text-foreground mb-4 text-balance tracking-tight leading-[1.1]">
+            How It Works
+          </h2>
+          <p className="text-base sm:text-lg text-muted-foreground text-pretty leading-relaxed">
+            Three simple steps to unlock your genetic insights
+          </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
-          {steps.map((step, index) => (
-            <Card key={index} className="relative p-6 sm:p-8 bg-card hover:shadow-lg transition-all duration-300 border-border group">
-              <div className="absolute top-6 sm:top-8 right-6 sm:right-8 text-6xl sm:text-7xl font-bold text-primary/10 group-hover:text-primary/20 transition-colors">{step.number}</div>
-              <div className="relative z-10">
-                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-4 sm:mb-6 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                  {step.icon}
-                </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-3 sm:mb-4">{step.title}</h3>
-                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">{step.description}</p>
-              </div>
-              {index < steps.length - 1 && (
-                <div className="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2">
-                  <svg className="w-8 h-8 text-primary/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-                </div>
-              )}
-            </Card>
-          ))}
+
+        {/* Timeline-style steps */}
+        <div className="max-w-5xl mx-auto">
+          <ol className="relative space-y-8 sm:space-y-10 md:space-y-12">
+            {/* Vertical spine on md+ */}
+            <div className="hidden md:block absolute left-1/2 top-0 bottom-0 -translate-x-1/2 w-px bg-border/40" />
+
+            {steps.map((step, index) => {
+              const isEven = index % 2 === 1
+              const delayClass =
+                index === 0
+                  ? ''
+                  : index === 1
+                  ? '[animation-delay:120ms]'
+                  : '[animation-delay:220ms]'
+
+              return (
+                <li
+                  key={step.number}
+                  className={`relative animate-in fade-in slide-in-from-bottom-4 duration-700 ${delayClass}`}
+                >
+                  {/* Mobile: horizontal flex layout */}
+                  <div className="flex md:hidden items-start gap-4">
+                    {/* Badge with vertical line */}
+                    <div className="relative flex-shrink-0">
+                      {index < steps.length - 1 && (
+                        <div className="absolute left-1/2 top-14 bottom-0 -translate-x-1/2 w-px bg-border/40 -mb-8" />
+                      )}
+                      <div className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-primary/20 via-secondary/10 to-accent/10 border border-border/60 flex items-center justify-center shadow-md shadow-primary/10">
+                        <span className="text-sm sm:text-base font-medium tracking-[0.18em] text-primary">
+                          {step.number}
+                        </span>
+                      </div>
+                    </div>
+                    {/* Card */}
+                    <div className="flex-1">
+                      <Card className="group relative w-full glass-backdrop backdrop-blur-sm border border-border/50 rounded-3xl p-6 sm:p-8 shadow-lg hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 bg-card/80">
+                        <div className="absolute inset-0 pointer-events-none rounded-3xl bg-gradient-to-br from-primary/10 via-secondary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                        <div className="relative z-10 space-y-3 sm:space-y-4">
+                          <div className="flex flex-col items-start gap-1">
+                            <span className="text-[11px] sm:text-xs font-medium uppercase tracking-[0.2em] text-primary/70">
+                              Step {step.number}
+                            </span>
+                            <h3 className="text-xl sm:text-2xl font-light text-foreground leading-snug">
+                              {step.title}
+                            </h3>
+                          </div>
+                          <p className="text-sm sm:text-base text-muted-foreground leading-relaxed text-pretty">
+                            {step.description}
+                          </p>
+                        </div>
+                      </Card>
+                    </div>
+                  </div>
+
+                  {/* Desktop: 3-column grid with centered badge */}
+                  <div className="hidden md:grid md:grid-cols-[1fr_auto_1fr] md:gap-8 lg:gap-12 md:items-start">
+                    {/* Left column - card for odd indices (0, 2) */}
+                    <div className={`${isEven ? '' : 'flex justify-end'}`}>
+                      {!isEven && (
+                        <Card className="group relative w-full max-w-md glass-backdrop backdrop-blur-sm border border-border/50 rounded-3xl p-6 sm:p-8 shadow-lg hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 bg-card/80">
+                          <div className="absolute inset-0 pointer-events-none rounded-3xl bg-gradient-to-br from-primary/10 via-secondary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                          <div className="relative z-10 space-y-3 sm:space-y-4">
+                            <div className="flex flex-col items-start gap-1">
+                              <span className="text-[11px] sm:text-xs font-medium uppercase tracking-[0.2em] text-primary/70">
+                                Step {step.number}
+                              </span>
+                              <h3 className="text-xl sm:text-2xl font-light text-foreground leading-snug">
+                                {step.title}
+                              </h3>
+                            </div>
+                            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed text-pretty">
+                              {step.description}
+                            </p>
+                          </div>
+                        </Card>
+                      )}
+                    </div>
+
+                    {/* Center column - badge always centered */}
+                    <div className="flex justify-center">
+                      <div className="relative z-10 w-14 h-14 lg:w-16 lg:h-16 rounded-full bg-gradient-to-br from-primary/20 via-secondary/10 to-accent/10 border border-border/60 flex items-center justify-center shadow-md shadow-primary/10">
+                        <span className="text-base lg:text-lg font-medium tracking-[0.18em] text-primary">
+                          {step.number}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Right column - card for even indices (1) */}
+                    <div className={`${isEven ? 'flex justify-start' : ''}`}>
+                      {isEven && (
+                        <Card className="group relative w-full max-w-md glass-backdrop backdrop-blur-sm border border-border/50 rounded-3xl p-6 sm:p-8 shadow-lg hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 bg-card/80">
+                          <div className="absolute inset-0 pointer-events-none rounded-3xl bg-gradient-to-br from-primary/10 via-secondary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                          <div className="relative z-10 space-y-3 sm:space-y-4">
+                            <div className="flex flex-col items-start gap-1">
+                              <span className="text-[11px] sm:text-xs font-medium uppercase tracking-[0.2em] text-primary/70">
+                                Step {step.number}
+                              </span>
+                              <h3 className="text-xl sm:text-2xl font-light text-foreground leading-snug">
+                                {step.title}
+                              </h3>
+                            </div>
+                            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed text-pretty">
+                              {step.description}
+                            </p>
+                          </div>
+                        </Card>
+                      )}
+                    </div>
+                  </div>
+                </li>
+              )
+            })}
+          </ol>
         </div>
       </div>
     </section>
