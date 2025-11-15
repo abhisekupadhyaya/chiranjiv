@@ -885,7 +885,7 @@ export function Waitlist() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-10 sm:mb-14">
             <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight text-foreground mb-5 sm:mb-6 text-balance tracking-tight leading-[1.1]">
-              Earn Early Access
+              Join Early Access
             </h2>
             <p className="text-base sm:text-lg md:text-xl text-muted-foreground text-pretty leading-relaxed font-light max-w-3xl mx-auto">
               Join the waitlist. Share your unique referral code to skip the queue. The more friends who sign up, the

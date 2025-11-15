@@ -190,9 +190,6 @@ export default function PrivacyPolicy() {
           <li>Modify health questionnaire responses</li>
         </ul>
         <p>
-          <strong>Right to Erasure</strong>, which includes the right to request deletion of your account and associated personal data (with the exception that anonymized genetic data in research databases cannot be retrieved or deleted, and certain data may be retained for legal or regulatory requirements).
-        </p>
-        <p>
           <strong>Right to Data Portability</strong>, which includes the right to request your personal data in a structured, commonly used format.
         </p>
         <p>

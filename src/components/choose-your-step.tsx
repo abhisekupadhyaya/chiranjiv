@@ -86,7 +86,7 @@ export function ChooseYourStep() {
                     className="w-full bg-primary text-primary-foreground hover:bg-primary/90 btn-glow hover:scale-[1.02] transition-all"
                     size="lg"
                   >
-                    Earn Early Access
+                    Join Early Access
                   </Button>
                 </div>
               </div>
