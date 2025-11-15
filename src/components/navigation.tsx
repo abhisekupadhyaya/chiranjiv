@@ -8,6 +8,7 @@ import * as Dialog from '@radix-ui/react-dialog'
 export function Navigation() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const [aboutUsOpen, setAboutUsOpen] = useState(false)
   const location = useLocation()
   const navigate = useNavigate()
 
@@ -40,6 +41,7 @@ export function Navigation() {
   // Close the drawer on route change and restore focus to trigger
   useEffect(() => {
     setOpen(false)
+    setAboutUsOpen(false)
   }, [location.pathname])
 
   return (
@@ -85,9 +87,10 @@ export function Navigation() {
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
-              <Link to="/faq" className="text-sm font-medium tracking-tight text-muted-foreground hover:text-foreground transition-all duration-200 nav-link-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-md px-2 py-1">FAQ</Link>
               <button onClick={() => handleHashNavigation('#how-it-works')} className="text-sm font-medium tracking-tight text-muted-foreground hover:text-foreground transition-all duration-200 nav-link-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-md px-2 py-1">How It Works</button>
               <button onClick={() => handleHashNavigation('#why-chiranjiv')} className="text-sm font-medium tracking-tight text-muted-foreground hover:text-foreground transition-all duration-200 nav-link-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-md px-2 py-1">Why Us</button>
+              <button onClick={() => handleHashNavigation('#waitlist')} className="text-sm font-medium tracking-tight text-muted-foreground hover:text-foreground transition-all duration-200 nav-link-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-md px-2 py-1">Sign In</button>
+              <Link to="/faq" className="text-sm font-medium tracking-tight text-muted-foreground hover:text-foreground transition-all duration-200 nav-link-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-md px-2 py-1">FAQ</Link>
             </div>
             {/* Right actions: CTA and Mobile Menu */}
             <div className="flex items-center gap-1.5 sm:gap-2">
@@ -99,7 +102,7 @@ export function Navigation() {
                 <span className="hidden sm:inline">Join Waitlist</span>
                 <span className="inline sm:hidden">Join</span>
               </Button>
-              <Dialog.Root open={open} onOpenChange={setOpen}>
+              <Dialog.Root open={open} onOpenChange={(isOpen) => { setOpen(isOpen); if (!isOpen) setAboutUsOpen(false); }}>
                 <Dialog.Trigger
                   aria-label="Open menu"
                   className="md:hidden inline-flex items-center justify-center p-2 rounded-lg border border-border/50 text-foreground hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-200 nav-link-hover"
@@ -110,7 +113,12 @@ export function Navigation() {
                   <Dialog.Overlay className="fixed inset-0 z-[100] bg-black/50 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
                   <Dialog.Content className="fixed inset-y-0 left-0 z-[101] w-80 max-w-[85vw] glass-backdrop border-r border-border/50 shadow-2xl p-6 flex flex-col gap-4 outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:slide-in-from-left data-[state=closed]:slide-out-to-left">
                     <div className="flex items-center justify-between">
-                      <span className="text-base font-semibold tracking-tight">Menu</span>
+                      <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 flex items-center justify-center">
+                          <img src="/favicon.ico" alt="Chiranjiv Logo" width={32} height={32} className="w-full h-full object-contain" />
+                        </div>
+                        <span className="text-base font-semibold tracking-tight">Chiranjiv</span>
+                      </div>
                       <Dialog.Close
                         aria-label="Close menu"
                         className="inline-flex items-center justify-center p-2 rounded-lg border border-border/50 text-foreground hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-all duration-200 nav-link-hover"
@@ -120,20 +128,35 @@ export function Navigation() {
                     </div>
                     <div className="h-px bg-border/50 my-2" />
                     <div className="flex flex-col gap-1">
-                    <Link to="/mission" className="px-3 py-2.5 text-sm font-medium tracking-tight rounded-lg hover:bg-muted/50 nav-link-hover transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background" aria-current={location.pathname === '/mission' ? 'page' : undefined}>
-                      Mission
-                    </Link>
-                    <Link to="/blog" className="px-3 py-2.5 text-sm font-medium tracking-tight rounded-lg hover:bg-muted/50 nav-link-hover transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background" aria-current={location.pathname.startsWith('/blog') ? 'page' : undefined}>
-                      Blog
-                    </Link>
-                    <Link to="/team" className="px-3 py-2.5 text-sm font-medium tracking-tight rounded-lg hover:bg-muted/50 nav-link-hover transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background" aria-current={location.pathname === '/team' ? 'page' : undefined}>
-                      Team
-                    </Link>
+                    {/* Collapsible About Us */}
+                    <div>
+                      <button 
+                        onClick={() => setAboutUsOpen(!aboutUsOpen)}
+                        className="w-full px-3 py-2.5 text-sm font-medium tracking-tight rounded-lg hover:bg-muted/50 nav-link-hover text-left transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background flex items-center justify-between"
+                      >
+                        <span>About Us</span>
+                        <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${aboutUsOpen ? 'rotate-180' : ''}`} />
+                      </button>
+                      {aboutUsOpen && (
+                        <div className="ml-3 mt-1 flex flex-col gap-1 border-l-2 border-border/30 pl-3">
+                          <Link to="/mission" className="px-3 py-2 text-sm font-medium tracking-tight rounded-lg hover:bg-muted/50 nav-link-hover transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background" aria-current={location.pathname === '/mission' ? 'page' : undefined} onClick={() => setOpen(false)}>
+                            Mission
+                          </Link>
+                          <Link to="/blog" className="px-3 py-2 text-sm font-medium tracking-tight rounded-lg hover:bg-muted/50 nav-link-hover transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background" aria-current={location.pathname.startsWith('/blog') ? 'page' : undefined} onClick={() => setOpen(false)}>
+                            Blog
+                          </Link>
+                          <Link to="/team" className="px-3 py-2 text-sm font-medium tracking-tight rounded-lg hover:bg-muted/50 nav-link-hover transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background" aria-current={location.pathname === '/team' ? 'page' : undefined} onClick={() => setOpen(false)}>
+                            Team
+                          </Link>
+                        </div>
+                      )}
+                    </div>
+                    <button onClick={() => { handleHashNavigation('#how-it-works'); setOpen(false); }} className="px-3 py-2.5 text-sm font-medium tracking-tight rounded-lg hover:bg-muted/50 nav-link-hover text-left transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background">How It Works</button>
+                    <button onClick={() => { handleHashNavigation('#why-chiranjiv'); setOpen(false); }} className="px-3 py-2.5 text-sm font-medium tracking-tight rounded-lg hover:bg-muted/50 nav-link-hover text-left transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background">Why Us</button>
+                    <button onClick={() => { handleHashNavigation('#waitlist'); setOpen(false); }} className="px-3 py-2.5 text-sm font-medium tracking-tight rounded-lg hover:bg-muted/50 nav-link-hover text-left transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background">Sign In</button>
                     <Link to="/faq" className="px-3 py-2.5 text-sm font-medium tracking-tight rounded-lg hover:bg-muted/50 nav-link-hover transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background" aria-current={location.pathname === '/faq' ? 'page' : undefined}>
                       FAQ
                     </Link>
-                    <button onClick={() => { handleHashNavigation('#how-it-works'); setOpen(false); }} className="px-3 py-2.5 text-sm font-medium tracking-tight rounded-lg hover:bg-muted/50 nav-link-hover text-left transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background">How It Works</button>
-                    <button onClick={() => { handleHashNavigation('#why-chiranjiv'); setOpen(false); }} className="px-3 py-2.5 text-sm font-medium tracking-tight rounded-lg hover:bg-muted/50 nav-link-hover text-left transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background">Why Us</button>
                     </div>
                     <div className="mt-auto pt-4">
                       <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 btn-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background" onClick={() => { handleHashNavigation('#waitlist'); setOpen(false); }}>
