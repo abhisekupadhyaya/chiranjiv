@@ -1,9 +1,32 @@
 import { PolicyLayout } from '@/components/policy-layout'
+import { PolicyCallout } from '@/components/policy-callout'
+
+const sections = [
+  { id: 'introduction', label: 'Introduction & Scope' },
+  { id: 'information-collected', label: 'Information We Collect' },
+  { id: 'how-we-use', label: 'How We Use Your Information' },
+  { id: 'research-use', label: 'Research Use & Data Sharing' },
+  { id: 'legal-basis', label: 'Legal Basis for Processing' },
+  { id: 'data-retention', label: 'Data Retention' },
+  { id: 'international-transfers', label: 'International Data Transfers' },
+  { id: 'your-rights', label: 'Your Rights' },
+  { id: 'age-restriction', label: 'Age Restriction' },
+  { id: 'data-security', label: 'Data Security' },
+  { id: 'cookies', label: 'Cookies & Tracking' },
+  { id: 'changes', label: 'Changes to this Policy' },
+  { id: 'contact', label: 'Contact & Complaints' }
+]
 
 export default function PrivacyPolicy() {
   return (
-    <PolicyLayout title="Chiranjiv Privacy Policy" effectiveDate="November ___, 2025" lastUpdated="November ___, 2025">
-      <section>
+    <PolicyLayout 
+      title="Privacy Policy" 
+      effectiveDate="November ___, 2025" 
+      lastUpdated="November ___, 2025"
+      category="Privacy & Data Protection"
+      sections={sections}
+    >
+      <section id="introduction">
         <h2>Introduction and Scope</h2>
         <p>
           This Privacy Policy ("Privacy Policy") governs the collection, use, processing, storage, and disclosure of personal data by
@@ -20,7 +43,7 @@ export default function PrivacyPolicy() {
           If you do not agree with this Privacy Policy, please do not use our Website or Services.
         </p>
       </section>
-      <section>
+      <section id="information-collected">
         <h2>Information We Collect</h2>
         <p>
           Through our website and through information we may directly provide to you outside of the website (for example, through packages we mail to
@@ -62,7 +85,7 @@ export default function PrivacyPolicy() {
           <li>Marketing communication preferences</li>
         </ul>
       </section>
-      <section>
+      <section id="how-we-use">
         <h2>How We Use Your Information</h2>
         <p>We use your personal data for the following primary purposes with your explicit consent:</p>
         <ul>
@@ -84,8 +107,12 @@ export default function PrivacyPolicy() {
           participation is entirely voluntary and separate from our primary testing services.
         </p>
       </section>
-      <section>
+      <section id="research-use">
         <h2>Research Use and Data Sharing</h2>
+        <PolicyCallout variant="info" title="Research Use – Always Optional">
+          <p className="mb-3">All research participation is entirely voluntary and requires your explicit opt-in consent. You can change your preference at any time through your account settings.</p>
+        </PolicyCallout>
+        <h3 className="mt-6">Anonymization & Safeguards</h3>
         <p>Before any research use or third-party sharing, genetic data undergoes rigorous anonymization:</p>
         <ul>
           <li>Removal of all direct identifiers (name, contact information, account details)</li>
@@ -93,6 +120,7 @@ export default function PrivacyPolicy() {
           <li>Aggregation with other anonymized datasets</li>
           <li>Implementation of technical and procedural safeguards to prevent re-identification</li>
         </ul>
+        <h3 className="mt-6">Research Partners</h3>
         <p>With your explicit opt-in consent, we may share anonymized genetic data with:</p>
         <ul>
           <li>Academic research institutions and universities</li>
@@ -100,6 +128,7 @@ export default function PrivacyPolicy() {
           <li>Government health agencies and regulatory bodies</li>
           <li>International research consortiums and collaboratives</li>
         </ul>
+        <h3 className="mt-6">Data Sharing Guidelines</h3>
         <p>We agree to use the following guidelines with regard to any use of data for research:</p>
         <ul>
           <li>All research partnerships are governed by strict data sharing agreements</li>
@@ -109,7 +138,7 @@ export default function PrivacyPolicy() {
         </ul>
         <p>Data may also be shared as required by law.</p>
       </section>
-      <section>
+      <section id="legal-basis">
         <h2>Legal Basis For Processing</h2>
         <p>Under DPDPA 2023 Section 6, we process your personal data based on the following legal grounds:</p>
         <h3>Consent</h3>
@@ -131,7 +160,7 @@ export default function PrivacyPolicy() {
           <li>Law enforcement requests where legally mandated</li>
         </ul>
       </section>
-      <section>
+      <section id="data-retention">
         <h2>Data Retention</h2>
         <p>Core genetic data that has been anonymized and included in research datasets is retained indefinitely for the following reasons:</p>
         <ul>
@@ -153,7 +182,7 @@ export default function PrivacyPolicy() {
           completed research studies.
         </p>
       </section>
-      <section>
+      <section id="international-transfers">
         <h2>International Data Transfers</h2>
         <p>We may transfer your personal data outside India to:</p>
         <ul>
@@ -170,45 +199,45 @@ export default function PrivacyPolicy() {
         </ul>
         <p>We will inform you of specific international transfers through this Privacy Policy or direct communication where required by law.</p>
       </section>
-      <section>
+      <section id="your-rights">
         <h2>Your Rights Under DPDPA 2023, Section 11</h2>
         <p>You have the following rights regarding your personal data:</p>
-        <p>
-          <strong>Right of Access</strong>, which includes the right to:
-        </p>
-        <ul>
-          <li>Request information about personal data we hold about you</li>
-          <li>Obtain copies of your genetic reports and test results</li>
-          <li>Understand how your data is being processed</li>
-        </ul>
-        <p>
-          <strong>Right to Correction</strong>, which includes the right to:
-        </p>
-        <ul>
-          <li>Request correction of inaccurate personal information</li>
-          <li>Update your account and contact details</li>
-          <li>Modify health questionnaire responses</li>
-        </ul>
-        <p>
-          <strong>Right to Data Portability</strong>, which includes the right to request your personal data in a structured, commonly used format.
-        </p>
-        <p>
-          <strong>Right to Withdraw Consent</strong>, which includes the right to:
-        </p>
-        <ul>
-          <li>Withdraw consent for research participation at any time</li>
-          <li>Opt-out of marketing communications</li>
-          <li>(with the understanding that withdrawal does not affect previously conducted research using anonymized data)</li>
-        </ul>
+        <PolicyCallout variant="rights" title="Right of Access" className="mb-6">
+          <p className="mb-3">Which includes the right to:</p>
+          <ul>
+            <li>Request information about personal data we hold about you</li>
+            <li>Obtain copies of your genetic reports and test results</li>
+            <li>Understand how your data is being processed</li>
+          </ul>
+        </PolicyCallout>
+        <PolicyCallout variant="rights" title="Right to Correction" className="mb-6">
+          <p className="mb-3">Which includes the right to:</p>
+          <ul>
+            <li>Request correction of inaccurate personal information</li>
+            <li>Update your account and contact details</li>
+            <li>Modify health questionnaire responses</li>
+          </ul>
+        </PolicyCallout>
+        <PolicyCallout variant="rights" title="Right to Data Portability" className="mb-6">
+          <p>Which includes the right to request your personal data in a structured, commonly used format.</p>
+        </PolicyCallout>
+        <PolicyCallout variant="rights" title="Right to Withdraw Consent" className="mb-6">
+          <p className="mb-3">Which includes the right to:</p>
+          <ul>
+            <li>Withdraw consent for research participation at any time</li>
+            <li>Opt-out of marketing communications</li>
+            <li>(with the understanding that withdrawal does not affect previously conducted research using anonymized data)</li>
+          </ul>
+        </PolicyCallout>
         <p>To exercise your rights, contact us at privacy@chiranjiv.com, or through your account settings.</p>
       </section>
-      <section>
+      <section id="age-restriction">
         <h2>Age Restriction and Verification</h2>
         <p>
           Our Services are available only to individuals who are 18 years of age or older. We do not knowingly collect genetic samples or personal data from individuals under 18 years of age, and any samples or data found to have been collected by anyone under the age of 18 will be deleted.
         </p>
       </section>
-      <section>
+      <section id="data-security">
         <h2>Data Security</h2>
         <p>We agree to provide the following technical safeguards:</p>
         <ul>
@@ -224,17 +253,17 @@ export default function PrivacyPolicy() {
           <li>Regular security audits and compliance reviews</li>
           <li>Incident response and breach notification procedures</li>
         </ul>
-        <p>
-          Given the sensitive nature of genetic information, we will provide the following special protections for all genetic information:
-        </p>
-        <ul>
-          <li>Additional encryption layers for genetic data</li>
-          <li>Separate storage systems with enhanced access controls</li>
-          <li>Regular security monitoring and threat detection</li>
-          <li>Specialized protocols for genetic data handling</li>
-        </ul>
+        <PolicyCallout variant="info" title="Extra Protection for Genetic Data" className="mt-6">
+          <p className="mb-3">Given the sensitive nature of genetic information, we provide the following special protections:</p>
+          <ul>
+            <li>Additional encryption layers for genetic data</li>
+            <li>Separate storage systems with enhanced access controls</li>
+            <li>Regular security monitoring and threat detection</li>
+            <li>Specialized protocols for genetic data handling</li>
+          </ul>
+        </PolicyCallout>
       </section>
-      <section>
+      <section id="cookies">
         <h2>Cookies and Tracking Technologies</h2>
         <p>A computer cookie (or "web cookie") is a small text file that a website stores on your browser or device when you visit a website.</p>
         <p>We may use the following types of cookies:</p>
@@ -257,7 +286,7 @@ export default function PrivacyPolicy() {
           <li>Customer support chat functionality</li>
         </ul>
       </section>
-      <section>
+      <section id="changes">
         <h2>Changes to this Privacy Policy</h2>
         <p>We may update this Privacy Policy periodically to reflect:</p>
         <ul>
@@ -273,15 +302,15 @@ export default function PrivacyPolicy() {
           For any non-material changes, updated Privacy Policies will be posted on our website with the applicable revision date. Your continued use of Services constitutes acceptance of those non-material changes.
         </p>
       </section>
-      <section>
+      <section id="contact">
         <h2>Contact Information</h2>
         <p>For questions, concerns, or requests regarding this Privacy Policy or our general data practices, please contact:</p>
-        <div className="mt-4 p-4 bg-muted/30 rounded-lg">
-          <p className="font-semibold">Data Protection Officer</p>
-          <p>Rapidera Technologies Pvt Ltd.</p>
-          <p>Email: privacy@chiranjiv.com</p>
-          <p>Phone: 902-282-3271</p>
-          <p>Address: 703 Deron Heights, Baner Road, Baner, Pune 411045</p>
+        <div className="mt-4 p-6 glass-backdrop backdrop-blur-sm border border-border/30 rounded-xl">
+          <p className="font-semibold text-foreground mb-3">Data Protection Officer</p>
+          <p className="text-muted-foreground font-light">Rapidera Technologies Pvt Ltd.</p>
+          <p className="text-muted-foreground font-light">Email: <a href="mailto:privacy@chiranjiv.com" className="text-primary hover:underline font-medium">privacy@chiranjiv.com</a></p>
+          <p className="text-muted-foreground font-light">Phone: <a href="tel:+919022823271" className="text-primary hover:underline font-medium">902-282-3271</a></p>
+          <p className="text-muted-foreground font-light">Address: 703 Deron Heights, Baner Road, Baner, Pune 411045</p>
         </div>
         <p className="mt-4">We will acknowledge your inquiry within 72 hours and provide a substantive response within 30 days.</p>
         <p>

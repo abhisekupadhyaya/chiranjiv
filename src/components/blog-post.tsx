@@ -5,9 +5,10 @@ interface BlogPostProps {
   subtitle?: string
   date?: string
   content: string
+  variant?: 'default' | 'embedded'
 }
 
-export function BlogPost({ title, subtitle, date, content }: BlogPostProps) {
+export function BlogPost({ title, subtitle, date, content, variant = 'default' }: BlogPostProps) {
   const parseContent = (text: string) => {
     const sections = text.split(/(?=^## \d+\.)/gm).filter(Boolean)
     return sections.map((section, index) => {
@@ -22,10 +23,10 @@ export function BlogPost({ title, subtitle, date, content }: BlogPostProps) {
               <div className="flex items-center gap-4 mb-4">
                 <div className="h-px flex-1 bg-gradient-to-r from-primary/50 to-transparent" />
               </div>
-              <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-4">{sectionTitle}</h3>
+              <h3 className="text-2xl sm:text-3xl font-light text-foreground mb-4">{sectionTitle}</h3>
             </div>
           )}
-          <div className="space-y-4 text-muted-foreground leading-relaxed">
+          <div className="space-y-4 text-muted-foreground leading-relaxed font-light">
             {sectionContent.split('\n\n').map((paragraph, pIndex) => {
               if (paragraph.startsWith('**') && paragraph.endsWith('**')) {
                 return (
@@ -52,8 +53,8 @@ export function BlogPost({ title, subtitle, date, content }: BlogPostProps) {
                 const phaseTitle = titleLine.replace(/\*\*/g, '')
                 return (
                   <div key={pIndex} className="bg-primary/5 rounded-lg p-5 border-l-4 border-primary">
-                    <h4 className="text-lg font-bold text-primary mb-3">{phaseTitle}</h4>
-                    <div className="space-y-2 text-muted-foreground">
+                    <h4 className="text-lg font-semibold text-primary mb-3">{phaseTitle}</h4>
+                    <div className="space-y-2 text-muted-foreground font-light">
                       {rest.map((line, lIndex) => (
                         <p key={lIndex}>{line}</p>
                       ))}
@@ -64,8 +65,8 @@ export function BlogPost({ title, subtitle, date, content }: BlogPostProps) {
               if (/^\d+\.\s+\*\*/.test(paragraph)) {
                 return (
                   <p key={pIndex} className="flex gap-3">
-                    <span className="text-primary font-bold flex-shrink-0">{paragraph.match(/^(\d+\.)/)?.[1]}</span>
-                    <span className="font-medium text-foreground/90">{paragraph.replace(/^\d+\.\s+/, '').replace(/\*\*/g, '')}</span>
+                    <span className="text-primary font-semibold flex-shrink-0">{paragraph.match(/^(\d+\.)/)?.[1]}</span>
+                    <span className="font-light text-foreground/90">{paragraph.replace(/^\d+\.\s+/, '').replace(/\*\*/g, '')}</span>
                   </p>
                 )
               }
@@ -90,18 +91,26 @@ export function BlogPost({ title, subtitle, date, content }: BlogPostProps) {
     })
   }
 
+  const contentElement = (
+    <article className={variant === 'default' ? 'max-w-3xl mx-auto' : ''}>
+      <div className="mb-10 pb-8 border-b border-border/50">
+        {date && <p className="text-sm font-medium text-primary mb-3 uppercase tracking-wider">{date}</p>}
+        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light text-foreground mb-4 text-balance leading-tight">
+          {title}
+        </h2>
+        {subtitle && <p className="text-lg sm:text-xl text-muted-foreground text-balance leading-relaxed font-light">{subtitle}</p>}
+      </div>
+      <div className="prose-custom">{parseContent(content)}</div>
+    </article>
+  )
+
+  if (variant === 'embedded') {
+    return contentElement
+  }
+
   return (
     <Card className="p-6 sm:p-10 lg:p-14 bg-card border-border hover:border-primary/30 transition-all duration-300 shadow-lg">
-      <article className="max-w-3xl mx-auto">
-        <div className="mb-10 pb-8 border-b border-border/50">
-          {date && <p className="text-sm font-medium text-primary mb-3 uppercase tracking-wider">{date}</p>}
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4 text-balance leading-tight">
-            {title}
-          </h2>
-          {subtitle && <p className="text-lg sm:text-xl text-muted-foreground text-balance leading-relaxed">{subtitle}</p>}
-        </div>
-        <div className="prose-custom">{parseContent(content)}</div>
-      </article>
+      {contentElement}
     </Card>
   )
 }
