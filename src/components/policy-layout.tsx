@@ -21,7 +21,6 @@ export function PolicyLayout({
   title, 
   effectiveDate, 
   lastUpdated, 
-  category,
   sections,
   children,
   topContent
@@ -91,14 +90,6 @@ export function PolicyLayout({
       <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         {/* Hero Section */}
         <div className="text-center mb-12 sm:mb-16">
-          {category && (
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-muted/30 backdrop-blur-sm border border-border/50 mb-5 sm:mb-7">
-              <span className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse-glow" />
-              <span className="text-[11px] sm:text-xs font-light text-muted-foreground tracking-wide">
-                {category}
-              </span>
-            </div>
-          )}
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extralight text-foreground mb-4 text-balance tracking-tight leading-[1.1]">
             {title}
           </h1>

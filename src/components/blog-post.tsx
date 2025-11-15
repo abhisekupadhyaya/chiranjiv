@@ -109,7 +109,7 @@ export function BlogPost({ title, subtitle, date, content, variant = 'default' }
   }
 
   return (
-    <Card className="p-6 sm:p-10 lg:p-14 bg-card border-border hover:border-primary/30 transition-all duration-300 shadow-lg">
+    <Card className="glass-backdrop backdrop-blur-sm border border-border/50 rounded-3xl p-6 sm:p-10 lg:p-14 shadow-lg hover:shadow-2xl transition-all duration-300">
       {contentElement}
     </Card>
   )

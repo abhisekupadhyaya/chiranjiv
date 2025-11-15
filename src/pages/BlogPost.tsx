@@ -1,5 +1,4 @@
 import { useParams, Link } from 'react-router-dom'
-import { ArrowLeft } from 'lucide-react'
 import { BlogPost as Post } from '@/components/blog-post'
 
 export default function BlogPost() {
@@ -101,33 +100,69 @@ Chiranjiv's mission is to write that missing chapter — with India's diversity 
 **Your DNA. Your Future. Free Forever.**`,
     }
     return (
-      <div className="pt-24 sm:pt-32 pb-16 sm:pb-24">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
-          <Link
-            to="/blog"
-            className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8 group"
-          >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            <span className="font-medium">Back to Blog</span>
-          </Link>
-          <Post title={blogPost.title} date={blogPost.date} content={blogPost.content} />
+      <section className="relative pt-24 sm:pt-32 pb-16 sm:pb-24 overflow-hidden">
+        {/* Background gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5" />
+        
+        {/* Floating animated orbs */}
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl animate-float" />
+        <div 
+          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-float" 
+          style={{ animationDelay: '2s' }}
+        />
+        <div 
+          className="absolute top-1/2 right-1/3 w-72 h-72 bg-accent/10 rounded-full blur-3xl animate-float" 
+          style={{ animationDelay: '4s' }}
+        />
+
+        <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
+          <div className="mb-8">
+            <p className="text-[11px] sm:text-xs uppercase tracking-[0.2em] text-primary/70 mb-4">Chiranjiv Blog</p>
+            <Link
+              to="/blog"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors hover:underline"
+            >
+              ← Back to Blog
+            </Link>
+          </div>
+          <div className="max-w-4xl mx-auto">
+            <Post title={blogPost.title} date={blogPost.date} content={blogPost.content} />
+          </div>
         </div>
-      </div>
+      </section>
     )
   }
   return (
-    <div className="pt-24 sm:pt-32 pb-16 sm:pb-24">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-        <Link
-          to="/blog"
-          className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8 group"
-        >
-          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-          <span className="font-medium">Back to Blog</span>
-        </Link>
-        <h1 className="text-2xl font-semibold text-foreground">Post not found</h1>
+    <section className="relative pt-24 sm:pt-32 pb-16 sm:pb-24 overflow-hidden">
+      {/* Background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5" />
+      
+      {/* Floating animated orbs */}
+      <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl animate-float" />
+      <div 
+        className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-float" 
+        style={{ animationDelay: '2s' }}
+      />
+      <div 
+        className="absolute top-1/2 right-1/3 w-72 h-72 bg-accent/10 rounded-full blur-3xl animate-float" 
+        style={{ animationDelay: '4s' }}
+      />
+
+      <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
+        <div className="mb-8">
+          <p className="text-[11px] sm:text-xs uppercase tracking-[0.2em] text-primary/70 mb-4">Chiranjiv Blog</p>
+          <Link
+            to="/blog"
+            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors hover:underline"
+          >
+            ← Back to Blog
+          </Link>
+        </div>
+        <div className="max-w-4xl mx-auto">
+          <h1 className="text-2xl font-light text-foreground">Post not found</h1>
+        </div>
       </div>
-    </div>
+    </section>
   )
 }
 
