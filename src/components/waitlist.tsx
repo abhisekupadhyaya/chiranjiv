@@ -1310,8 +1310,8 @@ export function Waitlist() {
                 <div className="text-xs sm:text-sm text-muted-foreground font-light tracking-tight">On Waitlist</div>
               </div>
               <div className="text-center p-4 rounded-xl bg-muted/20 backdrop-blur-sm border border-border/30 transition-all duration-300 hover:shadow-lg">
-                <div className="text-3xl sm:text-4xl font-light text-secondary mb-2 tracking-tight">2.5K+</div>
-                <div className="text-xs sm:text-sm text-muted-foreground font-light tracking-tight">Kits Shipped</div>
+                <div className="text-3xl sm:text-4xl font-light text-secondary mb-2 tracking-tight">10K+</div>
+                <div className="text-xs sm:text-sm text-muted-foreground font-light tracking-tight">Users Signed Up</div>
               </div>
               <div className="text-center p-4 rounded-xl bg-muted/20 backdrop-blur-sm border border-border/30 transition-all duration-300 hover:shadow-lg">
                 <div className="text-3xl sm:text-4xl font-light text-accent mb-2 tracking-tight">98%</div>
