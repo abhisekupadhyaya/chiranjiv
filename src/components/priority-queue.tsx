@@ -30,81 +30,60 @@ export function PriorityQueue() {
           </div>
 
           {/* Bento Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
-            {/* Large Hero Card - 2,000 Founding Genomes */}
-            <Card className="relative md:col-span-2 lg:row-span-2 bg-gradient-to-br from-primary/20 via-secondary/10 to-accent/10 backdrop-blur-sm border-border/50 hover:border-primary/50 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/20 group overflow-hidden p-0 flex flex-col min-h-[400px]">
-              <div className="p-8 sm:p-10 flex-shrink-0">
-                <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extralight tracking-tight text-foreground mb-4 leading-tight">
-                  2,000 Founding Genomes
-                </h3>
-                <p className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed">
-                  Join the first wave of Indians to get full-genome sequencing
-                </p>
-              </div>
-              <div className="relative overflow-hidden flex-1 min-h-[200px]">
-                <img
-                  src="/images/features/founding-genomes.jpg"
-                  alt="2,000 Founding Genomes"
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-card/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              </div>
-            </Card>
-
-            {/* Priority Support - Image at top, text below */}
-            <Card className="relative lg:col-span-2 bg-card/50 backdrop-blur-sm border-border/50 hover:border-secondary/50 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] group overflow-hidden p-0 min-h-[240px]">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 mb-10 sm:mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+            {/* Priority Support - Featured card spanning 2 columns */}
+            <Card className="relative md:col-span-2 lg:col-span-2 bg-card/50 backdrop-blur-sm border-border/50 hover:border-secondary/50 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] group overflow-hidden p-0 min-h-[280px]">
               <div className="relative overflow-hidden">
                 <img
                   src="/images/features/priority-support.jpg"
                   alt="Priority Support"
-                  className="w-full h-32 sm:h-40 object-cover group-hover:scale-110 transition-transform duration-500"
+                  className="w-full h-40 sm:h-48 object-cover group-hover:scale-110 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-card/30 to-transparent" />
               </div>
-              <div className="p-6 sm:p-8">
-                <h3 className="text-xl sm:text-2xl font-light tracking-tight text-foreground mb-3">
+              <div className="p-6 sm:p-8 lg:p-10">
+                <h3 className="text-2xl sm:text-3xl font-light tracking-tight text-foreground mb-3">
                   Priority Support
                 </h3>
-                <p className="text-sm text-muted-foreground font-light leading-relaxed">
+                <p className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed">
                   Direct line to our genomics team for questions and insights. Get expert guidance whenever you need it.
                 </p>
               </div>
             </Card>
 
-            {/* Data Co-Ownership - Circular image with text wrapping */}
-            <Card className="relative bg-card/50 backdrop-blur-sm border-border/50 hover:border-accent/50 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] group overflow-hidden p-6 sm:p-8 min-h-[200px]">
-              <h3 className="text-xl sm:text-2xl font-light tracking-tight text-foreground mb-3">
+            {/* Data Co-Ownership - Tall card with circular image */}
+            <Card className="relative md:col-span-2 lg:col-span-1 lg:row-span-2 bg-card/50 backdrop-blur-sm border-border/50 hover:border-accent/50 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] group overflow-hidden p-6 sm:p-8 lg:p-10 min-h-[280px] lg:min-h-[540px] flex flex-col">
+              <h3 className="text-xl sm:text-2xl lg:text-3xl font-light tracking-tight text-foreground mb-4 lg:mb-6">
                 Data Co-Ownership
               </h3>
-              <div className="relative">
-                <div 
-                  className="float-right ml-4 mr-4 sm:mr-0 sm:ml-4 mb-2 -mt-8 sm:mt-0 w-24 h-24 sm:w-22 sm:h-22 lg:w-24 lg:h-24 rounded-full overflow-hidden border-2 border-accent/30 group-hover:border-accent/50 transition-all duration-300 group-hover:scale-110 shadow-lg"
-                  style={{ shapeOutside: 'circle(50%)', shapeMargin: '0.75rem' }}
-                >
-                  <img
-                    src="/images/features/data-ownership.jpg"
-                    alt="Data Co-Ownership"
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                </div>
-                <p className="text-sm text-muted-foreground font-light leading-relaxed">
-                  You co-own the collective genomic database we build together. Your data, your rights.
+              <div className="relative flex-1 flex flex-col justify-between">
+                <p className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed mb-6 lg:mb-8">
+                  You co-own the collective genomic database we build together. Your data, your rights, your future.
                 </p>
+                <div className="flex justify-center mt-auto pt-4 lg:pt-8">
+                  <div className="w-32 h-32 sm:w-36 sm:h-36 lg:w-44 lg:h-44 rounded-full overflow-hidden border-2 border-accent/30 group-hover:border-accent/50 transition-all duration-300 group-hover:scale-110 shadow-lg">
+                    <img
+                      src="/images/features/data-ownership.jpg"
+                      alt="Data Co-Ownership"
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                  </div>
+                </div>
               </div>
             </Card>
 
-            {/* Lifetime Updates - Split layout with image on right */}
-            <Card className="relative bg-card/50 backdrop-blur-sm border-border/50 hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] group overflow-hidden p-0 min-h-[200px]">
-              <div className="flex items-stretch h-full min-h-[200px]">
-                <div className="flex-1 p-6 sm:p-8 pr-20 sm:pr-28 z-10 flex flex-col justify-center">
-                  <h3 className="text-xl sm:text-2xl font-light tracking-tight text-foreground mb-3">
+            {/* Lifetime Updates - Compact card with side image */}
+            <Card className="relative md:col-span-2 lg:col-span-2 bg-card/50 backdrop-blur-sm border-border/50 hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] group overflow-hidden p-0 min-h-[240px]">
+              <div className="flex items-stretch h-full min-h-[240px]">
+                <div className="flex-1 p-6 sm:p-8 lg:p-10 pr-24 sm:pr-32 lg:pr-36 z-10 flex flex-col justify-center">
+                  <h3 className="text-xl sm:text-2xl lg:text-3xl font-light tracking-tight text-foreground mb-3">
                     Lifetime Updates
                   </h3>
-                  <p className="text-sm text-muted-foreground font-light leading-relaxed">
-                    Get new insights as genomic science evolves with continuous updates throughout your lifetime.
+                  <p className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed">
+                    New insights as genomic science evolves. Continuous updates throughout your lifetime.
                   </p>
                 </div>
-                <div className="absolute right-0 top-0 bottom-0 w-20 sm:w-28 overflow-hidden">
+                <div className="absolute right-0 top-0 bottom-0 w-24 sm:w-32 lg:w-36 overflow-hidden">
                   <img
                     src="/images/features/lifetime-updates.jpg"
                     alt="Lifetime Updates"

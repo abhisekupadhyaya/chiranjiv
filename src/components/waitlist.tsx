@@ -883,15 +883,6 @@ export function Waitlist() {
       />
       <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-10 sm:mb-14">
-            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight text-foreground mb-5 sm:mb-6 text-balance tracking-tight leading-[1.1]">
-              Join Early Access
-            </h2>
-            <p className="text-base sm:text-lg md:text-xl text-muted-foreground text-pretty leading-relaxed font-light max-w-3xl mx-auto">
-              Join the waitlist. Share your unique referral code to skip the queue. The more friends who sign up, the
-              faster you move up.
-            </p>
-          </div>
           <Card className="p-6 sm:p-8 md:p-10 glass-backdrop glass-border-refractive rounded-3xl shadow-2xl border-border/50 backdrop-blur-sm transition-all duration-300">
             {auth.user ? (
               <>
@@ -957,39 +948,6 @@ export function Waitlist() {
                               />
                             </div>
                           </div>
-
-                          {/* Achievement Badges - Below Ring and Stats */}
-                          <div className="space-y-3">
-                            <h4 className="text-sm font-medium text-foreground tracking-tight">Achievements</h4>
-                            <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-transparent justify-center sm:justify-center">
-                              {achievements.map((achievement) => (
-                                <AchievementBadge key={achievement.id} achievement={achievement} />
-                              ))}
-                            </div>
-                          </div>
-
-                          {/* Referral Impact Section */}
-                          {metrics.nextMilestone && (
-                            <div className="p-5 rounded-xl border border-primary/20 bg-gradient-to-br from-primary/10 to-secondary/5">
-                              <div className="space-y-3">
-                                <div className="flex items-center justify-between">
-                                  <div className="text-sm font-medium text-foreground">Next Milestone: {metrics.nextMilestone.name}</div>
-                                  <div className="text-xs text-primary font-medium">
-                                    {metrics.nextMilestone.current}/{metrics.nextMilestone.required}
-                                  </div>
-                                </div>
-                                <div className="h-2 bg-muted/30 rounded-full overflow-hidden">
-                                  <div
-                                    className={cn('h-full bg-gradient-to-r rounded-full transition-all duration-1000', metrics.tierColors.from, metrics.tierColors.to)}
-                                    style={{ width: `${(metrics.nextMilestone.current / metrics.nextMilestone.required) * 100}%` }}
-                                  />
-                                </div>
-                                <p className="text-xs text-muted-foreground">
-                                  {metrics.nextMilestone.required - metrics.nextMilestone.current} more referral{metrics.nextMilestone.required - metrics.nextMilestone.current !== 1 ? 's' : ''} to unlock!
-                                </p>
-                              </div>
-                            </div>
-                          )}
 
                           {/* Share Section */}
                           <div className="space-y-4 pt-4 border-t border-border/30">
