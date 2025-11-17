@@ -4,6 +4,8 @@ import {
   ConfirmSignUpCommand,
   ResendConfirmationCodeCommand,
   InitiateAuthCommand,
+  ForgotPasswordCommand,
+  ConfirmForgotPasswordCommand,
 } from '@aws-sdk/client-cognito-identity-provider'
 import { getRuntimeAuthConfig } from './config'
 
@@ -91,6 +93,8 @@ export function toFriendlyCognitoError(err: any): string {
       return 'An account with this email already exists.'
     case 'UserNotConfirmedException':
       return 'Your account is not confirmed. Please verify your email to continue.'
+    case 'UserNotFoundException':
+      return 'No account found with this email address.'
     case 'InvalidPasswordException':
       return 'Password does not meet policy (use upper, lower, number, and symbol).'
     case 'NotAuthorizedException':
@@ -212,6 +216,38 @@ export function clearTokens() {
   } catch {
     // ignore
   }
+}
+
+export async function forgotPassword(email: string) {
+  const cfg = getRuntimeAuthConfig()
+  const region = getRegionFromAuthority(cfg.authority)
+  const client = new CognitoIdentityProviderClient({ region })
+  const secretHash = cfg.clientSecret
+    ? await computeSecretHash(cfg.clientId, cfg.clientSecret, email)
+    : undefined
+  const cmd = new ForgotPasswordCommand({
+    ClientId: cfg.clientId,
+    Username: email,
+    ...(secretHash ? { SecretHash: secretHash } : {}),
+  })
+  return await client.send(cmd)
+}
+
+export async function confirmForgotPassword(email: string, code: string, newPassword: string) {
+  const cfg = getRuntimeAuthConfig()
+  const region = getRegionFromAuthority(cfg.authority)
+  const client = new CognitoIdentityProviderClient({ region })
+  const secretHash = cfg.clientSecret
+    ? await computeSecretHash(cfg.clientId, cfg.clientSecret, email)
+    : undefined
+  const cmd = new ConfirmForgotPasswordCommand({
+    ClientId: cfg.clientId,
+    Username: email,
+    ConfirmationCode: code,
+    Password: newPassword,
+    ...(secretHash ? { SecretHash: secretHash } : {}),
+  })
+  return await client.send(cmd)
 }
 
 

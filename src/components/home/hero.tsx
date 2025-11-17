@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import { DnaHelix } from '@/components/dna-helix'
+import { DnaHelix } from '@/components/home/dna-helix'
 
 export function Hero() {
   return (
@@ -29,15 +29,8 @@ export function Hero() {
             </span>
           </h1>
           <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 sm:mb-8 md:mb-10 mx-auto text-pretty leading-relaxed max-w-3xl font-light">
-            Early users receive ₹1.5 L worth of Genome sequencing and DNA-based reports designed to optimize your health, wellness, and food choices.
+            Unlock your genetic blueprint for a fitter, longer, and more energetic life. Transform your lifestyle and health with proactive recommendations tailored for you.
           </p>
-          <div className="inline-flex md:flex items-start md:items-center gap-3 max-w-xl mx-auto mb-12 sm:mb-16 md:mb-20 text-center">
-            <span className="w-1 h-6 rounded-full bg-emerald-400/90 flex-shrink-0 mt-0.5" />
-            <p className="text-sm sm:text-base text-foreground/90 leading-relaxed">
-              <span className="font-medium">Join the waitlist.</span> Share your unique referral code to <span className="font-medium">skip the queue</span>.{' '}
-              <span className="block sm:inline">The more friends who sign up, the <span className="font-medium">faster you move up</span>.</span>
-            </p>
-          </div>
           <div className="flex items-center justify-center mb-6 sm:mb-8">
             <Button
               size="lg"
@@ -61,5 +54,4 @@ export function Hero() {
     </section>
   )
 }
-
 

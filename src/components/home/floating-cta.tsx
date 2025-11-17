@@ -86,27 +86,27 @@ export function FloatingCta() {
           }
         }}
       >
-        <div className="px-5 sm:px-6 md:px-8 lg:px-10">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5 sm:gap-4 md:gap-5 py-4 sm:py-4 md:py-5">
+        <div className="px-3 sm:px-5 md:px-8 lg:px-10">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3 md:gap-5 py-2.5 sm:py-3.5 md:py-5">
             {/* Left content box: Lines 1 & 2 */}
-            <div className="flex flex-col gap-1.5 sm:gap-1.5 flex-1 text-left">
+            <div className="flex flex-col gap-0.5 sm:gap-1 md:gap-1.5 flex-1 text-left min-w-0">
               {/* Line 1: Heading */}
-              <h3 className="text-sm sm:text-sm md:text-base lg:text-lg font-light tracking-tight text-foreground leading-snug">
+              <h3 className="text-[10px] sm:text-sm md:text-base lg:text-lg font-light tracking-tight text-foreground leading-tight sm:leading-snug truncate">
                 Worth ₹1,50,000. Free for early users.
               </h3>
 
               {/* Line 2: Subcopy */}
-              <p className="text-xs sm:text-xs md:text-sm text-muted-foreground font-light leading-relaxed">
+              <p className="text-[8px] sm:text-xs md:text-sm text-muted-foreground font-light leading-tight sm:leading-relaxed line-clamp-1">
                 Full genome sequencing + lifetime health insights + data co-ownership
               </p>
             </div>
 
             {/* Right badge box: Line 3 */}
-            <div className="flex items-center justify-start sm:justify-end gap-2.5 flex-shrink-0 sm:border-l border-border/30 sm:pl-4 md:pl-6">
-              <div className="text-2xl sm:text-2xl md:text-3xl lg:text-4xl font-extralight tracking-tight text-primary transition-all duration-200 md:group-hover:scale-105">
+            <div className="flex items-center justify-start sm:justify-end gap-1 sm:gap-2 md:gap-2.5 flex-shrink-0 sm:border-l border-border/30 sm:pl-3 md:pl-4 lg:pl-6">
+              <div className="text-sm sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-extralight tracking-tight text-primary transition-all duration-200 md:group-hover:scale-105 whitespace-nowrap">
                 FREE
               </div>
-              <div className="text-xs sm:text-xs md:text-sm text-primary/80 font-light tracking-wide">
+              <div className="text-[8px] sm:text-[10px] md:text-xs lg:text-sm text-primary/80 font-light tracking-wide whitespace-nowrap">
                 For Early Users
               </div>
             </div>
@@ -116,5 +116,4 @@ export function FloatingCta() {
     </div>
   )
 }
-
 

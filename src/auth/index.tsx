@@ -1,7 +1,7 @@
 import type { PropsWithChildren } from 'react'
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import type { CognitoTokens } from './cognito'
-import { clearTokens, getSavedTokens, saveTokens, signInWithCognito } from './cognito'
+import { clearTokens, getSavedTokens, saveTokens, signInWithCognito, forgotPassword, confirmForgotPassword } from './cognito'
 
 type AuthStatus = 'idle' | 'authenticating' | 'authenticated' | 'error'
 
@@ -19,6 +19,8 @@ type AuthContextValue = {
   tokens: CognitoTokens | null
   signIn: (email: string, password: string) => Promise<void>
   signOut: () => void
+  startPasswordReset: (email: string) => Promise<void>
+  completePasswordReset: (email: string, code: string, newPassword: string) => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined)
@@ -105,6 +107,14 @@ export function AuthProvider({ children }: PropsWithChildren) {
     setStatus('idle')
   }, [])
 
+  const startPasswordReset = useCallback(async (email: string) => {
+    await forgotPassword(email)
+  }, [])
+
+  const completePasswordReset = useCallback(async (email: string, code: string, newPassword: string) => {
+    await confirmForgotPassword(email, code, newPassword)
+  }, [])
+
   const value = useMemo<AuthContextValue>(
     () => ({
       status,
@@ -112,8 +122,10 @@ export function AuthProvider({ children }: PropsWithChildren) {
       tokens,
       signIn,
       signOut,
+      startPasswordReset,
+      completePasswordReset,
     }),
-    [status, user, tokens, signIn, signOut],
+    [status, user, tokens, signIn, signOut, startPasswordReset, completePasswordReset],
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

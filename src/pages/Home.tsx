@@ -1,13 +1,13 @@
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
-import { Hero } from '@/components/hero'
-import { Waitlist } from '@/components/waitlist'
-import { ChooseYourStep } from '@/components/choose-your-step'
-import { HowItWorks } from '@/components/how-it-works'
-import { WhyChiranjiv } from '@/components/why-chiranjiv'
-import { IndiaToWorld } from '@/components/india-to-world'
-import { PrivacyTrust } from '@/components/privacy-trust'
-import { FloatingCta } from '@/components/floating-cta'
+import { Hero } from '@/components/home/hero'
+import { ChooseYourStep } from '@/components/home/choose-your-step'
+import { Waitlist } from '@/components/home/waitlist'
+import { HowItWorks } from '@/components/home/how-it-works'
+import { WhyChiranjiv } from '@/components/home/why-chiranjiv'
+import { IndiaToWorld } from '@/components/home/india-to-world'
+import { PrivacyTrust } from '@/components/home/privacy-trust'
+import { FloatingCta } from '@/components/home/floating-cta'
 
 export default function Home() {
   const location = useLocation()
@@ -28,11 +28,11 @@ export default function Home() {
   }, [location.hash, location.pathname])
 
   return (
-    <div className="home-edge relative">
+    <div className="home-edge relative pb-12 sm:pb-16 md:pb-20 lg:pb-24 bg-gradient-to-b from-background via-background to-background/95">
       <Hero />
-      <WhyChiranjiv />
       <Waitlist />
       <ChooseYourStep />
+      <WhyChiranjiv />
       <HowItWorks />
       <IndiaToWorld />
       <PrivacyTrust />

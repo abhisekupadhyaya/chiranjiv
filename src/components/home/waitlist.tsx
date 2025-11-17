@@ -281,6 +281,9 @@ const calculateGamificationMetrics = (rank: number, totalUsers: number, referral
   }
 }
 
+// Achievements feature currently unused - commented out to avoid build errors
+// Uncomment when achievements display is implemented
+/*
 const getUnlockedAchievements = (rank: number, referralsCount: number) => {
   return ACHIEVEMENTS.map(achievement => {
     const isUnlocked = achievement.requirement.type === 'rank' 
@@ -289,6 +292,7 @@ const getUnlockedAchievements = (rank: number, referralsCount: number) => {
     return { ...achievement, unlocked: isUnlocked }
   })
 }
+*/
 
 // Sub-components for the gamified dashboard
 
@@ -360,6 +364,9 @@ const CircularRankProgress = ({ rank, totalUsers, tierColors, percentile }: Circ
   )
 }
 
+// AchievementBadge component removed - currently unused in UI
+// Uncomment and restore if achievements display is needed in the future
+/*
 interface AchievementBadgeProps {
   achievement: { id: string; name: string; icon: string; description: string; unlocked: boolean }
 }
@@ -385,6 +392,7 @@ const AchievementBadge = ({ achievement }: AchievementBadgeProps) => {
     </div>
   )
 }
+*/
 
 interface StatCardProps {
   icon: React.ReactNode
@@ -583,6 +591,17 @@ export function Waitlist() {
   const [rankData, setRankData] = useState<WaitlistRankResponse | null>(null)
   const [rankLoading, setRankLoading] = useState(false)
   const [rankError, setRankError] = useState('')
+  const [forgotStep, setForgotStep] = useState<'idle' | 'request' | 'confirm'>('idle')
+  const [forgotEmail, setForgotEmail] = useState('')
+  const [resetCode, setResetCode] = useState('')
+  const [resetPassword, setResetPassword] = useState('')
+  const [resetConfirmPassword, setResetConfirmPassword] = useState('')
+  const [resetRequesting, setResetRequesting] = useState(false)
+  const [resetSubmitting, setResetSubmitting] = useState(false)
+  const [resetError, setResetError] = useState('')
+  const [resetSuccess, setResetSuccess] = useState('')
+  const [showResetPassword, setShowResetPassword] = useState(false)
+  const [showResetConfirmPassword, setShowResetConfirmPassword] = useState(false)
 
   useEffect(() => {
     if (auth.user) {
@@ -868,6 +887,92 @@ export function Waitlist() {
     }
   }
 
+  const handleForgotPasswordClick = () => {
+    setForgotStep('request')
+    setForgotEmail(signinData.email)
+    setResetError('')
+    setResetSuccess('')
+  }
+
+  const handleRequestResetCode = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setResetError('')
+    setResetSuccess('')
+    if (!forgotEmail.trim()) {
+      setResetError('Please enter your email address')
+      return
+    }
+    setResetRequesting(true)
+    try {
+      await auth.startPasswordReset(forgotEmail.trim())
+      setResetSuccess('Reset code sent! Please check your email.')
+      setForgotStep('confirm')
+    } catch (err: any) {
+      setResetError(toFriendlyCognitoError(err))
+    } finally {
+      setResetRequesting(false)
+    }
+  }
+
+  const handleCompletePasswordReset = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setResetError('')
+    setResetSuccess('')
+    
+    if (!resetCode.trim()) {
+      setResetError('Please enter the verification code')
+      return
+    }
+    
+    const pw = resetPassword
+    const strongPw =
+      pw.length >= 8 &&
+      /[A-Z]/.test(pw) &&
+      /[a-z]/.test(pw) &&
+      /[0-9]/.test(pw) &&
+      /[^A-Za-z0-9]/.test(pw)
+    if (!strongPw) {
+      setResetError('Use 8+ chars with upper, lower, number, and symbol')
+      return
+    }
+    
+    if (resetPassword !== resetConfirmPassword) {
+      setResetError('Passwords do not match')
+      return
+    }
+    
+    setResetSubmitting(true)
+    try {
+      await auth.completePasswordReset(forgotEmail.trim(), resetCode.trim(), resetPassword)
+      setResetSuccess('Password reset successful! You can now sign in.')
+      // Reset form and go back to sign in after a brief delay
+      setTimeout(() => {
+        setForgotStep('idle')
+        setForgotEmail('')
+        setResetCode('')
+        setResetPassword('')
+        setResetConfirmPassword('')
+        setResetError('')
+        setResetSuccess('')
+        setSigninData({ ...signinData, email: forgotEmail.trim() })
+      }, 2000)
+    } catch (err: any) {
+      setResetError(toFriendlyCognitoError(err))
+    } finally {
+      setResetSubmitting(false)
+    }
+  }
+
+  const handleBackToSignin = () => {
+    setForgotStep('idle')
+    setForgotEmail('')
+    setResetCode('')
+    setResetPassword('')
+    setResetConfirmPassword('')
+    setResetError('')
+    setResetSuccess('')
+  }
+
   return (
     <section id="waitlist" className="py-16 sm:py-24 lg:py-32 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5" />
@@ -915,7 +1020,7 @@ export function Waitlist() {
                   <>
                     {(() => {
                       const metrics = calculateGamificationMetrics(rankData.rank, rankData.totalUsers, rankData.referralsCount)
-                      const achievements = getUnlockedAchievements(rankData.rank, rankData.referralsCount)
+                      // const achievements = getUnlockedAchievements(rankData.rank, rankData.referralsCount) // Unused for now
                       const referralUrl = `https://chiranjiv.com/?ref=${rankData.referralCode}`
                       
                       return (
@@ -1037,6 +1142,98 @@ export function Waitlist() {
                         </Button>
                       </div>
                     </form>
+                  ) : forgotStep === 'request' ? (
+                    <form onSubmit={handleRequestResetCode} className="space-y-4 sm:space-y-6">
+                      <div className="space-y-2">
+                        <h3 className="text-lg font-medium text-foreground tracking-tight">Reset Password</h3>
+                        <p className="text-sm text-muted-foreground font-light">Enter your email to receive a password reset code.</p>
+                      </div>
+                      <div>
+                        <label htmlFor="forgotEmail" className="block text-sm font-medium text-foreground mb-2 tracking-tight">Email Address</label>
+                        <Input 
+                          id="forgotEmail" 
+                          name="forgotEmail" 
+                          type="email" 
+                          value={forgotEmail} 
+                          onChange={(e) => setForgotEmail(e.target.value)} 
+                          placeholder="your.email@example.com" 
+                          className={`w-full glass-input ${resetError ? 'border-red-500' : ''}`}
+                        />
+                      </div>
+                      {resetError && <p className="text-xs text-red-500">{resetError}</p>}
+                      {resetSuccess && <p className="text-xs text-green-600">{resetSuccess}</p>}
+                      <Button type="submit" className="w-full btn-glow hover:scale-[1.02] transition-all" disabled={resetRequesting}>
+                        {resetRequesting ? 'Sending...' : 'Send Reset Code'}
+                      </Button>
+                      <div className="text-center">
+                        <Button type="button" variant="ghost" onClick={handleBackToSignin} className="text-sm hover:scale-105 transition-transform">
+                          Back to sign in
+                        </Button>
+                      </div>
+                    </form>
+                  ) : forgotStep === 'confirm' ? (
+                    <form onSubmit={handleCompletePasswordReset} className="space-y-4 sm:space-y-6">
+                      <div className="space-y-2">
+                        <h3 className="text-lg font-medium text-foreground tracking-tight">Enter New Password</h3>
+                        <p className="text-sm text-muted-foreground font-light">Enter the code from your email and your new password.</p>
+                      </div>
+                      <div>
+                        <label htmlFor="resetCode" className="block text-sm font-medium text-foreground mb-2 tracking-tight">Verification Code</label>
+                        <Input 
+                          id="resetCode" 
+                          name="resetCode" 
+                          type="text" 
+                          value={resetCode} 
+                          onChange={(e) => setResetCode(e.target.value)} 
+                          placeholder="Enter the 6-digit code" 
+                          className={`w-full glass-input ${resetError ? 'border-red-500' : ''}`}
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="resetPassword" className="block text-sm font-medium text-foreground mb-2 tracking-tight">New Password</label>
+                        <div className="relative">
+                          <Input 
+                            id="resetPassword" 
+                            name="resetPassword" 
+                            type={showResetPassword ? 'text' : 'password'} 
+                            value={resetPassword} 
+                            onChange={(e) => setResetPassword(e.target.value)} 
+                            placeholder="Minimum 8 characters" 
+                            className={`w-full glass-input pr-10 ${resetError ? 'border-red-500' : ''}`}
+                          />
+                          <button type="button" onClick={() => setShowResetPassword(!showResetPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors">
+                            {showResetPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                          </button>
+                        </div>
+                      </div>
+                      <div>
+                        <label htmlFor="resetConfirmPassword" className="block text-sm font-medium text-foreground mb-2 tracking-tight">Confirm New Password</label>
+                        <div className="relative">
+                          <Input 
+                            id="resetConfirmPassword" 
+                            name="resetConfirmPassword" 
+                            type={showResetConfirmPassword ? 'text' : 'password'} 
+                            value={resetConfirmPassword} 
+                            onChange={(e) => setResetConfirmPassword(e.target.value)} 
+                            placeholder="Re-enter your password" 
+                            className={`w-full glass-input pr-10 ${resetError ? 'border-red-500' : ''}`}
+                          />
+                          <button type="button" onClick={() => setShowResetConfirmPassword(!showResetConfirmPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors">
+                            {showResetConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                          </button>
+                        </div>
+                      </div>
+                      {resetError && <p className="text-xs text-red-500">{resetError}</p>}
+                      {resetSuccess && <p className="text-xs text-green-600">{resetSuccess}</p>}
+                      <Button type="submit" className="w-full btn-glow hover:scale-[1.02] transition-all" disabled={resetSubmitting}>
+                        {resetSubmitting ? 'Resetting...' : 'Reset Password'}
+                      </Button>
+                      <div className="text-center">
+                        <Button type="button" variant="ghost" onClick={handleBackToSignin} className="text-sm hover:scale-105 transition-transform">
+                          Back to sign in
+                        </Button>
+                      </div>
+                    </form>
                   ) : (
                     <form onSubmit={handleSigninSubmit} className="space-y-4 sm:space-y-6">
                       <div>
@@ -1047,10 +1244,16 @@ export function Waitlist() {
                         <label htmlFor="signinPassword" className="block text-sm font-medium text-foreground mb-2 tracking-tight">Password</label>
                         <Input id="signinPassword" name="password" type="password" value={signinData.password} onChange={handleSigninChange} placeholder="Your password" className="w-full glass-input" />
                       </div>
+                      {errors.email && <p className="text-xs text-red-500">{errors.email}</p>}
                       <Button type="submit" className="w-full btn-glow hover:scale-[1.02] transition-all">
                         Sign in
                       </Button>
                       {auth.user && <p className="text-xs text-green-600">Signed in</p>}
+                      <div className="text-center">
+                        <Button type="button" variant="outline" onClick={handleForgotPasswordClick} className="bg-transparent hover:scale-105 transition-transform">
+                          Forgot password?
+                        </Button>
+                      </div>
                       <div className="text-center">
                         <Button type="button" variant="outline" onClick={() => setShowSignin(false)} className="bg-transparent hover:scale-105 transition-transform">
                           New here? Sign up
@@ -1174,7 +1377,7 @@ export function Waitlist() {
                           <Checkbox id="privacyPolicy" checked={formData.privacyPolicy} onCheckedChange={(checked) => handleCheckboxChange('privacyPolicy', checked as boolean)} className={errors.privacyPolicy ? 'border-red-500' : ''} />
                           <Label htmlFor="privacyPolicy" className="text-sm leading-relaxed cursor-pointer font-light hover:text-foreground transition-colors">
                             I have read and accept the{' '}
-                            <a href="/privacy/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">Privacy Policy</a>{' '}
+                            <a href="/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">Privacy Policy</a>{' '}
                             *
                           </Label>
                         </div>
@@ -1183,7 +1386,7 @@ export function Waitlist() {
                           <Checkbox id="termsOfService" checked={formData.termsOfService} onCheckedChange={(checked) => handleCheckboxChange('termsOfService', checked as boolean)} className={errors.termsOfService ? 'border-red-500' : ''} />
                           <Label htmlFor="termsOfService" className="text-sm leading-relaxed cursor-pointer font-light hover:text-foreground transition-colors">
                             I have read and agree to the{' '}
-                            <a href="/privacy/terms-of-service" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">Terms of Service</a>{' '}
+                            <a href="/terms-of-service" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">Terms of Service</a>{' '}
                             *
                           </Label>
                         </div>
@@ -1192,7 +1395,7 @@ export function Waitlist() {
                           <Checkbox id="dataUsagePolicy" checked={formData.dataUsagePolicy} onCheckedChange={(checked) => handleCheckboxChange('dataUsagePolicy', checked as boolean)} className={errors.dataUsagePolicy ? 'border-red-500' : ''} />
                           <Label htmlFor="dataUsagePolicy" className="text-sm leading-relaxed cursor-pointer font-light hover:text-foreground transition-colors">
                             I have read and accept the{' '}
-                            <a href="/privacy/data-usage-policy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">Data Usage Policy</a>{' '}
+                            <a href="/data-usage-policy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">Data Usage Policy</a>{' '}
                             *
                           </Label>
                         </div>
@@ -1262,7 +1465,7 @@ export function Waitlist() {
             )}
           </Card>
           {!submitted && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mt-8 sm:mt-12 max-w-2xl mx-auto">
+            <div className="grid grid-cols-2 gap-4 sm:gap-6 mt-8 sm:mt-12 max-w-2xl mx-auto">
               <div className="text-center p-5 sm:p-6 rounded-xl bg-muted/20 backdrop-blur-sm border border-border/30 transition-all duration-300 hover:shadow-lg hover:scale-105">
                 <div className="text-3xl sm:text-4xl font-light text-primary mb-2 tracking-tight">10K+</div>
                 <div className="text-xs sm:text-sm text-muted-foreground font-light tracking-tight">On Waitlist</div>

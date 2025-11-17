@@ -1,42 +1,27 @@
 import { Card } from '@/components/ui/card'
 
-const features = [
+const benefits = [
   {
-    title: 'Complete Genome Sequencing',
+    title: 'Maximize Fitness, Longevity & Everyday Performance',
     description:
-      'Get 100% of your genome sequenced with our at-home kit or upload existing DNA data from any source.',
+      'Discover genetic insights for proactive health, anti-inflammation, recovery, and lifestyle so you can make smarter choices every day.',
   },
   {
-    title: 'Secure Data Storage',
+    title: 'Personalized Recommendations',
     description:
-      'We store and archive your full DNA data forever, with industry-leading security and privacy measures.',
+      'Actionable advice for your diet, fitness routine, sleep, and healthy aging—based on your unique DNA markers.',
   },
   {
-    title: 'Personalized Reports',
+    title: 'Not Just Wellness: True Fitness-Driven Results',
     description:
-      'Receive insights on health, allergies, nutrition, and medical conditions tailored to your DNA.',
-  },
-  {
-    title: 'Personalized Supplements',
-    description:
-      'Based on your genetic profile, we recommend and provide supplements specifically formulated for your needs.',
-  },
-  {
-    title: 'Data Co-Ownership',
-    description:
-      'You co-own the collective genomic database we build together. Your data, your rights, your future.',
-  },
-  {
-    title: 'Lifetime Updates',
-    description:
-      'New insights as genomic science evolves. Continuous updates throughout your lifetime.',
+      'Go beyond generic wellness. Focus on endurance, muscle recovery, inflammation risks, and long-term vitality.',
   },
 ]
 
-export function WhyChiranjiv() {
+export function KeyBenefits() {
   return (
     <section
-      id="why-chiranjiv"
+      id="key-benefits"
       className="relative py-16 sm:py-24 lg:py-32 overflow-hidden"
     >
       {/* Background gradient and floating orbs to match other sections */}
@@ -54,26 +39,23 @@ export function WhyChiranjiv() {
       <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-16">
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-extralight text-foreground mb-4 text-balance tracking-tight leading-[1.1]">
-            Why Chiranjiv?
+            Key Benefits
           </h2>
-          <p className="text-base sm:text-lg text-muted-foreground text-pretty leading-relaxed font-light max-w-3xl mx-auto">
-            We&apos;re revolutionizing personal genomics by making it accessible to everyone.
-          </p>
         </div>
 
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {features.map((feature, index) => (
+            {benefits.map((benefit, index) => (
               <Card
                 key={index}
                 className="relative glass-backdrop backdrop-blur-sm border border-border/50 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] group overflow-hidden animate-in fade-in slide-in-from-bottom-4"
               >
-                <div className="relative z-10 p-6 sm:p-8 flex flex-col h-full min-h-[200px]">
+                <div className="relative z-10 p-6 sm:p-8 flex flex-col h-full">
                   <h3 className="text-lg sm:text-xl font-light tracking-tight text-foreground mb-2">
-                    {feature.title}
+                    {benefit.title}
                   </h3>
                   <p className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed text-pretty">
-                    {feature.description}
+                    {benefit.description}
                   </p>
                 </div>
               </Card>
@@ -84,5 +66,4 @@ export function WhyChiranjiv() {
     </section>
   )
 }
-
 
