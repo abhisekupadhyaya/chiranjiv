@@ -49,14 +49,10 @@ export function HowItWorks() {
           </p>
         </div>
 
-        {/* Timeline-style steps */}
-        <div className="max-w-5xl mx-auto">
-          <ol className="relative space-y-8 sm:space-y-10 md:space-y-12">
-            {/* Vertical spine on md+ */}
-            <div className="hidden md:block absolute left-1/2 top-0 bottom-0 -translate-x-1/2 w-px bg-border/40" />
-
+        {/* Horizontal flex layout */}
+        <div className="max-w-6xl mx-auto">
+          <div className="flex flex-col md:flex-row gap-6 md:gap-8 lg:gap-10">
             {steps.map((step, index) => {
-              const isEven = index % 2 === 1
               const delayClass =
                 index === 0
                   ? ''
@@ -65,103 +61,30 @@ export function HowItWorks() {
                   : '[animation-delay:220ms]'
 
               return (
-                <li
+                <div
                   key={step.number}
-                  className={`relative animate-in fade-in slide-in-from-bottom-4 duration-700 ${delayClass}`}
+                  className={`flex-1 animate-in fade-in slide-in-from-bottom-4 duration-700 ${delayClass}`}
                 >
-                  {/* Mobile: horizontal flex layout */}
-                  <div className="flex md:hidden items-start gap-4">
-                    {/* Badge with vertical line */}
-                    <div className="relative flex-shrink-0">
-                      {index < steps.length - 1 && (
-                        <div className="absolute left-1/2 top-14 bottom-0 -translate-x-1/2 w-px bg-border/40 -mb-8" />
-                      )}
-                      <div className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-primary/20 via-secondary/10 to-accent/10 border border-border/60 flex items-center justify-center shadow-md shadow-primary/10">
-                        <span className="text-sm sm:text-base font-medium tracking-[0.18em] text-primary">
-                          {step.number}
+                  <Card className="group relative h-full glass-backdrop backdrop-blur-sm border border-border/50 rounded-3xl p-6 sm:p-8 shadow-lg hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 bg-card/80">
+                    <div className="absolute inset-0 pointer-events-none rounded-3xl bg-gradient-to-br from-primary/10 via-secondary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="relative z-10 space-y-3 sm:space-y-4">
+                      <div className="flex flex-col items-start gap-1">
+                        <span className="text-[11px] sm:text-xs font-medium uppercase tracking-[0.2em] text-primary/70">
+                          Step {step.number}
                         </span>
+                        <h3 className="text-xl sm:text-2xl font-light text-foreground leading-snug">
+                          {step.title}
+                        </h3>
                       </div>
+                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed text-pretty">
+                        {step.description}
+                      </p>
                     </div>
-                    {/* Card */}
-                    <div className="flex-1">
-                      <Card className="group relative w-full glass-backdrop backdrop-blur-sm border border-border/50 rounded-3xl p-6 sm:p-8 shadow-lg hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 bg-card/80">
-                        <div className="absolute inset-0 pointer-events-none rounded-3xl bg-gradient-to-br from-primary/10 via-secondary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                        <div className="relative z-10 space-y-3 sm:space-y-4">
-                          <div className="flex flex-col items-start gap-1">
-                            <span className="text-[11px] sm:text-xs font-medium uppercase tracking-[0.2em] text-primary/70">
-                              Step {step.number}
-                            </span>
-                            <h3 className="text-xl sm:text-2xl font-light text-foreground leading-snug">
-                              {step.title}
-                            </h3>
-                          </div>
-                          <p className="text-sm sm:text-base text-muted-foreground leading-relaxed text-pretty">
-                            {step.description}
-                          </p>
-                        </div>
-                      </Card>
-                    </div>
-                  </div>
-
-                  {/* Desktop: 3-column grid with centered badge */}
-                  <div className="hidden md:grid md:grid-cols-[1fr_auto_1fr] md:gap-8 lg:gap-12 md:items-start">
-                    {/* Left column - card for odd indices (0, 2) */}
-                    <div className={`${isEven ? '' : 'flex justify-end'}`}>
-                      {!isEven && (
-                        <Card className="group relative w-full max-w-md glass-backdrop backdrop-blur-sm border border-border/50 rounded-3xl p-6 sm:p-8 shadow-lg hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 bg-card/80">
-                          <div className="absolute inset-0 pointer-events-none rounded-3xl bg-gradient-to-br from-primary/10 via-secondary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                          <div className="relative z-10 space-y-3 sm:space-y-4">
-                            <div className="flex flex-col items-start gap-1">
-                              <span className="text-[11px] sm:text-xs font-medium uppercase tracking-[0.2em] text-primary/70">
-                                Step {step.number}
-                              </span>
-                              <h3 className="text-xl sm:text-2xl font-light text-foreground leading-snug">
-                                {step.title}
-                              </h3>
-                            </div>
-                            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed text-pretty">
-                              {step.description}
-                            </p>
-                          </div>
-                        </Card>
-                      )}
-                    </div>
-
-                    {/* Center column - badge always centered */}
-                    <div className="flex justify-center">
-                      <div className="relative z-10 w-14 h-14 lg:w-16 lg:h-16 rounded-full bg-gradient-to-br from-primary/20 via-secondary/10 to-accent/10 border border-border/60 flex items-center justify-center shadow-md shadow-primary/10">
-                        <span className="text-base lg:text-lg font-medium tracking-[0.18em] text-primary">
-                          {step.number}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Right column - card for even indices (1) */}
-                    <div className={`${isEven ? 'flex justify-start' : ''}`}>
-                      {isEven && (
-                        <Card className="group relative w-full max-w-md glass-backdrop backdrop-blur-sm border border-border/50 rounded-3xl p-6 sm:p-8 shadow-lg hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 bg-card/80">
-                          <div className="absolute inset-0 pointer-events-none rounded-3xl bg-gradient-to-br from-primary/10 via-secondary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                          <div className="relative z-10 space-y-3 sm:space-y-4">
-                            <div className="flex flex-col items-start gap-1">
-                              <span className="text-[11px] sm:text-xs font-medium uppercase tracking-[0.2em] text-primary/70">
-                                Step {step.number}
-                              </span>
-                              <h3 className="text-xl sm:text-2xl font-light text-foreground leading-snug">
-                                {step.title}
-                              </h3>
-                            </div>
-                            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed text-pretty">
-                              {step.description}
-                            </p>
-                          </div>
-                        </Card>
-                      )}
-                    </div>
-                  </div>
-                </li>
+                  </Card>
+                </div>
               )
             })}
-          </ol>
+          </div>
         </div>
       </div>
     </section>

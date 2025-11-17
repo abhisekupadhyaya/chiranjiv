@@ -252,7 +252,7 @@ const getTierInfo = (percentile: number): { tier: Tier; name: string; colors: { 
 }
 
 const calculateGamificationMetrics = (rank: number, totalUsers: number, referralsCount: number): GamificationMetrics => {
-  const percentile = ((totalUsers - rank) / totalUsers) * 100
+  const percentile = ((rank) / totalUsers) * 100
   const tierInfo = getTierInfo(percentile)
   
   // Estimate jump: assume each referral moves you up by ~sqrt(totalUsers/100) positions
@@ -1262,18 +1262,14 @@ export function Waitlist() {
             )}
           </Card>
           {!submitted && (
-            <div className="grid grid-cols-3 gap-4 mt-8 sm:mt-12">
-              <div className="text-center p-4 rounded-xl bg-muted/20 backdrop-blur-sm border border-border/30 transition-all duration-300 hover:shadow-lg">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mt-8 sm:mt-12 max-w-2xl mx-auto">
+              <div className="text-center p-5 sm:p-6 rounded-xl bg-muted/20 backdrop-blur-sm border border-border/30 transition-all duration-300 hover:shadow-lg hover:scale-105">
                 <div className="text-3xl sm:text-4xl font-light text-primary mb-2 tracking-tight">10K+</div>
                 <div className="text-xs sm:text-sm text-muted-foreground font-light tracking-tight">On Waitlist</div>
               </div>
-              <div className="text-center p-4 rounded-xl bg-muted/20 backdrop-blur-sm border border-border/30 transition-all duration-300 hover:shadow-lg">
-                <div className="text-3xl sm:text-4xl font-light text-secondary mb-2 tracking-tight">10K+</div>
-                <div className="text-xs sm:text-sm text-muted-foreground font-light tracking-tight">Users Signed Up</div>
-              </div>
-              <div className="text-center p-4 rounded-xl bg-muted/20 backdrop-blur-sm border border-border/30 transition-all duration-300 hover:shadow-lg">
-                <div className="text-3xl sm:text-4xl font-light text-accent mb-2 tracking-tight">98%</div>
-                <div className="text-xs sm:text-sm text-muted-foreground font-light tracking-tight">Satisfaction</div>
+              <div className="text-center p-5 sm:p-6 rounded-xl bg-muted/20 backdrop-blur-sm border border-border/30 transition-all duration-300 hover:shadow-lg hover:scale-105">
+                <div className="text-3xl sm:text-4xl font-light text-secondary mb-2 tracking-tight">5K+</div>
+                <div className="text-xs sm:text-sm text-muted-foreground font-light tracking-tight">Total Referrals</div>
               </div>
             </div>
           )}

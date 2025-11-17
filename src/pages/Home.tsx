@@ -2,10 +2,12 @@ import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import { Hero } from '@/components/hero'
 import { Waitlist } from '@/components/waitlist'
-import { PriorityQueue } from '@/components/priority-queue'
 import { ChooseYourStep } from '@/components/choose-your-step'
 import { HowItWorks } from '@/components/how-it-works'
 import { WhyChiranjiv } from '@/components/why-chiranjiv'
+import { IndiaToWorld } from '@/components/india-to-world'
+import { PrivacyTrust } from '@/components/privacy-trust'
+import { FloatingCta } from '@/components/floating-cta'
 
 export default function Home() {
   const location = useLocation()
@@ -26,13 +28,15 @@ export default function Home() {
   }, [location.hash, location.pathname])
 
   return (
-    <div className="home-edge">
+    <div className="home-edge relative">
       <Hero />
+      <WhyChiranjiv />
       <Waitlist />
-      <PriorityQueue />
       <ChooseYourStep />
       <HowItWorks />
-      <WhyChiranjiv />
+      <IndiaToWorld />
+      <PrivacyTrust />
+      <FloatingCta />
     </div>
   )
 }
