@@ -6,8 +6,8 @@ import { Card } from '@/components/ui/card'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import { Eye, EyeOff, Trophy, Users, TrendingUp, Share2, Copy, MessageCircle, Mail, Facebook, Linkedin } from 'lucide-react'
-import { postWaitlistSignup, getWaitlistRank, type WaitlistSignupRequest, type WaitlistRankResponse } from '@/services/api'
-import { signUpWithCognito, toFriendlyCognitoError, resendConfirmationCode } from '@/auth/cognito'
+import { postWaitlistSignup, getWaitlistRank, getWaitlistStats, type WaitlistSignupRequest, type WaitlistRankResponse } from '@/services/api'
+import { signUpWithCognito, toFriendlyCognitoError, resendConfirmationCode, checkExistingUserStatus } from '@/auth/cognito'
 import { getRuntimeAuthConfig } from '@/auth/config'
 import { useAuth } from '@/auth'
 import { cn } from '@/lib/utils'
@@ -599,6 +599,7 @@ export function Waitlist() {
   const [resetSuccess, setResetSuccess] = useState('')
   const [showResetPassword, setShowResetPassword] = useState(false)
   const [showResetConfirmPassword, setShowResetConfirmPassword] = useState(false)
+  const [waitlistStats, setWaitlistStats] = useState({ totalUsers: 0, totalReferrals: 0 })
 
   useEffect(() => {
     if (auth.user) {
@@ -621,6 +622,22 @@ export function Waitlist() {
       setEnteredReferralCode(refParam.trim())
     }
   }, [searchParams])
+
+  // Fetch waitlist stats on mount
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const result = await getWaitlistStats()
+        if (result.ok && 'totalUsers' in result.data) {
+          setWaitlistStats(result.data)
+        }
+      } catch (error) {
+        // Silent failure - will show default values
+        console.error('Failed to fetch waitlist stats:', error)
+      }
+    }
+    fetchStats()
+  }, [])
 
   // Fetch rank data when user is logged in
   useEffect(() => {
@@ -693,6 +710,38 @@ export function Waitlist() {
     setLoading(true)
     setErrors({})
     try {
+      // First, check if the user already exists in Cognito
+      const userStatus = await checkExistingUserStatus(formData.email.trim(), formData.password)
+      
+      if (userStatus === 'confirmed' || userStatus === 'password_or_other_error') {
+        // User exists and is verified (or password is wrong, which means they exist)
+        setErrors({ 
+          email: 'An account with this email already exists and is verified. Please sign in instead or reset your password.' 
+        })
+        setShowSignin(true)
+        setStep(1)
+        setLoading(false)
+        return
+      }
+      
+      if (userStatus === 'unconfirmed') {
+        // User exists but email is not verified, resend confirmation email
+        try {
+          await resendConfirmationCode(formData.email.trim())
+          setErrors({ 
+            email: "We found your account but it's not verified yet. We've sent a new verification email — please check your inbox." 
+          })
+        } catch {
+          setErrors({ 
+            email: "We found your account but it's not verified. Please check your email for the verification link." 
+          })
+        }
+        setStep(3)
+        setLoading(false)
+        return
+      }
+      
+      // userStatus === 'not_found', proceed with signup
       // Create Cognito user without Hosted UI
       let cognitoUserId: string
       try {
@@ -744,11 +793,39 @@ export function Waitlist() {
         // eslint-disable-next-line no-console
         console.error('Cognito SignUp error:', err)
         if (err?.name === 'UsernameExistsException') {
-          setStep(3)
-          setErrors({
-            email:
-              'An account with this email already exists. If unverified, enter the code below. Otherwise, try signing in.',
-          })
+          // Fallback: user already exists, check their status
+          try {
+            const existingUserStatus = await checkExistingUserStatus(formData.email.trim(), formData.password)
+            
+            if (existingUserStatus === 'unconfirmed') {
+              // User exists but is unverified
+              try {
+                await resendConfirmationCode(formData.email.trim())
+                setErrors({ 
+                  email: "We found your account but it's not verified yet. We've sent a new verification email — please check your inbox." 
+                })
+              } catch {
+                setErrors({ 
+                  email: "We found your account but it's not verified. Please check your email for the verification link." 
+                })
+              }
+              setStep(3)
+            } else {
+              // User exists and is confirmed (or other error)
+              setErrors({ 
+                email: 'An account with this email already exists and is verified. Please sign in instead or reset your password.' 
+              })
+              setShowSignin(true)
+              setStep(1)
+            }
+          } catch {
+            // If status check fails, be conservative and assume verified
+            setErrors({ 
+              email: 'An account with this email already exists. Please try signing in.' 
+            })
+            setShowSignin(true)
+            setStep(1)
+          }
           setLoading(false)
           return
         } else {
@@ -961,6 +1038,22 @@ export function Waitlist() {
       />
       <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
+          {!submitted && (
+            <div className="grid grid-cols-2 gap-4 sm:gap-6 mb-8 sm:mb-12 max-w-2xl mx-auto">
+              <div className="text-center p-5 sm:p-6 rounded-xl bg-muted/20 backdrop-blur-sm border border-border/30 transition-all duration-300 hover:shadow-lg hover:scale-105">
+                <div className="text-3xl sm:text-4xl font-light text-primary mb-2 tracking-tight">
+                  {waitlistStats.totalUsers > 0 ? waitlistStats.totalUsers.toLocaleString() : '10K+'}
+                </div>
+                <div className="text-xs sm:text-sm text-muted-foreground font-light tracking-tight">On Waitlist</div>
+              </div>
+              <div className="text-center p-5 sm:p-6 rounded-xl bg-muted/20 backdrop-blur-sm border border-border/30 transition-all duration-300 hover:shadow-lg hover:scale-105">
+                <div className="text-3xl sm:text-4xl font-light text-secondary mb-2 tracking-tight">
+                  {waitlistStats.totalReferrals > 0 ? waitlistStats.totalReferrals.toLocaleString() : '5K+'}
+                </div>
+                <div className="text-xs sm:text-sm text-muted-foreground font-light tracking-tight">Total Referrals</div>
+              </div>
+            </div>
+          )}
           <Card className="p-6 sm:p-8 md:p-10 glass-backdrop glass-border-refractive rounded-3xl shadow-2xl border-border/50 backdrop-blur-sm transition-all duration-300">
             {auth.user ? (
               <>
@@ -1455,18 +1548,6 @@ export function Waitlist() {
               </div>
             )}
           </Card>
-          {!submitted && (
-            <div className="grid grid-cols-2 gap-4 sm:gap-6 mt-8 sm:mt-12 max-w-2xl mx-auto">
-              <div className="text-center p-5 sm:p-6 rounded-xl bg-muted/20 backdrop-blur-sm border border-border/30 transition-all duration-300 hover:shadow-lg hover:scale-105">
-                <div className="text-3xl sm:text-4xl font-light text-primary mb-2 tracking-tight">10K+</div>
-                <div className="text-xs sm:text-sm text-muted-foreground font-light tracking-tight">On Waitlist</div>
-              </div>
-              <div className="text-center p-5 sm:p-6 rounded-xl bg-muted/20 backdrop-blur-sm border border-border/30 transition-all duration-300 hover:shadow-lg hover:scale-105">
-                <div className="text-3xl sm:text-4xl font-light text-secondary mb-2 tracking-tight">5K+</div>
-                <div className="text-xs sm:text-sm text-muted-foreground font-light tracking-tight">Total Referrals</div>
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </section>

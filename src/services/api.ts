@@ -50,6 +50,11 @@ export interface WaitlistRankResponse {
   referralCode: string
 }
 
+export interface WaitlistStatsResponse {
+  totalUsers: number
+  totalReferrals: number
+}
+
 export async function postWaitlistSignup(input: WaitlistSignupRequest): Promise<{
   ok: boolean
   status: number
@@ -114,6 +119,41 @@ export async function getWaitlistRank(userId: string): Promise<{
     return { ok: res.ok, status: res.status, data }
   } catch (error) {
     console.error('Waitlist rank error:', error)
+    return {
+      ok: false,
+      status: 500,
+      data: { error: 'Network error. Please try again.' },
+    }
+  }
+}
+
+export async function getWaitlistStats(): Promise<{
+  ok: boolean
+  status: number
+  data: WaitlistStatsResponse | { error: string }
+}> {
+  try {
+    const res = await fetch(`${API_BASE_URL}/chiranjiv-waitlist-stats`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    })
+    
+    let data: WaitlistStatsResponse | { error: string }
+    try {
+      data = await res.json()
+    } catch {
+      data = { error: 'Invalid response from server' }
+    }
+    
+    if (!res.ok) {
+      if (!('error' in data)) {
+        data = { error: 'Failed to fetch stats' }
+      }
+    }
+    
+    return { ok: res.ok, status: res.status, data }
+  } catch (error) {
+    console.error('Waitlist stats error:', error)
     return {
       ok: false,
       status: 500,

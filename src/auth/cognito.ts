@@ -250,4 +250,69 @@ export async function confirmForgotPassword(email: string, code: string, newPass
   return await client.send(cmd)
 }
 
+export type UserStatus = 'confirmed' | 'unconfirmed' | 'not_found' | 'password_or_other_error'
+
+/**
+ * Check if a user exists in Cognito and whether their email is verified.
+ * This function attempts to sign in with the provided credentials without saving tokens.
+ * 
+ * @param email - User's email address
+ * @param password - User's password
+ * @returns Status indicating whether user is confirmed, unconfirmed, not found, or has other errors
+ */
+export async function checkExistingUserStatus(email: string, password: string): Promise<UserStatus> {
+  const cfg = getRuntimeAuthConfig()
+  const region = getRegionFromAuthority(cfg.authority)
+  const client = new CognitoIdentityProviderClient({ region })
+  const secretHash = cfg.clientSecret
+    ? await computeSecretHash(cfg.clientId, cfg.clientSecret, email)
+    : undefined
+  
+  try {
+    const init = new InitiateAuthCommand({
+      AuthFlow: 'USER_PASSWORD_AUTH',
+      ClientId: cfg.clientId,
+      AuthParameters: {
+        USERNAME: email,
+        PASSWORD: password,
+        ...(secretHash ? { SECRET_HASH: secretHash } : {}),
+      },
+    })
+    const res = await client.send(init)
+    
+    // If we get a successful authentication result, the user exists and is confirmed
+    if (res.AuthenticationResult?.IdToken) {
+      return 'confirmed'
+    }
+    
+    // If we get a challenge, the user exists but might need additional steps
+    if (res.ChallengeName) {
+      return 'confirmed'
+    }
+    
+    // Unexpected state
+    return 'password_or_other_error'
+  } catch (err: any) {
+    const code = err?.name || err?.__type
+    
+    switch (code) {
+      case 'UserNotConfirmedException':
+        // User exists but email is not verified
+        return 'unconfirmed'
+      
+      case 'UserNotFoundException':
+        // User does not exist in Cognito
+        return 'not_found'
+      
+      case 'NotAuthorizedException':
+        // User exists but password is wrong, treat as existing confirmed user
+        return 'password_or_other_error'
+      
+      default:
+        // For any other error, assume user might exist (conservative approach)
+        return 'password_or_other_error'
+    }
+  }
+}
+
 
