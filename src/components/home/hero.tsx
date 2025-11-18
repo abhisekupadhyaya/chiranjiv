@@ -3,7 +3,7 @@ import { DnaHelix } from '@/components/home/dna-helix'
 
 export function Hero() {
   return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden pt-16 sm:pt-20 pb-12 sm:pb-16 hero-section">
+    <section id="hero" className="relative h-screen flex items-center justify-center overflow-hidden pt-16 sm:pt-20 pb-12 sm:pb-16 hero-section">
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5" />
       <div className="absolute inset-0 opacity-10">
         <DnaHelix />
@@ -29,7 +29,11 @@ export function Hero() {
             </span>
           </h1>
           <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 sm:mb-8 md:mb-10 mx-auto text-pretty leading-relaxed max-w-3xl font-light">
-            Unlock your genetic blueprint for a fitter, longer, and more energetic life. Transform your lifestyle and health with proactive recommendations tailored for you.
+            Early users receive ₹1.5 L worth of Genome sequencing and DNA-based reports designed to optimize your health, wellness, and food choices.
+          </p>
+          <p className="text-sm sm:text-base text-muted-foreground mb-6 sm:mb-8 md:mb-10 mx-auto leading-relaxed max-w-3xl font-light px-4 sm:px-0">
+            <span className="font-medium">Join the waitlist.</span> <span className="inline-block">Share your unique referral code to <span className="font-medium">skip the queue</span>.</span>{' '}
+            <span className="inline-block">The more friends who sign up, the <span className="font-medium">faster you move up</span>.</span>
           </p>
           <div className="flex items-center justify-center mb-6 sm:mb-8">
             <Button

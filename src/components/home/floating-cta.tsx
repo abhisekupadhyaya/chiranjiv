@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react'
 
-export function FloatingCta() {
+interface FloatingCtaProps {
+  show?: boolean
+}
+
+export function FloatingCta({ show = true }: FloatingCtaProps) {
   const [isLocked, setIsLocked] = useState(false)
 
   useEffect(() => {
@@ -58,7 +62,8 @@ export function FloatingCta() {
         ${isLocked ? 'absolute' : 'fixed'}
         ${isLocked ? 'bottom-0' : 'bottom-6 sm:bottom-4 md:bottom-6'}
         left-0 right-0 z-40
-        transition-all duration-300 ease-out
+        transition-all duration-500 ease-out
+        ${show ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0 pointer-events-none'}
       `}
       style={isLocked ? { position: 'absolute' } : undefined}
     >
@@ -91,12 +96,12 @@ export function FloatingCta() {
             {/* Left content box: Lines 1 & 2 */}
             <div className="flex flex-col gap-0.5 sm:gap-1 md:gap-1.5 flex-1 text-left min-w-0">
               {/* Line 1: Heading */}
-              <h3 className="text-[10px] sm:text-sm md:text-base lg:text-lg font-light tracking-tight text-foreground leading-tight sm:leading-snug truncate">
+              <h3 className="text-xs sm:text-sm md:text-base lg:text-lg font-light tracking-tight text-foreground leading-tight sm:leading-snug truncate">
                 Worth ₹1,50,000. Free for early users.
               </h3>
 
               {/* Line 2: Subcopy */}
-              <p className="text-[8px] sm:text-xs md:text-sm text-muted-foreground font-light leading-tight sm:leading-relaxed line-clamp-1">
+              <p className="text-[10px] sm:text-xs md:text-sm text-muted-foreground font-light leading-tight sm:leading-relaxed line-clamp-1">
                 Full genome sequencing + lifetime health insights + data co-ownership
               </p>
             </div>

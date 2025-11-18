@@ -7,7 +7,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import { Eye, EyeOff, Trophy, Users, TrendingUp, Share2, Copy, MessageCircle, Mail, Facebook, Linkedin } from 'lucide-react'
 import { postWaitlistSignup, getWaitlistRank, type WaitlistSignupRequest, type WaitlistRankResponse } from '@/services/api'
-import { signUpWithCognito, toFriendlyCognitoError, confirmSignUp, resendConfirmationCode } from '@/auth/cognito'
+import { signUpWithCognito, toFriendlyCognitoError, resendConfirmationCode } from '@/auth/cognito'
 import { getRuntimeAuthConfig } from '@/auth/config'
 import { useAuth } from '@/auth'
 import { cn } from '@/lib/utils'
@@ -585,9 +585,6 @@ export function Waitlist() {
   const successRef = useRef<HTMLDivElement>(null)
   const [showSignin, setShowSignin] = useState(false)
   const [signinData, setSigninData] = useState({ email: '', password: '' })
-  const [confirmCode, setConfirmCode] = useState('')
-  const [confirming, setConfirming] = useState(false)
-  const [confirmError, setConfirmError] = useState('')
   const [rankData, setRankData] = useState<WaitlistRankResponse | null>(null)
   const [rankLoading, setRankLoading] = useState(false)
   const [rankError, setRankError] = useState('')
@@ -854,36 +851,12 @@ export function Waitlist() {
     navigator.clipboard.writeText(message)
   }
 
-  const handleConfirmSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setConfirmError('')
-    if (!confirmCode.trim()) {
-      setConfirmError('Enter the verification code sent to your email')
-      return
-    }
-    setConfirming(true)
-    try {
-      await confirmSignUp(formData.email.trim(), confirmCode.trim())
-      // Auto sign-in after confirmation
-      await auth.signIn(formData.email.trim(), formData.password)
-      setSubmitted(true)
-      setTimeout(() => {
-        successRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
-      }, 100)
-    } catch (err: any) {
-      setConfirmError(toFriendlyCognitoError(err))
-    } finally {
-      setConfirming(false)
-    }
-  }
-
   const handleResendCode = async () => {
-    setConfirmError('')
     try {
       await resendConfirmationCode(formData.email.trim())
-      setConfirmError('Verification code resent. Please check your email.')
     } catch (err: any) {
-      setConfirmError(toFriendlyCognitoError(err))
+      // Silent failure - user can try again
+      console.error('Failed to resend verification email:', err)
     }
   }
 
@@ -1424,23 +1397,41 @@ export function Waitlist() {
                   </form>
                 )}
                 {step === 3 && (
-                  <form onSubmit={handleConfirmSubmit} className="space-y-4 sm:space-y-6">
+                  <div className="space-y-6 text-center">
+                    <div className="w-20 h-20 bg-gradient-to-br from-primary/30 to-secondary/20 rounded-full flex items-center justify-center mx-auto backdrop-blur-sm border border-primary/20 shadow-lg shadow-primary/10">
+                      <Mail className="w-10 h-10 text-primary" />
+                    </div>
                     <div className="space-y-2">
-                      <h3 className="text-lg font-medium text-foreground tracking-tight">Verify your email</h3>
-                      <p className="text-sm text-muted-foreground font-light">We sent a 6-digit code to {formData.email}. Enter it below to confirm your account.</p>
+                      <h3 className="text-2xl font-medium text-foreground tracking-tight">Check Your Email</h3>
+                      <p className="text-sm text-muted-foreground font-light max-w-md mx-auto">
+                        We've sent a verification link to <span className="font-medium text-foreground">{formData.email}</span>. 
+                        Click the link in the email to verify your account.
+                      </p>
                     </div>
-                    <div>
-                      <label htmlFor="verificationCode" className="block text-sm font-medium text-foreground mb-2 tracking-tight">Verification Code</label>
-                      <Input id="verificationCode" name="verificationCode" type="text" value={confirmCode} onChange={(e) => setConfirmCode(e.target.value)} placeholder="Enter the 6-digit code" className={`w-full glass-input ${confirmError ? 'border-red-500' : ''}`} />
-                      {confirmError && <p className="text-xs text-red-500 mt-1">{confirmError}</p>}
-                    </div>
-                    <div className="flex gap-3 pt-2">
-                      <Button type="button" variant="outline" onClick={handleResendCode} disabled={confirming} className="hover:scale-105 transition-transform">Resend Code</Button>
-                      <Button type="submit" className="bg-primary text-primary-foreground hover:bg-primary/90 btn-glow hover:scale-[1.02] transition-all" disabled={confirming}>
-                        {confirming ? 'Confirming...' : 'Confirm Account'}
+                    <div className="flex flex-col sm:flex-row gap-3 pt-4 max-w-md mx-auto">
+                      <Button 
+                        type="button" 
+                        variant="outline" 
+                        onClick={handleResendCode}
+                        className="flex-1 hover:scale-105 transition-transform"
+                      >
+                        Resend Email
+                      </Button>
+                      <Button 
+                        type="button"
+                        onClick={() => {
+                          setStep(1)
+                          setShowSignin(true)
+                        }}
+                        className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90 btn-glow hover:scale-[1.02] transition-all"
+                      >
+                        Return to Sign In
                       </Button>
                     </div>
-                  </form>
+                    <p className="text-xs text-muted-foreground font-light max-w-md mx-auto">
+                      Didn't receive the email? Check your spam folder or click "Resend Email" above.
+                    </p>
+                  </div>
                 )}
               </>
             ) : (

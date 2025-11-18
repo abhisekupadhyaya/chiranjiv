@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { Hero } from '@/components/home/hero'
 import { ChooseYourStep } from '@/components/home/choose-your-step'
@@ -11,6 +11,7 @@ import { FloatingCta } from '@/components/home/floating-cta'
 
 export default function Home() {
   const location = useLocation()
+  const [showFloatingCta, setShowFloatingCta] = useState(false)
 
   useEffect(() => {
     // Handle hash scrolling when component mounts or hash changes
@@ -27,6 +28,28 @@ export default function Home() {
     }
   }, [location.hash, location.pathname])
 
+  useEffect(() => {
+    // Show floating CTA as soon as user starts scrolling
+    const handleScroll = () => {
+      // Show CTA if page is scrolled down at all
+      if (window.scrollY > 0) {
+        setShowFloatingCta(true)
+      } else {
+        setShowFloatingCta(false)
+      }
+    }
+
+    // Add scroll listener
+    window.addEventListener('scroll', handleScroll)
+    
+    // Check initial scroll position
+    handleScroll()
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
+
   return (
     <div className="home-edge relative pb-12 sm:pb-16 md:pb-20 lg:pb-24 bg-gradient-to-b from-background via-background to-background/95">
       <Hero />
@@ -36,7 +59,7 @@ export default function Home() {
       <HowItWorks />
       <IndiaToWorld />
       <PrivacyTrust />
-      <FloatingCta />
+      <FloatingCta show={showFloatingCta} />
     </div>
   )
 }
