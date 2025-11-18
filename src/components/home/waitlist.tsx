@@ -575,7 +575,7 @@ export function Waitlist() {
     researchConsent: false,
     marketingConsent: false,
   })
-  const [submitted, setSubmitted] = useState(false)
+  const [submitted] = useState(false)
   const [referralCode, setReferralCode] = useState('')
   const [enteredReferralCode, setEnteredReferralCode] = useState('')
   const [showPassword, setShowPassword] = useState(false)
