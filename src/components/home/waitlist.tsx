@@ -7,7 +7,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import { Eye, EyeOff, Trophy, Users, TrendingUp, Share2, Copy, MessageCircle, Mail, Facebook, Linkedin } from 'lucide-react'
 import { postWaitlistSignup, getWaitlistRank, getWaitlistStats, type WaitlistSignupRequest, type WaitlistRankResponse } from '@/services/api'
-import { signUpWithCognito, toFriendlyCognitoError, resendConfirmationCode, checkExistingUserStatus } from '@/auth/cognito'
+import { signUpWithCognito, toFriendlyCognitoError, resendConfirmationCode } from '@/auth/cognito'
 import { getRuntimeAuthConfig } from '@/auth/config'
 import { useAuth } from '@/auth'
 import { cn } from '@/lib/utils'
@@ -253,7 +253,7 @@ const getTierInfo = (percentile: number): { tier: Tier; name: string; colors: { 
 
 const calculateGamificationMetrics = (rank: number, totalUsers: number, referralsCount: number): GamificationMetrics => {
   const percentile = ((totalUsers - rank) / totalUsers) * 100
-  const tierInfo = getTierInfo(100 - percentile)
+  const tierInfo = getTierInfo(percentile)
   
   // Estimate jump: assume each referral moves you up by ~sqrt(totalUsers/100) positions
   const estimatedJump = Math.max(5, Math.floor(Math.sqrt(totalUsers / 100)))
@@ -305,7 +305,7 @@ interface CircularRankProgressProps {
 
 const CircularRankProgress = ({ rank, totalUsers, tierColors, percentile }: CircularRankProgressProps) => {
   const [mounted, setMounted] = useState(false)
-  const progress = 100 - percentile
+  const progress = percentile
   const circumference = 2 * Math.PI * 90
   const strokeDashoffset = mounted ? circumference - (progress / 100) * circumference : circumference
 
@@ -325,7 +325,7 @@ const CircularRankProgress = ({ rank, totalUsers, tierColors, percentile }: Circ
             stroke="currentColor"
             strokeWidth="12"
             fill="none"
-            className="text-muted/20"
+            className="text-gray-300 dark:text-gray-700"
           />
           {/* Progress circle with improved shadow */}
           <circle
@@ -709,40 +709,9 @@ export function Waitlist() {
     }
     setLoading(true)
     setErrors({})
+    
     try {
-      // First, check if the user already exists in Cognito
-      const userStatus = await checkExistingUserStatus(formData.email.trim(), formData.password)
-      
-      if (userStatus === 'confirmed' || userStatus === 'password_or_other_error') {
-        // User exists and is verified (or password is wrong, which means they exist)
-        setErrors({ 
-          email: 'An account with this email already exists and is verified. Please sign in instead or reset your password.' 
-        })
-        setShowSignin(true)
-        setStep(1)
-        setLoading(false)
-        return
-      }
-      
-      if (userStatus === 'unconfirmed') {
-        // User exists but email is not verified, resend confirmation email
-        try {
-          await resendConfirmationCode(formData.email.trim())
-          setErrors({ 
-            email: "We found your account but it's not verified yet. We've sent a new verification email — please check your inbox." 
-          })
-        } catch {
-          setErrors({ 
-            email: "We found your account but it's not verified. Please check your email for the verification link." 
-          })
-        }
-        setStep(3)
-        setLoading(false)
-        return
-      }
-      
-      // userStatus === 'not_found', proceed with signup
-      // Create Cognito user without Hosted UI
+      // Create Cognito user
       let cognitoUserId: string
       try {
         const cfg = getRuntimeAuthConfig()
@@ -761,13 +730,13 @@ export function Waitlist() {
 
         const combinedPhone = toE164(formData.countryCode, formData.phoneLocal)
         const doSignup = async (attrs: Record<string, string>) =>
-        await signUpWithCognito({
-          email: formData.email.trim(),
-          password: formData.password,
-          name: formData.name.trim(),
-          phone: combinedPhone,
+          await signUpWithCognito({
+            email: formData.email.trim(),
+            password: formData.password,
+            name: formData.name.trim(),
+            phone: combinedPhone,
             userAttributes: attrs,
-        })
+          })
 
         let signupResult
         try {
@@ -789,51 +758,18 @@ export function Waitlist() {
         }
         cognitoUserId = signupResult.UserSub
       } catch (err: any) {
-        // Log full error for diagnostics
-        // eslint-disable-next-line no-console
+        // Log error for diagnostics
         console.error('Cognito SignUp error:', err)
-        if (err?.name === 'UsernameExistsException') {
-          // Fallback: user already exists, check their status
-          try {
-            const existingUserStatus = await checkExistingUserStatus(formData.email.trim(), formData.password)
-            
-            if (existingUserStatus === 'unconfirmed') {
-              // User exists but is unverified
-              try {
-                await resendConfirmationCode(formData.email.trim())
-                setErrors({ 
-                  email: "We found your account but it's not verified yet. We've sent a new verification email — please check your inbox." 
-                })
-              } catch {
-                setErrors({ 
-                  email: "We found your account but it's not verified. Please check your email for the verification link." 
-                })
-              }
-              setStep(3)
-            } else {
-              // User exists and is confirmed (or other error)
-              setErrors({ 
-                email: 'An account with this email already exists and is verified. Please sign in instead or reset your password.' 
-              })
-              setShowSignin(true)
-              setStep(1)
-            }
-          } catch {
-            // If status check fails, be conservative and assume verified
-            setErrors({ 
-              email: 'An account with this email already exists. Please try signing in.' 
-            })
-            setShowSignin(true)
-            setStep(1)
-          }
-          setLoading(false)
-          return
-        } else {
         const message = toFriendlyCognitoError(err)
         setErrors({ email: message })
+        
+        // If user already exists, suggest signing in
+        if (err?.name === 'UsernameExistsException') {
+          setShowSignin(true)
+          setStep(1)
+        }
         setLoading(false)
         return
-        }
       }
 
       // Call waitlist signup API with Cognito user ID
@@ -878,7 +814,6 @@ export function Waitlist() {
       } catch {
         // ignore storage failures
       }
-      return
     } catch (error) {
       setErrors({ email: 'Network error. Please try again.' })
     } finally {
@@ -1497,8 +1432,8 @@ export function Waitlist() {
                     <div className="space-y-2">
                       <h3 className="text-2xl font-medium text-foreground tracking-tight">Check Your Email</h3>
                       <p className="text-sm text-muted-foreground font-light max-w-md mx-auto">
-                        We've sent a verification link to <span className="font-medium text-foreground">{formData.email}</span>. 
-                        Click the link in the email to verify your account.
+                        We've sent a verification code to <span className="font-medium text-foreground">{formData.email}</span>. 
+                        Please check your email and verify your account to complete registration.
                       </p>
                     </div>
                     <div className="flex flex-col sm:flex-row gap-3 pt-4 max-w-md mx-auto">
@@ -1508,7 +1443,7 @@ export function Waitlist() {
                         onClick={handleResendCode}
                         className="flex-1 hover:scale-105 transition-transform"
                       >
-                        Resend Email
+                        Resend Code
                       </Button>
                       <Button 
                         type="button"
@@ -1518,11 +1453,11 @@ export function Waitlist() {
                         }}
                         className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90 btn-glow hover:scale-[1.02] transition-all"
                       >
-                        Return to Sign In
+                        Go to Sign In
                       </Button>
                     </div>
                     <p className="text-xs text-muted-foreground font-light max-w-md mx-auto">
-                      Didn't receive the email? Check your spam folder or click "Resend Email" above.
+                      Didn't receive the email? Check your spam folder or request a new code above.
                     </p>
                   </div>
                 )}

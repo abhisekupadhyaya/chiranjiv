@@ -1,7 +1,14 @@
 import type { PropsWithChildren } from 'react'
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { Amplify } from 'aws-amplify'
+import { getCurrentUser, fetchAuthSession, signOut as amplifySignOut } from 'aws-amplify/auth'
+import { Hub } from 'aws-amplify/utils'
+import { getAmplifyConfig } from './config'
+import { signInWithCognito, forgotPassword, confirmForgotPassword, clearTokens } from './cognito'
 import type { CognitoTokens } from './cognito'
-import { clearTokens, getSavedTokens, saveTokens, signInWithCognito, forgotPassword, confirmForgotPassword } from './cognito'
+
+// Configure Amplify
+Amplify.configure(getAmplifyConfig())
 
 type AuthStatus = 'idle' | 'authenticating' | 'authenticated' | 'error'
 
@@ -25,82 +32,94 @@ type AuthContextValue = {
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined)
 
-function base64UrlDecode(input: string): string {
-  const normalized = input.replace(/-/g, '+').replace(/_/g, '/')
-  const padded = normalized.padEnd(Math.ceil(normalized.length / 4) * 4, '=')
-  try {
-    return atob(padded)
-  } catch {
-    return ''
-  }
-}
-
-function decodeJwtPayload<T>(jwt: string): T | null {
-  const parts = jwt.split('.')
-  if (parts.length < 2) return null
-  const json = base64UrlDecode(parts[1])
-  if (!json) return null
-  try {
-    return JSON.parse(json) as T
-  } catch {
-    return null
-  }
-}
-
 export function AuthProvider({ children }: PropsWithChildren) {
   const [status, setStatus] = useState<AuthStatus>('idle')
   const [tokens, setTokens] = useState<CognitoTokens | null>(null)
   const [user, setUser] = useState<AuthUser>(null)
 
-  useEffect(() => {
-    const existing = getSavedTokens()
-    if (existing?.idToken) {
-      setTokens(existing)
-      const claims = decodeJwtPayload<Record<string, unknown>>(existing.idToken)
-      if (claims && typeof claims === 'object' && claims.sub) {
+  const loadUser = useCallback(async () => {
+    try {
+      await getCurrentUser()
+      const session = await fetchAuthSession()
+      
+      if (session.tokens?.idToken) {
+        const idToken = session.tokens.idToken
+        const accessToken = session.tokens.accessToken
+        
+        const tokenData: CognitoTokens = {
+          idToken: idToken.toString(),
+          accessToken: accessToken.toString(),
+        }
+        
+        setTokens(tokenData)
+        
+        // Extract user info from token payload
+        const payload = idToken.payload
         setUser({
-          sub: String(claims.sub),
-          email: typeof claims.email === 'string' ? claims.email : undefined,
-          name: typeof claims.name === 'string' ? claims.name : undefined,
-          phone_number: typeof claims.phone_number === 'string' ? claims.phone_number : undefined,
-          ...claims,
+          sub: String(payload.sub),
+          email: typeof payload.email === 'string' ? payload.email : undefined,
+          name: typeof payload.name === 'string' ? payload.name : undefined,
+          phone_number: typeof payload.phone_number === 'string' ? payload.phone_number : undefined,
+          ...payload,
         })
         setStatus('authenticated')
       } else {
         setStatus('idle')
       }
-    } else {
+    } catch {
       setStatus('idle')
+      setUser(null)
+      setTokens(null)
     }
   }, [])
+
+  useEffect(() => {
+    loadUser()
+
+    // Listen to auth events
+    const hubListener = Hub.listen('auth', ({ payload }) => {
+      switch (payload.event) {
+        case 'signedIn':
+          loadUser()
+          break
+        case 'signedOut':
+          setUser(null)
+          setTokens(null)
+          setStatus('idle')
+          break
+        case 'tokenRefresh':
+          loadUser()
+          break
+        case 'tokenRefresh_failure':
+          setUser(null)
+          setTokens(null)
+          setStatus('idle')
+          break
+      }
+    })
+
+    return () => hubListener()
+  }, [loadUser])
 
   const signIn = useCallback(async (email: string, password: string) => {
     setStatus('authenticating')
     try {
       const t = await signInWithCognito(email, password)
-      saveTokens(t)
       setTokens(t)
-      const claims = decodeJwtPayload<Record<string, unknown>>(t.idToken)
-      setUser(
-        claims && typeof claims === 'object' && (claims as any).sub
-          ? {
-              sub: String((claims as any).sub),
-              email: typeof (claims as any).email === 'string' ? (claims as any).email : undefined,
-              name: typeof (claims as any).name === 'string' ? (claims as any).name : undefined,
-              phone_number:
-                typeof (claims as any).phone_number === 'string' ? (claims as any).phone_number : undefined,
-              ...claims,
-            }
-          : null,
-      )
+      await loadUser()
       setStatus('authenticated')
     } catch (e) {
       setStatus('error')
       throw e
     }
-  }, [])
+  }, [loadUser])
 
-  const signOut = useCallback(() => {
+  const signOut = useCallback(async () => {
+    try {
+      await amplifySignOut()
+    } catch {
+      // ignore errors during sign out
+    }
     clearTokens()
     setTokens(null)
     setUser(null)

@@ -1,32 +1,4 @@
-import {
-  CognitoIdentityProviderClient,
-  SignUpCommand,
-  ConfirmSignUpCommand,
-  ResendConfirmationCodeCommand,
-  InitiateAuthCommand,
-  ForgotPasswordCommand,
-  ConfirmForgotPasswordCommand,
-} from '@aws-sdk/client-cognito-identity-provider'
-import { getRuntimeAuthConfig } from './config'
-
-function getRegionFromAuthority(authority: string): string {
-  // e.g. https://cognito-idp.us-east-2.amazonaws.com/us-east-2_XXXX
-  const match = authority.match(/cognito-idp\.([a-z0-9-]+)\.amazonaws\.com/i)
-  return match?.[1] || 'us-east-1'
-}
-
-async function computeSecretHash(clientId: string, clientSecret: string, username: string): Promise<string> {
-  const algo = { name: 'HMAC', hash: 'SHA-256' } as const
-  const enc = new TextEncoder()
-  const key = await crypto.subtle.importKey('raw', enc.encode(clientSecret), algo, false, ['sign'])
-  const signature = await crypto.subtle.sign(algo, key, enc.encode(username + clientId))
-  const bytes = new Uint8Array(signature)
-  let binary = ''
-  for (let i = 0; i < bytes.byteLength; i++) {
-    binary += String.fromCharCode(bytes[i])
-  }
-  return btoa(binary)
-}
+import { signUp, signIn, confirmSignUp, resendSignUpCode, resetPassword, confirmResetPassword, fetchAuthSession } from 'aws-amplify/auth'
 
 function normalizePhone(phone: string): string | undefined {
   if (!phone) return undefined
@@ -58,31 +30,31 @@ export async function signUpWithCognito(input: {
   phone?: string
   userAttributes?: Record<string, string>
 }) {
-  const cfg = getRuntimeAuthConfig()
-  const region = getRegionFromAuthority(cfg.authority)
-  const client = new CognitoIdentityProviderClient({ region })
-  const secretHash = cfg.clientSecret
-    ? await computeSecretHash(cfg.clientId, cfg.clientSecret, input.email)
-    : undefined
-  const cmd = new SignUpCommand({
-    ClientId: cfg.clientId,
-    Username: input.email,
-    Password: input.password,
-    ...(secretHash ? { SecretHash: secretHash } : {}),
-    UserAttributes: [
-      { Name: 'email', Value: input.email },
-      ...(input.name ? [{ Name: 'name', Value: input.name }] : []),
-      ...(normalizePhone(input.phone || '') ? [{ Name: 'phone_number', Value: normalizePhone(input.phone || '') as string }] : []),
-      ...Object.entries(input.userAttributes || {}).map(([Name, Value]) => ({ Name, Value })),
-    ],
+  const userAttributes: Record<string, string> = {
+    email: input.email,
+    ...(input.name ? { name: input.name } : {}),
+    ...(normalizePhone(input.phone || '') ? { phone_number: normalizePhone(input.phone || '') as string } : {}),
+    ...input.userAttributes,
+  }
+
+  const result = await signUp({
+    username: input.email,
+    password: input.password,
+    options: {
+      userAttributes,
+    },
   })
-  const resp = await client.send(cmd)
-  return resp
+
+  return {
+    UserSub: result.userId,
+    UserConfirmed: result.isSignUpComplete,
+  }
 }
 
 export function toFriendlyCognitoError(err: any): string {
   const code = err?.name || err?.__type || 'Error'
   const message = err?.message || 'An error occurred'
+  
   switch (code) {
     case 'InvalidParameterException':
       if (typeof message === 'string' && /USER_PASSWORD_AUTH/i.test(message)) {
@@ -90,9 +62,9 @@ export function toFriendlyCognitoError(err: any): string {
       }
       return 'Invalid details provided. Please check your email and phone number.'
     case 'UsernameExistsException':
-      return 'An account with this email already exists.'
+      return 'An account with this email already exists. Please sign in or reset your password.'
     case 'UserNotConfirmedException':
-      return 'Your account is not confirmed. Please verify your email to continue.'
+      return 'Your account is not confirmed. Please check your email for the verification link.'
     case 'UserNotFoundException':
       return 'No account found with this email address.'
     case 'InvalidPasswordException':
@@ -100,6 +72,9 @@ export function toFriendlyCognitoError(err: any): string {
     case 'NotAuthorizedException':
       if (typeof message === 'string' && /secret hash/i.test(message)) {
         return 'Client secret is required and not configured.'
+      }
+      if (typeof message === 'string' && /incorrect username or password/i.test(message.toLowerCase())) {
+        return 'Incorrect email or password.'
       }
       return 'Not authorized. Please check credentials or configuration.'
     case 'CodeMismatchException':
@@ -116,39 +91,22 @@ export function toFriendlyCognitoError(err: any): string {
     case 'LimitExceededException':
       return 'Request limit exceeded. Please try again later.'
     default:
-      return `${code}: ${message}`
+      // Return just the message for unknown errors
+      return message || `${code}: ${message}`
   }
 }
 
-export async function confirmSignUp(email: string, code: string) {
-  const cfg = getRuntimeAuthConfig()
-  const region = getRegionFromAuthority(cfg.authority)
-  const client = new CognitoIdentityProviderClient({ region })
-  const secretHash = cfg.clientSecret
-    ? await computeSecretHash(cfg.clientId, cfg.clientSecret, email)
-    : undefined
-  const cmd = new ConfirmSignUpCommand({
-    ClientId: cfg.clientId,
-    Username: email,
-    ConfirmationCode: code,
-    ...(secretHash ? { SecretHash: secretHash } : {}),
+export async function confirmSignUpCode(email: string, code: string) {
+  return await confirmSignUp({
+    username: email,
+    confirmationCode: code,
   })
-  return await client.send(cmd)
 }
 
 export async function resendConfirmationCode(email: string) {
-  const cfg = getRuntimeAuthConfig()
-  const region = getRegionFromAuthority(cfg.authority)
-  const client = new CognitoIdentityProviderClient({ region })
-  const secretHash = cfg.clientSecret
-    ? await computeSecretHash(cfg.clientId, cfg.clientSecret, email)
-    : undefined
-  const cmd = new ResendConfirmationCodeCommand({
-    ClientId: cfg.clientId,
-    Username: email,
-    ...(secretHash ? { SecretHash: secretHash } : {}),
+  return await resendSignUpCode({
+    username: email,
   })
-  return await client.send(cmd)
 }
 
 export type CognitoTokens = {
@@ -158,37 +116,29 @@ export type CognitoTokens = {
 }
 
 export async function signInWithCognito(email: string, password: string): Promise<CognitoTokens> {
-  const cfg = getRuntimeAuthConfig()
-  const region = getRegionFromAuthority(cfg.authority)
-  const client = new CognitoIdentityProviderClient({ region })
-  const secretHash = cfg.clientSecret
-    ? await computeSecretHash(cfg.clientId, cfg.clientSecret, email)
-    : undefined
-  const init = new InitiateAuthCommand({
-    AuthFlow: 'USER_PASSWORD_AUTH',
-    ClientId: cfg.clientId,
-    AuthParameters: {
-      USERNAME: email,
-      PASSWORD: password,
-      ...(secretHash ? { SECRET_HASH: secretHash } : {}),
-    },
+  const result = await signIn({
+    username: email,
+    password,
   })
-  const res = await client.send(init)
-  if (res.ChallengeName) {
-    // Basic handling for NEW_PASSWORD_REQUIRED or others could be added here
-    throw new Error(`Auth challenge: ${res.ChallengeName}`)
-  }
-  const tokens = res.AuthenticationResult
-  if (!tokens?.IdToken || !tokens.AccessToken) {
+
+  if (!result.isSignedIn) {
     throw new Error('Authentication failed')
   }
-  const result: CognitoTokens = {
-    idToken: tokens.IdToken,
-    accessToken: tokens.AccessToken,
-    refreshToken: tokens.RefreshToken,
+
+  // Fetch the session to get tokens
+  const session = await fetchAuthSession()
+  
+  if (!session.tokens?.idToken || !session.tokens.accessToken) {
+    throw new Error('Failed to get authentication tokens')
   }
-  saveTokens(result)
-  return result
+
+  const tokens: CognitoTokens = {
+    idToken: session.tokens.idToken.toString(),
+    accessToken: session.tokens.accessToken.toString(),
+  }
+
+  saveTokens(tokens)
+  return tokens
 }
 
 const TOKENS_KEY = 'cjv_cognito_tokens'
@@ -219,100 +169,16 @@ export function clearTokens() {
 }
 
 export async function forgotPassword(email: string) {
-  const cfg = getRuntimeAuthConfig()
-  const region = getRegionFromAuthority(cfg.authority)
-  const client = new CognitoIdentityProviderClient({ region })
-  const secretHash = cfg.clientSecret
-    ? await computeSecretHash(cfg.clientId, cfg.clientSecret, email)
-    : undefined
-  const cmd = new ForgotPasswordCommand({
-    ClientId: cfg.clientId,
-    Username: email,
-    ...(secretHash ? { SecretHash: secretHash } : {}),
+  return await resetPassword({
+    username: email,
   })
-  return await client.send(cmd)
 }
 
 export async function confirmForgotPassword(email: string, code: string, newPassword: string) {
-  const cfg = getRuntimeAuthConfig()
-  const region = getRegionFromAuthority(cfg.authority)
-  const client = new CognitoIdentityProviderClient({ region })
-  const secretHash = cfg.clientSecret
-    ? await computeSecretHash(cfg.clientId, cfg.clientSecret, email)
-    : undefined
-  const cmd = new ConfirmForgotPasswordCommand({
-    ClientId: cfg.clientId,
-    Username: email,
-    ConfirmationCode: code,
-    Password: newPassword,
-    ...(secretHash ? { SecretHash: secretHash } : {}),
+  return await confirmResetPassword({
+    username: email,
+    confirmationCode: code,
+    newPassword,
   })
-  return await client.send(cmd)
 }
-
-export type UserStatus = 'confirmed' | 'unconfirmed' | 'not_found' | 'password_or_other_error'
-
-/**
- * Check if a user exists in Cognito and whether their email is verified.
- * This function attempts to sign in with the provided credentials without saving tokens.
- * 
- * @param email - User's email address
- * @param password - User's password
- * @returns Status indicating whether user is confirmed, unconfirmed, not found, or has other errors
- */
-export async function checkExistingUserStatus(email: string, password: string): Promise<UserStatus> {
-  const cfg = getRuntimeAuthConfig()
-  const region = getRegionFromAuthority(cfg.authority)
-  const client = new CognitoIdentityProviderClient({ region })
-  const secretHash = cfg.clientSecret
-    ? await computeSecretHash(cfg.clientId, cfg.clientSecret, email)
-    : undefined
-  
-  try {
-    const init = new InitiateAuthCommand({
-      AuthFlow: 'USER_PASSWORD_AUTH',
-      ClientId: cfg.clientId,
-      AuthParameters: {
-        USERNAME: email,
-        PASSWORD: password,
-        ...(secretHash ? { SECRET_HASH: secretHash } : {}),
-      },
-    })
-    const res = await client.send(init)
-    
-    // If we get a successful authentication result, the user exists and is confirmed
-    if (res.AuthenticationResult?.IdToken) {
-      return 'confirmed'
-    }
-    
-    // If we get a challenge, the user exists but might need additional steps
-    if (res.ChallengeName) {
-      return 'confirmed'
-    }
-    
-    // Unexpected state
-    return 'password_or_other_error'
-  } catch (err: any) {
-    const code = err?.name || err?.__type
-    
-    switch (code) {
-      case 'UserNotConfirmedException':
-        // User exists but email is not verified
-        return 'unconfirmed'
-      
-      case 'UserNotFoundException':
-        // User does not exist in Cognito
-        return 'not_found'
-      
-      case 'NotAuthorizedException':
-        // User exists but password is wrong, treat as existing confirmed user
-        return 'password_or_other_error'
-      
-      default:
-        // For any other error, assume user might exist (conservative approach)
-        return 'password_or_other_error'
-    }
-  }
-}
-
 

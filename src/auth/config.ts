@@ -1,4 +1,5 @@
 import type { UserManagerSettings } from 'oidc-client-ts'
+import type { ResourcesConfig } from 'aws-amplify'
 
 type RuntimeAuthConfig = {
   authority: string
@@ -9,6 +10,13 @@ type RuntimeAuthConfig = {
   cognitoDomain?: string
   clientSecret?: string
   addressAttrName?: string
+}
+
+function getUserPoolIdFromAuthority(authority: string): string {
+  // Extract user pool ID from authority URL
+  // e.g. https://cognito-idp.us-east-2.amazonaws.com/us-east-2_GV16bcF7q
+  const match = authority.match(/amazonaws\.com\/([^/]+)/)
+  return match?.[1] || ''
 }
 
 export function getRuntimeAuthConfig(): RuntimeAuthConfig {
@@ -45,6 +53,42 @@ export function getRuntimeAuthConfig(): RuntimeAuthConfig {
     cognitoDomain,
     clientSecret,
     addressAttrName,
+  }
+}
+
+export function getAmplifyConfig(): ResourcesConfig {
+  const cfg = getRuntimeAuthConfig()
+  const userPoolId = getUserPoolIdFromAuthority(cfg.authority)
+
+  return {
+    Auth: {
+      Cognito: {
+        userPoolId,
+        userPoolClientId: cfg.clientId,
+        loginWith: {
+          email: true,
+        },
+        signUpVerificationMethod: 'code',
+        userAttributes: {
+          email: {
+            required: true,
+          },
+          name: {
+            required: false,
+          },
+          phone_number: {
+            required: false,
+          },
+        },
+        passwordFormat: {
+          minLength: 8,
+          requireLowercase: true,
+          requireUppercase: true,
+          requireNumbers: true,
+          requireSpecialCharacters: true,
+        },
+      },
+    },
   }
 }
 
