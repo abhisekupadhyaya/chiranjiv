@@ -225,19 +225,19 @@ const ACHIEVEMENTS = [
 ]
 
 const getTierInfo = (percentile: number): { tier: Tier; name: string; colors: { from: string; via: string; to: string; glow: string } } => {
-  if (percentile >= 99) {
+  if (percentile <= 1) {
     return {
       tier: 'gold',
       name: 'Gold Tier',
       colors: { from: 'from-yellow-400', via: 'via-amber-500', to: 'to-orange-600', glow: 'shadow-yellow-500/50' }
     }
-  } else if (percentile >= 95) {
+  } else if (percentile <= 5) {
     return {
       tier: 'silver',
       name: 'Silver Tier',
       colors: { from: 'from-gray-300', via: 'via-slate-400', to: 'to-gray-500', glow: 'shadow-gray-400/50' }
     }
-  } else if (percentile >= 80) {
+  } else if (percentile <= 20) {
     return {
       tier: 'bronze',
       name: 'Bronze Tier',
@@ -252,8 +252,8 @@ const getTierInfo = (percentile: number): { tier: Tier; name: string; colors: { 
 }
 
 const calculateGamificationMetrics = (rank: number, totalUsers: number, referralsCount: number): GamificationMetrics => {
-  const percentile = ((rank) / totalUsers) * 100
-  const tierInfo = getTierInfo(percentile)
+  const percentile = ((totalUsers - rank) / totalUsers) * 100
+  const tierInfo = getTierInfo(100 - percentile)
   
   // Estimate jump: assume each referral moves you up by ~sqrt(totalUsers/100) positions
   const estimatedJump = Math.max(5, Math.floor(Math.sqrt(totalUsers / 100)))
@@ -305,7 +305,7 @@ interface CircularRankProgressProps {
 
 const CircularRankProgress = ({ rank, totalUsers, tierColors, percentile }: CircularRankProgressProps) => {
   const [mounted, setMounted] = useState(false)
-  const progress = ((totalUsers - rank) / totalUsers) * 100
+  const progress = 100 - percentile
   const circumference = 2 * Math.PI * 90
   const strokeDashoffset = mounted ? circumference - (progress / 100) * circumference : circumference
 

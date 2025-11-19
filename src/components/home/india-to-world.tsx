@@ -27,7 +27,7 @@ export function IndiaToWorld() {
                 From India, to the World
               </h2>
               <p className="text-base sm:text-lg text-muted-foreground mb-6 leading-relaxed font-light">
-                We're starting with India because it's the world's most genetically diverse nation — and the most
+                We're starting with India because it's the world's most genetically diverse nation and the most
                 underrepresented in global genomic databases.
               </p>
               <p className="text-base sm:text-lg text-muted-foreground mb-6 leading-relaxed font-light">
@@ -60,7 +60,7 @@ export function IndiaToWorld() {
                     4,600+ Ethnic Groups
                   </h3>
                   <p className="text-sm sm:text-base text-muted-foreground leading-relaxed font-light">
-                    India's genetic diversity rivals entire continents — and we're mapping it all
+                    India's genetic diversity rivals entire continents and we're mapping it all
                   </p>
                 </div>
               </Card>
