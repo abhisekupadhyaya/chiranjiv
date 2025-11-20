@@ -12,26 +12,9 @@ import { getRuntimeAuthConfig } from '@/auth/config'
 import { useAuth } from '@/auth'
 import { cn } from '@/lib/utils'
 
-const COUNTRY_CODES = [
-  { label: '🇮🇳 +91', value: '+91' },
-]
-
 const toE164 = (countryCode: string, localNumber: string): string => {
   const digitsOnly = localNumber.replace(/\D/g, '')
   return countryCode + digitsOnly
-}
-
-const parseE164 = (phone: string): { countryCode: string; localNumber: string } | null => {
-  if (!phone || !phone.startsWith('+')) return null
-  for (const country of COUNTRY_CODES) {
-    if (phone.startsWith(country.value)) {
-      return {
-        countryCode: country.value,
-        localNumber: phone.slice(country.value.length).trim(),
-      }
-    }
-  }
-  return { countryCode: '+91', localNumber: phone.slice(1).trim() }
 }
 
 // Removed unused ADDRESS_COUNTRIES constant
@@ -438,6 +421,336 @@ const ShareButtonGrid = ({ referralUrl, showReferralLink = true }: ShareButtonGr
   )
 }
 
+// SigninForm Component with local state
+interface SigninFormProps {
+  auth: ReturnType<typeof useAuth>
+  onSwitchToSignup: () => void
+  onShowForgotPassword: () => void
+  onShowUnverifiedEmail: (email: string) => void
+}
+
+const SigninForm = ({ auth, onSwitchToSignup, onShowForgotPassword, onShowUnverifiedEmail }: SigninFormProps) => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [errors, setErrors] = useState<Record<string, string>>({})
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!email || !password) {
+      setErrors({ email: 'Please enter email and password to sign in' })
+      return
+    }
+    try {
+      await auth.signIn(email.trim(), password)
+    } catch (err: any) {
+      // Handle unverified account specifically
+      if (err?.name === 'UserNotConfirmedException') {
+        onShowUnverifiedEmail(email.trim())
+        return
+      }
+      setErrors({ email: toFriendlyCognitoError(err) })
+    }
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+      <div>
+        <label htmlFor="signinEmail" className="block text-sm font-medium text-foreground mb-2 tracking-tight">Email</label>
+        <Input 
+          id="signinEmail" 
+          name="email" 
+          type="email" 
+          value={email} 
+          onChange={(e) => setEmail(e.target.value)} 
+          placeholder="your.email@example.com" 
+          className="w-full glass-input" 
+        />
+      </div>
+      <div>
+        <label htmlFor="signinPassword" className="block text-sm font-medium text-foreground mb-2 tracking-tight">Password</label>
+        <Input 
+          id="signinPassword" 
+          name="password" 
+          type="password" 
+          value={password} 
+          onChange={(e) => setPassword(e.target.value)} 
+          placeholder="Your password" 
+          className="w-full glass-input" 
+        />
+      </div>
+      {errors.email && <p className="text-xs text-red-500">{errors.email}</p>}
+      <Button type="submit" className="w-full btn-glow hover:scale-[1.02] transition-all">
+        Sign in
+      </Button>
+      {auth.user && <p className="text-xs text-green-600">Signed in</p>}
+      <div className="text-center">
+        <Button type="button" variant="outline" onClick={onShowForgotPassword} className="bg-transparent hover:scale-105 transition-transform">
+          Forgot password?
+        </Button>
+      </div>
+      <div className="text-center">
+        <Button type="button" variant="outline" onClick={onSwitchToSignup} className="bg-transparent hover:scale-105 transition-transform">
+          New here? Sign up
+        </Button>
+      </div>
+    </form>
+  )
+}
+
+// PasswordResetRequestForm Component with local state
+interface PasswordResetRequestFormProps {
+  initialEmail?: string
+  onBack: () => void
+  onCodeSent: (email: string) => void
+  auth: ReturnType<typeof useAuth>
+}
+
+const PasswordResetRequestForm = ({ initialEmail = '', onBack, onCodeSent, auth }: PasswordResetRequestFormProps) => {
+  const [email, setEmail] = useState(initialEmail)
+  const [error, setError] = useState('')
+  const [success, setSuccess] = useState('')
+  const [requesting, setRequesting] = useState(false)
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setError('')
+    setSuccess('')
+    if (!email.trim()) {
+      setError('Please enter your email address')
+      return
+    }
+    setRequesting(true)
+    try {
+      await auth.startPasswordReset(email.trim())
+      setSuccess('Reset code sent! Please check your email.')
+      onCodeSent(email.trim())
+    } catch (err: any) {
+      setError(toFriendlyCognitoError(err))
+    } finally {
+      setRequesting(false)
+    }
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+      <div className="space-y-2">
+        <h3 className="text-lg font-medium text-foreground tracking-tight">Reset Password</h3>
+        <p className="text-sm text-muted-foreground font-light">Enter your email to receive a password reset code.</p>
+      </div>
+      <div>
+        <label htmlFor="forgotEmail" className="block text-sm font-medium text-foreground mb-2 tracking-tight">Email Address</label>
+        <Input 
+          id="forgotEmail" 
+          name="forgotEmail" 
+          type="email" 
+          value={email} 
+          onChange={(e) => setEmail(e.target.value)} 
+          placeholder="your.email@example.com" 
+          className={`w-full glass-input ${error ? 'border-red-500' : ''}`}
+        />
+      </div>
+      {error && <p className="text-xs text-red-500">{error}</p>}
+      {success && <p className="text-xs text-green-600">{success}</p>}
+      <Button type="submit" className="w-full btn-glow hover:scale-[1.02] transition-all" disabled={requesting}>
+        {requesting ? 'Sending...' : 'Send Reset Code'}
+      </Button>
+      <div className="text-center">
+        <Button type="button" variant="ghost" onClick={onBack} className="text-sm hover:scale-105 transition-transform">
+          Back to sign in
+        </Button>
+      </div>
+    </form>
+  )
+}
+
+// PasswordResetConfirmForm Component with local state
+interface PasswordResetConfirmFormProps {
+  email: string
+  onBack: () => void
+  onResetSuccess: () => void
+  auth: ReturnType<typeof useAuth>
+}
+
+const PasswordResetConfirmForm = ({ email, onBack, onResetSuccess, auth }: PasswordResetConfirmFormProps) => {
+  const [code, setCode] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [error, setError] = useState('')
+  const [success, setSuccess] = useState('')
+  const [submitting, setSubmitting] = useState(false)
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setError('')
+    setSuccess('')
+    
+    if (!code.trim()) {
+      setError('Please enter the verification code')
+      return
+    }
+    
+    const pw = password
+    const strongPw =
+      pw.length >= 8 &&
+      /[A-Z]/.test(pw) &&
+      /[a-z]/.test(pw) &&
+      /[0-9]/.test(pw) &&
+      /[^A-Za-z0-9]/.test(pw)
+    if (!strongPw) {
+      setError('Use 8+ chars with upper, lower, number, and symbol')
+      return
+    }
+    
+    if (password !== confirmPassword) {
+      setError('Passwords do not match')
+      return
+    }
+    
+    setSubmitting(true)
+    try {
+      await auth.completePasswordReset(email.trim(), code.trim(), password)
+      setSuccess('Password reset successful! You can now sign in.')
+      setTimeout(() => {
+        onResetSuccess()
+      }, 2000)
+    } catch (err: any) {
+      setError(toFriendlyCognitoError(err))
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+      <div className="space-y-2">
+        <h3 className="text-lg font-medium text-foreground tracking-tight">Enter New Password</h3>
+        <p className="text-sm text-muted-foreground font-light">Enter the code from your email and your new password.</p>
+      </div>
+      <div>
+        <label htmlFor="resetCode" className="block text-sm font-medium text-foreground mb-2 tracking-tight">Verification Code</label>
+        <Input 
+          id="resetCode" 
+          name="resetCode" 
+          type="text" 
+          value={code} 
+          onChange={(e) => setCode(e.target.value)} 
+          placeholder="Enter the 6-digit code" 
+          className={`w-full glass-input ${error ? 'border-red-500' : ''}`}
+        />
+      </div>
+      <div>
+        <label htmlFor="resetPassword" className="block text-sm font-medium text-foreground mb-2 tracking-tight">New Password</label>
+        <div className="relative">
+          <Input 
+            id="resetPassword" 
+            name="resetPassword" 
+            type={showPassword ? 'text' : 'password'} 
+            value={password} 
+            onChange={(e) => setPassword(e.target.value)} 
+            placeholder="Minimum 8 characters" 
+            className={`w-full glass-input pr-10 ${error ? 'border-red-500' : ''}`}
+          />
+          <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors">
+            {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+          </button>
+        </div>
+      </div>
+      <div>
+        <label htmlFor="resetConfirmPassword" className="block text-sm font-medium text-foreground mb-2 tracking-tight">Confirm New Password</label>
+        <div className="relative">
+          <Input 
+            id="resetConfirmPassword" 
+            name="resetConfirmPassword" 
+            type={showConfirmPassword ? 'text' : 'password'} 
+            value={confirmPassword} 
+            onChange={(e) => setConfirmPassword(e.target.value)} 
+            placeholder="Re-enter your password" 
+            className={`w-full glass-input pr-10 ${error ? 'border-red-500' : ''}`}
+          />
+          <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors">
+            {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+          </button>
+        </div>
+      </div>
+      {error && <p className="text-xs text-red-500">{error}</p>}
+      {success && <p className="text-xs text-green-600">{success}</p>}
+      <Button type="submit" className="w-full btn-glow hover:scale-[1.02] transition-all" disabled={submitting}>
+        {submitting ? 'Resetting...' : 'Reset Password'}
+      </Button>
+      <div className="text-center">
+        <Button type="button" variant="ghost" onClick={onBack} className="text-sm hover:scale-105 transition-transform">
+          Back to sign in
+        </Button>
+      </div>
+    </form>
+  )
+}
+
+// UnverifiedEmailScreen Component with local state
+interface UnverifiedEmailScreenProps {
+  email: string
+  onBack: () => void
+}
+
+const UnverifiedEmailScreen = ({ email, onBack }: UnverifiedEmailScreenProps) => {
+  const [resending, setResending] = useState(false)
+  const [resent, setResent] = useState(false)
+  const [error, setError] = useState('')
+
+  const handleResend = async () => {
+    if (!email) return
+    setResending(true)
+    setResent(false)
+    setError('')
+    try {
+      await resendConfirmationCode(email)
+      setResent(true)
+    } catch (err: any) {
+      console.error('Failed to resend verification email:', err)
+      setError(toFriendlyCognitoError(err))
+    } finally {
+      setResending(false)
+    }
+  }
+
+  return (
+    <div className="space-y-4 sm:space-y-6">
+      <div className="space-y-2">
+        <div className="w-16 h-16 bg-gradient-to-br from-yellow-400/30 to-orange-500/20 rounded-full flex items-center justify-center mx-auto backdrop-blur-sm border border-yellow-400/30 shadow-lg shadow-yellow-400/10">
+          <Mail className="w-8 h-8 text-yellow-600 dark:text-yellow-400" />
+        </div>
+        <h3 className="text-lg font-medium text-foreground tracking-tight text-center">Account Not Verified</h3>
+        <p className="text-sm text-muted-foreground font-light text-center">
+          Your account is not verified. Please check your email at <span className="font-medium text-foreground">{email}</span> for the verification link.
+        </p>
+      </div>
+      {resent && (
+        <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
+          <p className="text-sm text-green-600 dark:text-green-400 text-center">
+            Verification email sent! Please check your inbox and spam folder.
+          </p>
+        </div>
+      )}
+      {error && <p className="text-xs text-red-500 text-center">{error}</p>}
+      <Button 
+        type="button" 
+        onClick={handleResend}
+        className="w-full btn-glow hover:scale-[1.02] transition-all" 
+        disabled={resending}
+      >
+        {resending ? 'Sending...' : 'Resend Verification Email'}
+      </Button>
+      <div className="text-center">
+        <Button type="button" variant="ghost" onClick={onBack} className="text-sm hover:scale-105 transition-transform">
+          Back to sign in
+        </Button>
+      </div>
+    </div>
+  )
+}
+
 export function Waitlist() {
   const auth = useAuth()
   const [searchParams] = useSearchParams()
@@ -471,41 +784,16 @@ export function Waitlist() {
   const [loading, setLoading] = useState(false)
   const successRef = useRef<HTMLDivElement>(null)
   const [showSignin, setShowSignin] = useState(false)
-  const [signinData, setSigninData] = useState({ email: '', password: '' })
+  const [showForgotPassword, setShowForgotPassword] = useState(false)
+  const [forgotPasswordEmail, setForgotPasswordEmail] = useState('')
+  const [showResetConfirm, setShowResetConfirm] = useState(false)
+  const [unverifiedEmail, setUnverifiedEmail] = useState('')
   const [rankData, setRankData] = useState<WaitlistRankResponse | null>(null)
   const [rankLoading, setRankLoading] = useState(false)
   const [rankError, setRankError] = useState('')
-  const [forgotStep, setForgotStep] = useState<'idle' | 'request' | 'confirm'>('idle')
-  const [forgotEmail, setForgotEmail] = useState('')
-  const [resetCode, setResetCode] = useState('')
-  const [resetPassword, setResetPassword] = useState('')
-  const [resetConfirmPassword, setResetConfirmPassword] = useState('')
-  const [resetRequesting, setResetRequesting] = useState(false)
-  const [resetSubmitting, setResetSubmitting] = useState(false)
-  const [resetError, setResetError] = useState('')
-  const [resetSuccess, setResetSuccess] = useState('')
-  const [showResetPassword, setShowResetPassword] = useState(false)
-  const [showResetConfirmPassword, setShowResetConfirmPassword] = useState(false)
   const [waitlistStats, setWaitlistStats] = useState({ totalUsers: 0, totalReferrals: 0 })
   const [statsLoading, setStatsLoading] = useState(true)
   const [referralLinkCopied, setReferralLinkCopied] = useState(false)
-  const [unverifiedEmail, setUnverifiedEmail] = useState('')
-  const [resendingVerification, setResendingVerification] = useState(false)
-  const [verificationResent, setVerificationResent] = useState(false)
-
-  useEffect(() => {
-    if (auth.user) {
-      const userPhone = auth.user?.phone_number as string
-      const parsed = userPhone ? parseE164(userPhone) : null
-      setFormData((prev) => ({
-        ...prev,
-        name: prev.name || (auth.user?.name as string) || '',
-        email: prev.email || (auth.user?.email as string) || '',
-        countryCode: parsed?.countryCode || prev.countryCode || '+91',
-        phoneLocal: parsed?.localNumber || prev.phoneLocal || '',
-      }))
-    }
-  }, [auth.user])
 
   // Auto-fill referral code from URL query parameter
   useEffect(() => {
@@ -740,29 +1028,6 @@ export function Waitlist() {
     if (errors[name]) setErrors({ ...errors, [name]: '' })
   }
 
-  const handleSigninChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSigninData({ ...signinData, [e.target.name]: e.target.value })
-  }
-
-  const handleSigninSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!signinData.email || !signinData.password) {
-      setErrors({ email: 'Please enter email and password to sign in' })
-      return
-    }
-    try {
-      await auth.signIn(signinData.email.trim(), signinData.password)
-    } catch (err: any) {
-      // Handle unverified account specifically
-      if (err?.name === 'UserNotConfirmedException') {
-        setUnverifiedEmail(signinData.email.trim())
-        setErrors({})
-        return
-      }
-      setErrors({ email: toFriendlyCognitoError(err) })
-    }
-  }
-
   const copyReferralMessage = () => {
     const message = `Join me on Project Chiranjiv - India's first free full-genome sequencing platform! Use my referral code ${referralCode} to skip the queue. https://chiranjiv.com`
     navigator.clipboard.writeText(message)
@@ -775,113 +1040,6 @@ export function Waitlist() {
       // Silent failure - user can try again
       console.error('Failed to resend verification email:', err)
     }
-  }
-
-  const handleForgotPasswordClick = () => {
-    setForgotStep('request')
-    setForgotEmail(signinData.email)
-    setResetError('')
-    setResetSuccess('')
-  }
-
-  const handleRequestResetCode = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setResetError('')
-    setResetSuccess('')
-    if (!forgotEmail.trim()) {
-      setResetError('Please enter your email address')
-      return
-    }
-    setResetRequesting(true)
-    try {
-      await auth.startPasswordReset(forgotEmail.trim())
-      setResetSuccess('Reset code sent! Please check your email.')
-      setForgotStep('confirm')
-    } catch (err: any) {
-      setResetError(toFriendlyCognitoError(err))
-    } finally {
-      setResetRequesting(false)
-    }
-  }
-
-  const handleCompletePasswordReset = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setResetError('')
-    setResetSuccess('')
-    
-    if (!resetCode.trim()) {
-      setResetError('Please enter the verification code')
-      return
-    }
-    
-    const pw = resetPassword
-    const strongPw =
-      pw.length >= 8 &&
-      /[A-Z]/.test(pw) &&
-      /[a-z]/.test(pw) &&
-      /[0-9]/.test(pw) &&
-      /[^A-Za-z0-9]/.test(pw)
-    if (!strongPw) {
-      setResetError('Use 8+ chars with upper, lower, number, and symbol')
-      return
-    }
-    
-    if (resetPassword !== resetConfirmPassword) {
-      setResetError('Passwords do not match')
-      return
-    }
-    
-    setResetSubmitting(true)
-    try {
-      await auth.completePasswordReset(forgotEmail.trim(), resetCode.trim(), resetPassword)
-      setResetSuccess('Password reset successful! You can now sign in.')
-      // Reset form and go back to sign in after a brief delay
-      setTimeout(() => {
-        setForgotStep('idle')
-        setForgotEmail('')
-        setResetCode('')
-        setResetPassword('')
-        setResetConfirmPassword('')
-        setResetError('')
-        setResetSuccess('')
-        setSigninData({ ...signinData, email: forgotEmail.trim() })
-      }, 2000)
-    } catch (err: any) {
-      setResetError(toFriendlyCognitoError(err))
-    } finally {
-      setResetSubmitting(false)
-    }
-  }
-
-  const handleBackToSignin = () => {
-    setForgotStep('idle')
-    setForgotEmail('')
-    setResetCode('')
-    setResetPassword('')
-    setResetConfirmPassword('')
-    setResetError('')
-    setResetSuccess('')
-  }
-
-  const handleResendVerificationEmail = async () => {
-    if (!unverifiedEmail) return
-    setResendingVerification(true)
-    setVerificationResent(false)
-    try {
-      await resendConfirmationCode(unverifiedEmail)
-      setVerificationResent(true)
-    } catch (err: any) {
-      console.error('Failed to resend verification email:', err)
-      setErrors({ email: toFriendlyCognitoError(err) })
-    } finally {
-      setResendingVerification(false)
-    }
-  }
-
-  const handleBackToSigninFromUnverified = () => {
-    setUnverifiedEmail('')
-    setVerificationResent(false)
-    setErrors({})
   }
 
   const resetFormData = () => {
@@ -909,20 +1067,13 @@ export function Waitlist() {
     setErrors({})
   }
 
-  const resetSigninData = () => {
-    setSigninData({ email: '', password: '' })
-    setErrors({})
-  }
-
   const handleSignOut = async () => {
-    // Clear all user-related state
+    // Clear user-related state
     setRankData(null)
     setRankError('')
-    setSigninData({ email: '', password: '' })
-    setErrors({})
     setReferralLinkCopied(false)
-    setUnverifiedEmail('')
-    setVerificationResent(false)
+    setShowSignin(false)
+    resetFormData()
     // Sign out from auth
     await auth.signOut()
   }
@@ -1140,162 +1291,45 @@ export function Waitlist() {
                         {loading ? 'Saving...' : 'Continue'}
                       </Button>
                       <div className="text-center">
-                        <Button type="button" variant="outline" onClick={() => { resetFormData(); setShowSignin(true) }} className="bg-transparent hover:scale-105 transition-transform">
+                        <Button type="button" variant="outline" onClick={() => setShowSignin(true)} className="bg-transparent hover:scale-105 transition-transform">
                           Already have an account? Sign in
                         </Button>
                       </div>
                     </form>
-                  ) : forgotStep === 'request' ? (
-                    <form onSubmit={handleRequestResetCode} className="space-y-4 sm:space-y-6">
-                      <div className="space-y-2">
-                        <h3 className="text-lg font-medium text-foreground tracking-tight">Reset Password</h3>
-                        <p className="text-sm text-muted-foreground font-light">Enter your email to receive a password reset code.</p>
-                      </div>
-                      <div>
-                        <label htmlFor="forgotEmail" className="block text-sm font-medium text-foreground mb-2 tracking-tight">Email Address</label>
-                        <Input 
-                          id="forgotEmail" 
-                          name="forgotEmail" 
-                          type="email" 
-                          value={forgotEmail} 
-                          onChange={(e) => setForgotEmail(e.target.value)} 
-                          placeholder="your.email@example.com" 
-                          className={`w-full glass-input ${resetError ? 'border-red-500' : ''}`}
-                        />
-                      </div>
-                      {resetError && <p className="text-xs text-red-500">{resetError}</p>}
-                      {resetSuccess && <p className="text-xs text-green-600">{resetSuccess}</p>}
-                      <Button type="submit" className="w-full btn-glow hover:scale-[1.02] transition-all" disabled={resetRequesting}>
-                        {resetRequesting ? 'Sending...' : 'Send Reset Code'}
-                      </Button>
-                      <div className="text-center">
-                        <Button type="button" variant="ghost" onClick={handleBackToSignin} className="text-sm hover:scale-105 transition-transform">
-                          Back to sign in
-                        </Button>
-                      </div>
-                    </form>
-                  ) : forgotStep === 'confirm' ? (
-                    <form onSubmit={handleCompletePasswordReset} className="space-y-4 sm:space-y-6">
-                      <div className="space-y-2">
-                        <h3 className="text-lg font-medium text-foreground tracking-tight">Enter New Password</h3>
-                        <p className="text-sm text-muted-foreground font-light">Enter the code from your email and your new password.</p>
-                      </div>
-                      <div>
-                        <label htmlFor="resetCode" className="block text-sm font-medium text-foreground mb-2 tracking-tight">Verification Code</label>
-                        <Input 
-                          id="resetCode" 
-                          name="resetCode" 
-                          type="text" 
-                          value={resetCode} 
-                          onChange={(e) => setResetCode(e.target.value)} 
-                          placeholder="Enter the 6-digit code" 
-                          className={`w-full glass-input ${resetError ? 'border-red-500' : ''}`}
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="resetPassword" className="block text-sm font-medium text-foreground mb-2 tracking-tight">New Password</label>
-                        <div className="relative">
-                          <Input 
-                            id="resetPassword" 
-                            name="resetPassword" 
-                            type={showResetPassword ? 'text' : 'password'} 
-                            value={resetPassword} 
-                            onChange={(e) => setResetPassword(e.target.value)} 
-                            placeholder="Minimum 8 characters" 
-                            className={`w-full glass-input pr-10 ${resetError ? 'border-red-500' : ''}`}
-                          />
-                          <button type="button" onClick={() => setShowResetPassword(!showResetPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors">
-                            {showResetPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                          </button>
-                        </div>
-                      </div>
-                      <div>
-                        <label htmlFor="resetConfirmPassword" className="block text-sm font-medium text-foreground mb-2 tracking-tight">Confirm New Password</label>
-                        <div className="relative">
-                          <Input 
-                            id="resetConfirmPassword" 
-                            name="resetConfirmPassword" 
-                            type={showResetConfirmPassword ? 'text' : 'password'} 
-                            value={resetConfirmPassword} 
-                            onChange={(e) => setResetConfirmPassword(e.target.value)} 
-                            placeholder="Re-enter your password" 
-                            className={`w-full glass-input pr-10 ${resetError ? 'border-red-500' : ''}`}
-                          />
-                          <button type="button" onClick={() => setShowResetConfirmPassword(!showResetConfirmPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors">
-                            {showResetConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                          </button>
-                        </div>
-                      </div>
-                      {resetError && <p className="text-xs text-red-500">{resetError}</p>}
-                      {resetSuccess && <p className="text-xs text-green-600">{resetSuccess}</p>}
-                      <Button type="submit" className="w-full btn-glow hover:scale-[1.02] transition-all" disabled={resetSubmitting}>
-                        {resetSubmitting ? 'Resetting...' : 'Reset Password'}
-                      </Button>
-                      <div className="text-center">
-                        <Button type="button" variant="ghost" onClick={handleBackToSignin} className="text-sm hover:scale-105 transition-transform">
-                          Back to sign in
-                        </Button>
-                      </div>
-                    </form>
+                  ) : showForgotPassword && showResetConfirm ? (
+                    <PasswordResetConfirmForm
+                      email={forgotPasswordEmail}
+                      onBack={() => {
+                        setShowResetConfirm(false)
+                        setShowForgotPassword(false)
+                      }}
+                      onResetSuccess={() => {
+                        setShowResetConfirm(false)
+                        setShowForgotPassword(false)
+                      }}
+                      auth={auth}
+                    />
+                  ) : showForgotPassword ? (
+                    <PasswordResetRequestForm
+                      onBack={() => setShowForgotPassword(false)}
+                      onCodeSent={(email) => {
+                        setForgotPasswordEmail(email)
+                        setShowResetConfirm(true)
+                      }}
+                      auth={auth}
+                    />
                   ) : unverifiedEmail ? (
-                    <div className="space-y-4 sm:space-y-6">
-                      <div className="space-y-2">
-                        <div className="w-16 h-16 bg-gradient-to-br from-yellow-400/30 to-orange-500/20 rounded-full flex items-center justify-center mx-auto backdrop-blur-sm border border-yellow-400/30 shadow-lg shadow-yellow-400/10">
-                          <Mail className="w-8 h-8 text-yellow-600 dark:text-yellow-400" />
-                        </div>
-                        <h3 className="text-lg font-medium text-foreground tracking-tight text-center">Account Not Verified</h3>
-                        <p className="text-sm text-muted-foreground font-light text-center">
-                          Your account is not verified. Please check your email at <span className="font-medium text-foreground">{unverifiedEmail}</span> for the verification link.
-                        </p>
-                      </div>
-                      {verificationResent && (
-                        <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
-                          <p className="text-sm text-green-600 dark:text-green-400 text-center">
-                            Verification email sent! Please check your inbox and spam folder.
-                          </p>
-                        </div>
-                      )}
-                      {errors.email && <p className="text-xs text-red-500 text-center">{errors.email}</p>}
-                      <Button 
-                        type="button" 
-                        onClick={handleResendVerificationEmail}
-                        className="w-full btn-glow hover:scale-[1.02] transition-all" 
-                        disabled={resendingVerification}
-                      >
-                        {resendingVerification ? 'Sending...' : 'Resend Verification Email'}
-                      </Button>
-                      <div className="text-center">
-                        <Button type="button" variant="ghost" onClick={handleBackToSigninFromUnverified} className="text-sm hover:scale-105 transition-transform">
-                          Back to sign in
-                        </Button>
-                      </div>
-                    </div>
+                    <UnverifiedEmailScreen
+                      email={unverifiedEmail}
+                      onBack={() => setUnverifiedEmail('')}
+                    />
                   ) : (
-                    <form onSubmit={handleSigninSubmit} className="space-y-4 sm:space-y-6">
-                      <div>
-                        <label htmlFor="signinEmail" className="block text-sm font-medium text-foreground mb-2 tracking-tight">Email</label>
-                        <Input id="signinEmail" name="email" type="email" value={signinData.email} onChange={handleSigninChange} placeholder="your.email@example.com" className="w-full glass-input" />
-                      </div>
-                      <div>
-                        <label htmlFor="signinPassword" className="block text-sm font-medium text-foreground mb-2 tracking-tight">Password</label>
-                        <Input id="signinPassword" name="password" type="password" value={signinData.password} onChange={handleSigninChange} placeholder="Your password" className="w-full glass-input" />
-                      </div>
-                      {errors.email && <p className="text-xs text-red-500">{errors.email}</p>}
-                      <Button type="submit" className="w-full btn-glow hover:scale-[1.02] transition-all">
-                        Sign in
-                      </Button>
-                      {auth.user && <p className="text-xs text-green-600">Signed in</p>}
-                      <div className="text-center">
-                        <Button type="button" variant="outline" onClick={handleForgotPasswordClick} className="bg-transparent hover:scale-105 transition-transform">
-                          Forgot password?
-                        </Button>
-                      </div>
-                      <div className="text-center">
-                        <Button type="button" variant="outline" onClick={() => { resetSigninData(); setShowSignin(false) }} className="bg-transparent hover:scale-105 transition-transform">
-                          New here? Sign up
-                        </Button>
-                      </div>
-                    </form>
+                    <SigninForm
+                      auth={auth}
+                      onSwitchToSignup={() => setShowSignin(false)}
+                      onShowForgotPassword={() => setShowForgotPassword(true)}
+                      onShowUnverifiedEmail={(email) => setUnverifiedEmail(email)}
+                    />
                   )
                 )}
                 {step === 2 && (
@@ -1465,7 +1499,6 @@ export function Waitlist() {
                       <Button 
                         type="button"
                         onClick={() => {
-                          resetFormData()
                           setStep(1)
                           setShowSignin(true)
                         }}
