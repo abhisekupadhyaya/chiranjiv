@@ -118,8 +118,8 @@ export function ChooseYourStep() {
                   {/* Pricing - fixed height container */}
                   <div className="h-[4rem] flex flex-col justify-center mb-4">
                     <div className="flex items-baseline gap-3">
-                      <div className="text-2xl sm:text-3xl font-extralight tracking-tight text-muted-foreground">
-                        Coming Soon
+                      <div className="text-2xl sm:text-3xl font-extralight tracking-tight text-blue-500">
+                        COMING SOON
                       </div>
                     </div>
                   </div>
