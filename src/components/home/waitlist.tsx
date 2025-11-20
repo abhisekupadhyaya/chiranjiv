@@ -489,6 +489,9 @@ export function Waitlist() {
   const [waitlistStats, setWaitlistStats] = useState({ totalUsers: 0, totalReferrals: 0 })
   const [statsLoading, setStatsLoading] = useState(true)
   const [referralLinkCopied, setReferralLinkCopied] = useState(false)
+  const [unverifiedEmail, setUnverifiedEmail] = useState('')
+  const [resendingVerification, setResendingVerification] = useState(false)
+  const [verificationResent, setVerificationResent] = useState(false)
 
   useEffect(() => {
     if (auth.user) {
@@ -749,6 +752,12 @@ export function Waitlist() {
     try {
       await auth.signIn(signinData.email.trim(), signinData.password)
     } catch (err: any) {
+      // Handle unverified account specifically
+      if (err?.name === 'UserNotConfirmedException') {
+        setUnverifiedEmail(signinData.email.trim())
+        setErrors({})
+        return
+      }
       setErrors({ email: toFriendlyCognitoError(err) })
     }
   }
@@ -851,6 +860,27 @@ export function Waitlist() {
     setResetConfirmPassword('')
     setResetError('')
     setResetSuccess('')
+  }
+
+  const handleResendVerificationEmail = async () => {
+    if (!unverifiedEmail) return
+    setResendingVerification(true)
+    setVerificationResent(false)
+    try {
+      await resendConfirmationCode(unverifiedEmail)
+      setVerificationResent(true)
+    } catch (err: any) {
+      console.error('Failed to resend verification email:', err)
+      setErrors({ email: toFriendlyCognitoError(err) })
+    } finally {
+      setResendingVerification(false)
+    }
+  }
+
+  const handleBackToSigninFromUnverified = () => {
+    setUnverifiedEmail('')
+    setVerificationResent(false)
+    setErrors({})
   }
 
   return (
@@ -1163,6 +1193,39 @@ export function Waitlist() {
                         </Button>
                       </div>
                     </form>
+                  ) : unverifiedEmail ? (
+                    <div className="space-y-4 sm:space-y-6">
+                      <div className="space-y-2">
+                        <div className="w-16 h-16 bg-gradient-to-br from-yellow-400/30 to-orange-500/20 rounded-full flex items-center justify-center mx-auto backdrop-blur-sm border border-yellow-400/30 shadow-lg shadow-yellow-400/10">
+                          <Mail className="w-8 h-8 text-yellow-600 dark:text-yellow-400" />
+                        </div>
+                        <h3 className="text-lg font-medium text-foreground tracking-tight text-center">Account Not Verified</h3>
+                        <p className="text-sm text-muted-foreground font-light text-center">
+                          Your account is not verified. Please check your email at <span className="font-medium text-foreground">{unverifiedEmail}</span> for the verification link.
+                        </p>
+                      </div>
+                      {verificationResent && (
+                        <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
+                          <p className="text-sm text-green-600 dark:text-green-400 text-center">
+                            Verification email sent! Please check your inbox and spam folder.
+                          </p>
+                        </div>
+                      )}
+                      {errors.email && <p className="text-xs text-red-500 text-center">{errors.email}</p>}
+                      <Button 
+                        type="button" 
+                        onClick={handleResendVerificationEmail}
+                        className="w-full btn-glow hover:scale-[1.02] transition-all" 
+                        disabled={resendingVerification}
+                      >
+                        {resendingVerification ? 'Sending...' : 'Resend Verification Email'}
+                      </Button>
+                      <div className="text-center">
+                        <Button type="button" variant="ghost" onClick={handleBackToSigninFromUnverified} className="text-sm hover:scale-105 transition-transform">
+                          Back to sign in
+                        </Button>
+                      </div>
+                    </div>
                   ) : (
                     <form onSubmit={handleSigninSubmit} className="space-y-4 sm:space-y-6">
                       <div>

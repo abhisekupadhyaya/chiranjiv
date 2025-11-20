@@ -121,6 +121,13 @@ export async function signInWithCognito(email: string, password: string): Promis
     password,
   })
 
+  // Check if account needs confirmation
+  if (!result.isSignedIn && result.nextStep?.signInStep === 'CONFIRM_SIGN_UP') {
+    const error = new Error('User is not confirmed.')
+    error.name = 'UserNotConfirmedException'
+    throw error
+  }
+
   if (!result.isSignedIn) {
     throw new Error('Authentication failed')
   }
