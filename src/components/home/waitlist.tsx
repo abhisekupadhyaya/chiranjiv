@@ -708,6 +708,7 @@ export function Waitlist() {
 
       // Move to confirmation step
       setStep(3)
+      resetFormData()
       const signupResponse = data as any
       setReferralCode(signupResponse.referralCode)
       try {
