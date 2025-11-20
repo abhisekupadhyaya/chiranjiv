@@ -34,9 +34,7 @@ const parseE164 = (phone: string): { countryCode: string; localNumber: string } 
   return { countryCode: '+91', localNumber: phone.slice(1).trim() }
 }
 
-const ADDRESS_COUNTRIES = [
-  { label: 'India', value: 'IN' },
-]
+// Removed unused ADDRESS_COUNTRIES constant
 
 const INDIAN_STATES = [
   'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh',
@@ -330,12 +328,11 @@ const StatCard = ({ icon, label, value, trend, highlight }: StatCardProps) => {
 }
 
 interface ShareButtonGridProps {
-  referralCode: string
   referralUrl: string
   showReferralLink?: boolean
 }
 
-const ShareButtonGrid = ({ referralCode, referralUrl, showReferralLink = true }: ShareButtonGridProps) => {
+const ShareButtonGrid = ({ referralUrl, showReferralLink = true }: ShareButtonGridProps) => {
   const [copied, setCopied] = useState(false)
   const message = `Claim your FREE Genome Test and unlock actionable insights for your fitness, lifestyle, and long-term health (worth ₹1.5L in value).
 
@@ -728,10 +725,7 @@ export function Waitlist() {
     if (errors.phone) setErrors({ ...errors, phone: '' })
   }
   
-  const handleCountryCodeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setFormData({ ...formData, countryCode: e.target.value })
-    if (errors.phone) setErrors({ ...errors, phone: '' })
-  }
+  // Removed unused handleCountryCodeChange function
 
   const handleCheckboxChange = (name: string, checked: boolean) => {
     setFormData({ ...formData, [name]: checked })
@@ -991,7 +985,7 @@ export function Waitlist() {
 
                           {/* Share Section */}
                           <div className="space-y-4">
-                            <ShareButtonGrid referralCode={rankData.referralCode} referralUrl={referralUrl} showReferralLink={false} />
+                            <ShareButtonGrid referralUrl={referralUrl} showReferralLink={false} />
                           </div>
 
                           {/* Q1 Timeline Banner */}
