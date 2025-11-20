@@ -61,7 +61,7 @@ So while Europe has biobanks with over **500,000 sequenced genomes**, India is s
 
 **Project Chiranjiv was built to fill this gap — ethically, transparently, and at scale.**
 
-By offering free full-genome sequencing across India, Chiranjiv will build the world's most detailed reference map of Indian sub-populations.
+By offering highly subsidised full-genome sequencing across India with detailed insights into individual health, wellness and longevity plan, Chiranjiv aims to build the world's most detailed reference map of Indian sub-populations.
 
 Our mission is to make genomic knowledge truly representative — capturing the genetic signatures of Maharashtrians, Punjabis, Tamils, and every other region and community.
 
@@ -97,7 +97,7 @@ Chiranjiv's mission is to write that missing chapter — with India's diversity 
 
 ---
 
-**Your DNA. Your Future. Free Forever.**`,
+**Decrypt your DNA for a fitter, healthier, better you**`,
     }
     return (
       <section className="relative pt-24 sm:pt-32 pb-16 sm:pb-24 overflow-hidden">

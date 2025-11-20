@@ -23,17 +23,20 @@ export function Hero() {
           </div>
           <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl hero-headline text-foreground mb-4 sm:mb-6 md:mb-8 text-balance font-extralight leading-[1.1] tracking-tight">
             <span className="inline-block text-foreground">Your DNA.</span>{' '}
-            <span className="inline-block text-foreground">Your Future.</span>{' '}
+            <span className="inline-block text-foreground">Your Fitness.</span>{' '}
+            <span className="inline-block text-foreground">Your Longevity.</span>{' '}
             <span className="inline-block bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-cyan-400 via-blue-500 via-purple-500 via-pink-500 to-orange-400 animate-gradient-x font-extralight">
               Your Control.
             </span>
           </h1>
-          <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 sm:mb-8 md:mb-10 mx-auto text-pretty leading-relaxed max-w-3xl font-light">
-            Early users receive ₹1.5 L worth of Genome sequencing and DNA-based reports designed to optimize your health, wellness, and food choices.
+          <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-4 sm:mb-5 md:mb-6 mx-auto text-pretty leading-relaxed max-w-3xl font-light">
+            Unlock your genetic blueprint for a fitter, longer, and more energetic life. Transform your lifestyle and health with proactive recommendations tailored for you.
+          </p>
+          <p className="text-sm sm:text-base md:text-lg text-muted-foreground mb-6 sm:mb-8 md:mb-10 mx-auto text-pretty leading-relaxed max-w-3xl font-light">
+            Understand your body at the deepest level and make smarter health choices for life, with <span className="font-medium text-foreground">₹1.5 L worth of genetic reports</span> included at no cost to early users
           </p>
           <p className="text-sm sm:text-base text-muted-foreground mb-6 sm:mb-8 md:mb-10 mx-auto leading-relaxed max-w-3xl font-light px-4 sm:px-0">
-            <span className="font-medium">Join the waitlist.</span> <span className="inline-block">Share your unique referral code to <span className="font-medium">skip the queue</span>.</span>{' '}
-            <span className="inline-block">The more friends who sign up, the <span className="font-medium">faster you move up</span>.</span>
+            <span className="font-medium">Join the waitlist.</span> <span className="inline-block">Share your unique referral code to <span className="font-medium">jump the queue</span>.</span>
           </p>
           <div className="flex items-center justify-center mb-6 sm:mb-8">
             <Button
@@ -47,7 +50,7 @@ export function Hero() {
           <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-muted-foreground">
             <span className="font-light tracking-wide text-xs sm:text-sm">Ethical & Transparent</span>
             <span className="text-muted-foreground/30">•</span>
-            <span className="font-light tracking-wide text-xs sm:text-sm">Bank-Grade Security</span>
+            <span className="font-light tracking-wide text-xs sm:text-sm">Highly Secure</span>
             <span className="text-muted-foreground/30">•</span>
             <span className="font-light tracking-wide text-xs sm:text-sm">Data Stored in India</span>
             <span className="text-muted-foreground/30">•</span>

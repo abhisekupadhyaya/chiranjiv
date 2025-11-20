@@ -9,9 +9,9 @@ const steps = [
   },
   {
     number: '02',
-    title: 'Receive Your Kit',
+    title: 'Sample Collection',
     description:
-      'Get your free at-home DNA collection kit delivered when you reach the top spots in Q1 2026.',
+      'Schedule At home Sample Collection at your convenience',
   },
   {
     number: '03',

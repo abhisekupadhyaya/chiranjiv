@@ -192,8 +192,8 @@ export function PolicyLayout({
                   <div className="mt-12 pt-8 border-t border-border/30">
                     <p className="text-sm text-muted-foreground font-light">
                       Questions about this document? Contact us at{' '}
-                      <a href="mailto:privacy@chiranjiv.com" className="text-primary hover:underline font-medium">
-                        privacy@chiranjiv.com
+                      <a href="mailto:support@chiranjiv.com" className="text-primary hover:underline font-medium">
+                        support@chiranjiv.com
                       </a>
                     </p>
                   </div>
@@ -207,8 +207,8 @@ export function PolicyLayout({
                 <div className="mt-12 pt-8 border-t border-border/30">
                   <p className="text-sm text-muted-foreground font-light">
                     Questions about this document? Contact us at{' '}
-                    <a href="mailto:privacy@chiranjiv.com" className="text-primary hover:underline font-medium">
-                      privacy@chiranjiv.com
+                    <a href="mailto:support@chiranjiv.com" className="text-primary hover:underline font-medium">
+                      support@chiranjiv.com
                     </a>
                   </p>
                 </div>

@@ -4,7 +4,7 @@ export default function DataUsagePolicy() {
   return (
     <PolicyLayout 
       title="Data Usage Policy" 
-      lastUpdated="November ___, 2025"
+      lastUpdated="November 1, 2025"
       category="Internal Policy · Data Governance"
     >
       <section id="purpose" className="mb-8">

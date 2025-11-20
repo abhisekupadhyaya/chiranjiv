@@ -39,13 +39,13 @@ export function ChooseYourStep() {
 
           {/* Pricing Cards Grid */}
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 max-w-6xl mx-auto mb-12 sm:mb-16">
-            {/* Basic Health & Ancestry Report Card */}
+            {/* Basic Health Report Card */}
             <div className="relative glass-backdrop backdrop-blur-sm border border-primary/30 rounded-3xl p-6 sm:p-8 md:p-10 shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 animate-in fade-in slide-in-from-bottom-4 flex flex-col">
               <div className="flex flex-col flex-1">
                 {/* Header Section */}
                 <div className="mb-8">
                   <h3 className="text-2xl sm:text-3xl font-light tracking-tight text-foreground mb-6 leading-tight h-[3.5rem] flex items-center">
-                    Basic Health & Ancestry Report
+                    Basic Health Report
                   </h3>
                   
                   {/* Pricing - fixed height container */}
@@ -58,19 +58,33 @@ export function ChooseYourStep() {
                     <div className="text-xs sm:text-sm text-primary/80 font-light mt-1">For Early Access Members</div>
                   </div>
                   
-                  <p className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed text-pretty min-h-[3rem]">
-                    Start with core ancestry and foundational wellness insights. A perfect on-ramp to your genome.
-                  </p>
+                  <div className="space-y-3 min-h-[240px] sm:min-h-[260px]">
+                    <div className="flex items-start gap-3">
+                      <div className="w-1.5 h-1.5 rounded-full bg-primary/60 flex-shrink-0 mt-2" />
+                      <p className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed text-pretty">Unlock your unique genetic profile for a personalized path to better health and wellbeing.</p>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-1.5 h-1.5 rounded-full bg-primary/60 flex-shrink-0 mt-2" />
+                      <p className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed text-pretty">Receive actionable tips for boosting everyday energy, sleep, immunity, and healthy aging.</p>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-1.5 h-1.5 rounded-full bg-primary/60 flex-shrink-0 mt-2" />
+                      <p className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed text-pretty">Get nutrition suggestions tailored to your genetic needs.</p>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-1.5 h-1.5 rounded-full bg-primary/60 flex-shrink-0 mt-2" />
+                      <p className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed text-pretty">Take control of your data and gain clarity on your ancestry, empowering lifelong wellness choices.</p>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Features List - grows to fill space */}
                 <div className="space-y-3 mb-8 flex-1">
                   {[
-                    'Ancestry overview (India + global context)',
                     'Foundational wellness markers (non-diagnostic)',
-                    'Starter nutrition pointers',
-                    'Data ownership & control dashboard',
-                    'Downloadable summary (PDF)'
+                    'Personalized nutrition jumpstart',
+                    'Lifetime data control dashboard',
+                    'Downloadable wellness summary (PDF)'
                   ].map((feature, i) => (
                     <div key={i} className="flex items-start gap-3">
                       <CheckIcon />
@@ -105,44 +119,50 @@ export function ChooseYourStep() {
                   <div className="h-[4rem] flex flex-col justify-center mb-4">
                     <div className="flex items-baseline gap-3">
                       <div className="text-2xl sm:text-3xl font-extralight tracking-tight text-muted-foreground">
-                        Future pricing
+                        Coming Soon
                       </div>
                     </div>
                   </div>
                   
-                  <p className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed text-pretty min-h-[3rem]">
-                    Go deeper with regional ancestry resolution and personalized health guidance calibrated for Indian genomes.
-                  </p>
+                  <div className="space-y-3 min-h-[240px] sm:min-h-[260px]">
+                    <div className="flex items-start gap-3">
+                      <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground/40 flex-shrink-0 mt-2" />
+                      <p className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed text-pretty">Dive into ultra-personalized health tools using your deep regional ancestry.</p>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground/40 flex-shrink-0 mt-2" />
+                      <p className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed text-pretty">Get a custom nutrition and metabolism plan to fuel your longevity journey.</p>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground/40 flex-shrink-0 mt-2" />
+                      <p className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed text-pretty">Maximize your fitness and recovery with DNA-based insights.</p>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground/40 flex-shrink-0 mt-2" />
+                      <p className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed text-pretty">Proactive wellness: detect early risk factors for chronic conditions and optimize your healthy lifespan.</p>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground/40 flex-shrink-0 mt-2" />
+                      <p className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed text-pretty">Medication sensitivity and best-fit recommendations for a future-proof lifestyle.</p>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Features List - grows to fill space */}
                 <div className="space-y-3 mb-8 flex-1">
                   {[
-                    'Fine-grained regional ancestry (as references expand)',
-                    'Personalized nutrition plan & metabolism insights',
-                    'Fitness & recovery tendencies',
-                    'Early risk indicators (non-diagnostic)',
-                    'Medication & sensitivity flags (where supported)',
-                    'Priority updates as new models launch',
-                    'Export to your healthcare provider'
+                    'Personalized nutrition and metabolism roadmap',
+                    'Fitness and recovery tendencies for healthy aging',
+                    'Early risk and inflammation indicators (non-diagnostic)',
+                    'Medication & sensitivity insights',
+                    'Healthcare provider sharing options',
+                    'Priority access to future upgrades'
                   ].map((feature, i) => (
                     <div key={i} className="flex items-start gap-3">
                       <CheckIcon />
                       <span className="text-sm font-light text-foreground leading-relaxed">{feature}</span>
                     </div>
                   ))}
-                </div>
-
-                {/* CTA Button - anchored at bottom with separator */}
-                <div className="pt-8 border-t border-border/30">
-                  <Button 
-                    variant="outline" 
-                    className="w-full bg-transparent hover:bg-transparent hover:border-border/50 hover:text-muted-foreground transition-all border-border/50 cursor-not-allowed"
-                    size="lg"
-                    disabled
-                  >
-                    Coming Soon
-                  </Button>
                 </div>
               </div>
             </div>

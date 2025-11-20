@@ -14,85 +14,6 @@ import { cn } from '@/lib/utils'
 
 const COUNTRY_CODES = [
   { label: '🇮🇳 +91', value: '+91' },
-  { label: '🇺🇸 +1', value: '+1' },
-  { label: '🇬🇧 +44', value: '+44' },
-  { label: '🇨🇦 +1', value: '+1' },
-  { label: '🇦🇺 +61', value: '+61' },
-  { label: '🇩🇪 +49', value: '+49' },
-  { label: '🇫🇷 +33', value: '+33' },
-  { label: '🇮🇹 +39', value: '+39' },
-  { label: '🇪🇸 +34', value: '+34' },
-  { label: '🇳🇱 +31', value: '+31' },
-  { label: '🇧🇪 +32', value: '+32' },
-  { label: '🇨🇭 +41', value: '+41' },
-  { label: '🇦🇹 +43', value: '+43' },
-  { label: '🇸🇪 +46', value: '+46' },
-  { label: '🇳🇴 +47', value: '+47' },
-  { label: '🇩🇰 +45', value: '+45' },
-  { label: '🇫🇮 +358', value: '+358' },
-  { label: '🇵🇱 +48', value: '+48' },
-  { label: '🇬🇷 +30', value: '+30' },
-  { label: '🇵🇹 +351', value: '+351' },
-  { label: '🇮🇪 +353', value: '+353' },
-  { label: '🇷🇺 +7', value: '+7' },
-  { label: '🇹🇷 +90', value: '+90' },
-  { label: '🇸🇦 +966', value: '+966' },
-  { label: '🇦🇪 +971', value: '+971' },
-  { label: '🇮🇱 +972', value: '+972' },
-  { label: '🇰🇼 +965', value: '+965' },
-  { label: '🇶🇦 +974', value: '+974' },
-  { label: '🇧🇭 +973', value: '+973' },
-  { label: '🇴🇲 +968', value: '+968' },
-  { label: '🇯🇴 +962', value: '+962' },
-  { label: '🇱🇧 +961', value: '+961' },
-  { label: '🇪🇬 +20', value: '+20' },
-  { label: '🇿🇦 +27', value: '+27' },
-  { label: '🇳🇬 +234', value: '+234' },
-  { label: '🇰🇪 +254', value: '+254' },
-  { label: '🇨🇳 +86', value: '+86' },
-  { label: '🇯🇵 +81', value: '+81' },
-  { label: '🇰🇷 +82', value: '+82' },
-  { label: '🇸🇬 +65', value: '+65' },
-  { label: '🇲🇾 +60', value: '+60' },
-  { label: '🇹🇭 +66', value: '+66' },
-  { label: '🇵🇭 +63', value: '+63' },
-  { label: '🇻🇳 +84', value: '+84' },
-  { label: '🇮🇩 +62', value: '+62' },
-  { label: '🇭🇰 +852', value: '+852' },
-  { label: '🇹🇼 +886', value: '+886' },
-  { label: '🇲🇴 +853', value: '+853' },
-  { label: '🇧🇩 +880', value: '+880' },
-  { label: '🇵🇰 +92', value: '+92' },
-  { label: '🇱🇰 +94', value: '+94' },
-  { label: '🇳🇵 +977', value: '+977' },
-  { label: '🇧🇹 +975', value: '+975' },
-  { label: '🇦🇫 +93', value: '+93' },
-  { label: '🇲🇲 +95', value: '+95' },
-  { label: '🇳🇿 +64', value: '+64' },
-  { label: '🇫🇯 +679', value: '+679' },
-  { label: '🇵🇬 +675', value: '+675' },
-  { label: '🇧🇷 +55', value: '+55' },
-  { label: '🇲🇽 +52', value: '+52' },
-  { label: '🇦🇷 +54', value: '+54' },
-  { label: '🇨🇱 +56', value: '+56' },
-  { label: '🇨🇴 +57', value: '+57' },
-  { label: '🇵🇪 +51', value: '+51' },
-  { label: '🇻🇪 +58', value: '+58' },
-  { label: '🇪🇨 +593', value: '+593' },
-  { label: '🇧🇴 +591', value: '+591' },
-  { label: '🇵🇾 +595', value: '+595' },
-  { label: '🇺🇾 +598', value: '+598' },
-  { label: '🇵🇦 +507', value: '+507' },
-  { label: '🇨🇷 +506', value: '+506' },
-  { label: '🇬🇹 +502', value: '+502' },
-  { label: '🇭🇳 +504', value: '+504' },
-  { label: '🇳🇮 +505', value: '+505' },
-  { label: '🇸🇻 +503', value: '+503' },
-  { label: '🇩🇴 +1', value: '+1' },
-  { label: '🇨🇺 +53', value: '+53' },
-  { label: '🇯🇲 +1', value: '+1' },
-  { label: '🇹🇹 +1', value: '+1' },
-  { label: '🇧🇧 +1', value: '+1' },
 ]
 
 const toE164 = (countryCode: string, localNumber: string): string => {
@@ -115,53 +36,6 @@ const parseE164 = (phone: string): { countryCode: string; localNumber: string } 
 
 const ADDRESS_COUNTRIES = [
   { label: 'India', value: 'IN' },
-  { label: 'United States', value: 'US' },
-  { label: 'United Kingdom', value: 'GB' },
-  { label: 'Canada', value: 'CA' },
-  { label: 'Australia', value: 'AU' },
-  { label: 'Germany', value: 'DE' },
-  { label: 'France', value: 'FR' },
-  { label: 'Italy', value: 'IT' },
-  { label: 'Spain', value: 'ES' },
-  { label: 'Netherlands', value: 'NL' },
-  { label: 'Belgium', value: 'BE' },
-  { label: 'Switzerland', value: 'CH' },
-  { label: 'Austria', value: 'AT' },
-  { label: 'Sweden', value: 'SE' },
-  { label: 'Norway', value: 'NO' },
-  { label: 'Denmark', value: 'DK' },
-  { label: 'Finland', value: 'FI' },
-  { label: 'Poland', value: 'PL' },
-  { label: 'Greece', value: 'GR' },
-  { label: 'Portugal', value: 'PT' },
-  { label: 'Ireland', value: 'IE' },
-  { label: 'Russia', value: 'RU' },
-  { label: 'Turkey', value: 'TR' },
-  { label: 'Saudi Arabia', value: 'SA' },
-  { label: 'United Arab Emirates', value: 'AE' },
-  { label: 'Israel', value: 'IL' },
-  { label: 'China', value: 'CN' },
-  { label: 'Japan', value: 'JP' },
-  { label: 'South Korea', value: 'KR' },
-  { label: 'Singapore', value: 'SG' },
-  { label: 'Malaysia', value: 'MY' },
-  { label: 'Thailand', value: 'TH' },
-  { label: 'Philippines', value: 'PH' },
-  { label: 'Vietnam', value: 'VN' },
-  { label: 'Indonesia', value: 'ID' },
-  { label: 'Bangladesh', value: 'BD' },
-  { label: 'Pakistan', value: 'PK' },
-  { label: 'Sri Lanka', value: 'LK' },
-  { label: 'Nepal', value: 'NP' },
-  { label: 'Brazil', value: 'BR' },
-  { label: 'Mexico', value: 'MX' },
-  { label: 'Argentina', value: 'AR' },
-  { label: 'Chile', value: 'CL' },
-  { label: 'Colombia', value: 'CO' },
-  { label: 'Peru', value: 'PE' },
-  { label: 'South Africa', value: 'ZA' },
-  { label: 'New Zealand', value: 'NZ' },
-  { label: 'Other', value: 'OTHER' },
 ]
 
 const INDIAN_STATES = [
@@ -458,11 +332,24 @@ const StatCard = ({ icon, label, value, trend, highlight }: StatCardProps) => {
 interface ShareButtonGridProps {
   referralCode: string
   referralUrl: string
+  showReferralLink?: boolean
 }
 
-const ShareButtonGrid = ({ referralCode, referralUrl }: ShareButtonGridProps) => {
+const ShareButtonGrid = ({ referralCode, referralUrl, showReferralLink = true }: ShareButtonGridProps) => {
   const [copied, setCopied] = useState(false)
-  const message = `Join me on Project Chiranjiv - India's first free full-genome sequencing platform! Use my referral code ${referralCode} to skip the queue. ${referralUrl}`
+  const message = `Claim your FREE Genome Test and unlock actionable insights for your fitness, lifestyle, and long-term health (worth ₹1.5L in value).
+
+Participate with family and create your genetic map that empowers future generations to take charge of their health and wellness.
+
+Here's how you can lead the movement:
+
+1 Register for yourself, your family, and friends.
+
+2 Share your unique referral link in your groups.
+
+3 Invite more → Jump the queue faster for free testing and priority reports!
+
+${referralUrl}`
 
   const handleCopy = async (text: string) => {
     await navigator.clipboard.writeText(text)
@@ -506,30 +393,32 @@ const ShareButtonGrid = ({ referralCode, referralUrl }: ShareButtonGridProps) =>
   return (
     <div className="space-y-4">
       {/* Referral Link */}
-      <div className="space-y-2">
-        <label className="text-sm font-medium text-foreground tracking-tight">Your Referral Link:</label>
-        <div className="flex gap-2">
-          <input
-            type="text"
-            readOnly
-            value={referralUrl}
-            className="flex-1 glass-input px-4 py-2.5 text-sm font-mono text-foreground rounded-lg border border-border/30"
-            onClick={(e) => e.currentTarget.select()}
-          />
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => handleCopy(referralUrl)}
-            className={cn(
-              'hover:scale-105 transition-all duration-200 h-10 w-10',
-              copied && 'bg-green-500 text-white border-green-500 hover:bg-green-600'
-            )}
-            title={copied ? 'Copied!' : 'Copy link'}
-          >
-            <Copy className="w-4 h-4" />
-          </Button>
+      {showReferralLink && (
+        <div className="space-y-2">
+          <label className="text-sm font-medium text-foreground tracking-tight">Your Referral Link:</label>
+          <div className="flex gap-2">
+            <input
+              type="text"
+              readOnly
+              value={referralUrl}
+              className="flex-1 glass-input px-4 py-2.5 text-sm font-mono text-foreground rounded-lg border border-border/30"
+              onClick={(e) => e.currentTarget.select()}
+            />
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => handleCopy(referralUrl)}
+              className={cn(
+                'hover:scale-105 transition-all duration-200 h-10 w-10',
+                copied && 'bg-green-500 text-white border-green-500 hover:bg-green-600'
+              )}
+              title={copied ? 'Copied!' : 'Copy link'}
+            >
+              <Copy className="w-4 h-4" />
+            </Button>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Share Buttons */}
       <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
@@ -600,6 +489,7 @@ export function Waitlist() {
   const [showResetPassword, setShowResetPassword] = useState(false)
   const [showResetConfirmPassword, setShowResetConfirmPassword] = useState(false)
   const [waitlistStats, setWaitlistStats] = useState({ totalUsers: 0, totalReferrals: 0 })
+  const [referralLinkCopied, setReferralLinkCopied] = useState(false)
 
   useEffect(() => {
     if (auth.user) {
@@ -668,7 +558,14 @@ export function Waitlist() {
     const newErrors: Record<string, string> = {}
     if (!formData.name.trim()) newErrors.name = 'Name is required'
     if (!formData.email.trim()) newErrors.email = 'Email is required'
-    if (!formData.phoneLocal.trim()) newErrors.phone = 'Phone number is required'
+    if (!formData.phoneLocal.trim()) {
+      newErrors.phone = 'Phone number is required'
+    } else {
+      const digitsOnly = formData.phoneLocal.replace(/\D/g, '')
+      if (digitsOnly.length !== 10) {
+        newErrors.phone = 'Phone number must be exactly 10 digits'
+      }
+    }
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors)
       return
@@ -1026,6 +923,43 @@ export function Waitlist() {
                       
                       return (
                         <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                          {/* Announcement Banner */}
+                          <div className="relative">
+                            <p className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed">
+                              Share your personal link with friends, family, or your fitness groups. The more people you invite, the faster you move up! Jump the queue for free kits and priority reports by spreading the word.
+                            </p>
+                          </div>
+
+                          {/* Referral Link Input */}
+                          <div className="space-y-2">
+                            <label className="text-sm font-medium text-foreground tracking-tight">Your Referral Link:</label>
+                            <div className="flex gap-2">
+                              <input
+                                type="text"
+                                readOnly
+                                value={referralUrl}
+                                className="flex-1 glass-input px-4 py-2.5 text-sm font-mono text-foreground rounded-lg border border-border/30"
+                                onClick={(e) => e.currentTarget.select()}
+                              />
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                onClick={async () => {
+                                  await navigator.clipboard.writeText(referralUrl)
+                                  setReferralLinkCopied(true)
+                                  setTimeout(() => setReferralLinkCopied(false), 2000)
+                                }}
+                                className={cn(
+                                  'hover:scale-105 transition-all duration-200 h-10 w-10',
+                                  referralLinkCopied && 'bg-green-500 text-white border-green-500 hover:bg-green-600'
+                                )}
+                                title={referralLinkCopied ? 'Copied!' : 'Copy link'}
+                              >
+                                <Copy className="w-4 h-4" />
+                              </Button>
+                            </div>
+                          </div>
+
                           {/* Top Section: Ring + Stats Side by Side */}
                           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
                             {/* Hero Circular Rank Display */}
@@ -1056,14 +990,15 @@ export function Waitlist() {
                           </div>
 
                           {/* Share Section */}
-                          <div className="space-y-4 pt-4 border-t border-border/30">
-                            <div className="text-center space-y-2">
-                              <h4 className="text-base font-medium text-foreground tracking-tight">Climb the Ranks</h4>
-                              <p className="text-sm text-muted-foreground font-light">
-                                Share your referral link and watch your rank soar!
-                              </p>
-                            </div>
-                            <ShareButtonGrid referralCode={rankData.referralCode} referralUrl={referralUrl} />
+                          <div className="space-y-4">
+                            <ShareButtonGrid referralCode={rankData.referralCode} referralUrl={referralUrl} showReferralLink={false} />
+                          </div>
+
+                          {/* Q1 Timeline Banner */}
+                          <div className="relative">
+                            <p className="text-sm sm:text-base font-medium text-foreground text-center">
+                              Testing kits to be sent out in Q1 to early registrants/Top referrers
+                            </p>
                           </div>
                         </div>
                       )
@@ -1076,6 +1011,14 @@ export function Waitlist() {
                 {step === 1 && (
                   !showSignin ? (
                     <form onSubmit={handleStep1Submit} className="space-y-4 sm:space-y-6">
+                      <div className="mb-8 sm:mb-10">
+                        <p className="text-base sm:text-lg text-muted-foreground font-light leading-relaxed text-center">
+                          Register now. Participate with family and create your genetic map that empowers future generations to take charge of their health and wellness.
+                        </p>
+                        <p className="text-base sm:text-lg text-muted-foreground font-light leading-relaxed text-center mt-2">
+                          Don't just join—lead the movement!
+                        </p>
+                      </div>
                       <div>
                         <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2 tracking-tight">Full Name *</label>
                         <Input id="name" name="name" type="text" value={formData.name} onChange={handleChange} placeholder="Enter your full name" className={`w-full glass-input ${errors.name ? 'border-red-500' : ''}`} />
@@ -1089,22 +1032,9 @@ export function Waitlist() {
                       <div>
                         <label htmlFor="phoneLocal" className="block text-sm font-medium text-foreground mb-2 tracking-tight">Phone Number *</label>
                         <div className="flex gap-2">
-                          <select
-                            name="countryCode"
-                            value={formData.countryCode}
-                            onChange={handleCountryCodeChange}
-                            className={cn(
-                              "file:text-foreground selection:bg-primary selection:text-primary-foreground glass-input h-9 w-28 min-w-0 rounded-md border px-3 py-1 text-base shadow-xs outline-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
-                              errors.phone ? 'border-red-500' : ''
-                            )}
-                            aria-label="Country code"
-                          >
-                            {COUNTRY_CODES.map((country, idx) => (
-                              <option key={`${country.value}-${idx}`} value={country.value}>
-                                {country.label}
-                              </option>
-                            ))}
-                          </select>
+                          <div className="flex items-center px-3 h-9 rounded-md border border-border/30 bg-muted/20 text-sm text-muted-foreground whitespace-nowrap">
+                            🇮🇳 +91
+                          </div>
                           <Input
                             id="phoneLocal"
                             name="phoneLocal"
@@ -1278,27 +1208,9 @@ export function Waitlist() {
                       </div>
                       <div>
                         <label htmlFor="addressCountry" className="block text-sm font-medium text-foreground mb-2 tracking-tight">Country *</label>
-                        <select
-                          id="addressCountry"
-                          name="addressCountry"
-                          value={formData.addressCountry}
-                          onChange={(e) => {
-                            setFormData({ ...formData, addressCountry: e.target.value, state: '' })
-                            if (errors.addressCountry) setErrors({ ...errors, addressCountry: '' })
-                            if (errors.state) setErrors({ ...errors, state: '' })
-                          }}
-                          className={cn(
-                            "file:text-foreground selection:bg-primary selection:text-primary-foreground glass-input h-9 w-full min-w-0 rounded-md border px-3 py-1 text-base shadow-xs outline-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
-                            errors.addressCountry ? 'border-red-500' : ''
-                          )}
-                          aria-label="Country"
-                        >
-                          {ADDRESS_COUNTRIES.map((country) => (
-                            <option key={country.value} value={country.value}>
-                              {country.label}
-                            </option>
-                          ))}
-                        </select>
+                        <div className="flex items-center px-3 h-9 rounded-md border border-border/30 bg-muted/20 text-sm text-foreground">
+                          🇮🇳 India
+                        </div>
                         {errors.addressCountry && <p className="text-xs text-red-500 mt-1">{errors.addressCountry}</p>}
                       </div>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

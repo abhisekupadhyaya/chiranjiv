@@ -4,7 +4,7 @@ export default function TermsOfService() {
   return (
     <PolicyLayout 
       title="Terms Of Service" 
-      lastUpdated="November __, 2025"
+      lastUpdated="November 1, 2025"
       category="Legal & Data Protection"
     >
       <section id="introduction" className="mb-8">
@@ -241,8 +241,7 @@ export default function TermsOfService() {
         
         <div className="mt-4 p-6 glass-backdrop backdrop-blur-sm border border-border/30 rounded-xl mb-4">
           <p className="font-semibold text-foreground mb-3">Rapidera Technologies Pvt Ltd.</p>
-          <p className="text-muted-foreground font-light">Email: <a href="mailto:privacy@chiranjiv.com" className="text-primary hover:underline font-medium">privacy@chiranjiv.com</a></p>
-          <p className="text-muted-foreground font-light">Phone: <a href="tel:+919022823271" className="text-primary hover:underline font-medium">9022823271</a></p>
+          <p className="text-muted-foreground font-light">Email: <a href="mailto:support@chiranjiv.com" className="text-primary hover:underline font-medium">support@chiranjiv.com</a></p>
           <p className="text-muted-foreground font-light">Address: 703 Deron Heights, Baner Road, Baner, Pune 411045, India</p>
         </div>
       </section>

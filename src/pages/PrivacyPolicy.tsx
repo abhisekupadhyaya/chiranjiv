@@ -4,7 +4,7 @@ export default function PrivacyPolicy() {
   return (
     <PolicyLayout 
       title="Privacy Policy" 
-      lastUpdated="November ___, 2025"
+      lastUpdated="November 1, 2025"
       category="Privacy & Data Protection"
     >
       <section id="introduction" className="mb-8">
@@ -295,7 +295,7 @@ export default function PrivacyPolicy() {
         </ul>
         
         <p className="mb-4 leading-relaxed">
-          To exercise your rights, contact us at privacy@chiranjiv.com, or through your account settings.
+          To exercise your rights, contact us at support@chiranjiv.com, or through your account settings.
         </p>
       </section>
 
@@ -416,8 +416,7 @@ export default function PrivacyPolicy() {
         <div className="mt-4 p-6 glass-backdrop backdrop-blur-sm border border-border/30 rounded-xl mb-6">
           <p className="font-semibold text-foreground mb-3">Data Protection Officer</p>
           <p className="text-muted-foreground font-light">Rapidera Technologies Pvt Ltd.</p>
-          <p className="text-muted-foreground font-light">Email: <a href="mailto:privacy@chiranjiv.com" className="text-primary hover:underline font-medium">privacy@chiranjiv.com</a></p>
-          <p className="text-muted-foreground font-light">Phone: <a href="tel:+919022823271" className="text-primary hover:underline font-medium">902-282-3271</a></p>
+          <p className="text-muted-foreground font-light">Email: <a href="mailto:support@chiranjiv.com" className="text-primary hover:underline font-medium">support@chiranjiv.com</a></p>
           <p className="text-muted-foreground font-light">Address: 703 Deron Heights, Baner Road, Baner, Pune 411045</p>
         </div>
         
