@@ -587,8 +587,8 @@ export function Waitlist() {
     if (!formData.state.trim()) newErrors.state = 'State/Province is required'
     if (!formData.pincode.trim()) newErrors.pincode = 'Pincode/ZIP code is required'
     const age = parseInt(formData.age)
-    if (!formData.age.trim() || isNaN(age) || age < 1 || age > 120) {
-      newErrors.age = 'Please enter a valid age (1-120)'
+    if (!formData.age.trim() || isNaN(age) || age < 18 || age > 120) {
+      newErrors.age = 'You must be at least 18 years old to register'
     }
     const pw = formData.password
     const strongPw =
@@ -1317,7 +1317,7 @@ export function Waitlist() {
                       </div>
                       <div>
                         <label htmlFor="age" className="block text-sm font-medium text-foreground mb-2 tracking-tight">Age *</label>
-                        <Input id="age" name="age" type="number" min="1" max="120" value={formData.age} onChange={handleChange} placeholder="Enter your age" className={`w-full glass-input ${errors.age ? 'border-red-500' : ''}`} />
+                        <Input id="age" name="age" type="number" min="18" max="120" value={formData.age} onChange={handleChange} placeholder="Enter your age (18+)" className={`w-full glass-input ${errors.age ? 'border-red-500' : ''}`} />
                         {errors.age && <p className="text-xs text-red-500 mt-1">{errors.age}</p>}
                       </div>
                     </div>
