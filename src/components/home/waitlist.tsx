@@ -914,6 +914,19 @@ export function Waitlist() {
     setErrors({})
   }
 
+  const handleSignOut = async () => {
+    // Clear all user-related state
+    setRankData(null)
+    setRankError('')
+    setSigninData({ email: '', password: '' })
+    setErrors({})
+    setReferralLinkCopied(false)
+    setUnverifiedEmail('')
+    setVerificationResent(false)
+    // Sign out from auth
+    await auth.signOut()
+  }
+
   return (
     <section id="waitlist" className="py-16 sm:py-24 lg:py-32 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5" />
@@ -959,7 +972,7 @@ export function Waitlist() {
                       <div className="text-xs text-muted-foreground">{auth.user?.email}</div>
                     </div>
                   </div>
-                  <Button variant="ghost" size="sm" onClick={auth.signOut} className="hover:scale-105 transition-transform text-xs">
+                  <Button variant="ghost" size="sm" onClick={handleSignOut} className="hover:scale-105 transition-transform text-xs">
                     Sign out
                   </Button>
                 </div>
