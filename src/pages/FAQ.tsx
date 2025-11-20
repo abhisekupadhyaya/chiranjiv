@@ -3,7 +3,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 
 const faqs = [
   { 
-    question: 'Why is this free?', 
+    question: 'Why is this free for early users?', 
     answer: "We are offering early registrants and champions (top referrers) free testing and insights, We want to enroll enough champions of our cause and give them incentive to lead this revolution. Even after the first phase, the testing will be heavily subsidised as we believe genomic data is too important to ask users to pay huge sums for. We want to build the largest Indian genomic database — which benefits everyone, including you. We will sustain ourselves through ethical research partnerships and optional premium features for users (coming soon).",
     category: 'basics'
   },

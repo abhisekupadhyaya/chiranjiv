@@ -334,19 +334,20 @@ interface ShareButtonGridProps {
 
 const ShareButtonGrid = ({ referralUrl, showReferralLink = true }: ShareButtonGridProps) => {
   const [copied, setCopied] = useState(false)
-  const message = `Claim your FREE Genome Test and unlock actionable insights for your fitness, lifestyle, and long-term health (worth ₹1.5L in value).
-
-Participate with family and create your genetic map that empowers future generations to take charge of their health and wellness.
-
-Here's how you can lead the movement:
-
-1 Register for yourself, your family, and friends.
-
-2 Share your unique referral link in your groups.
-
-3 Invite more → Jump the queue faster for free testing and priority reports!
-
-${referralUrl}`
+  
+  // Build message parts
+  const messageParts = [
+    'Claim your FREE Genome Test and unlock actionable insights for your fitness, lifestyle, and long-term health (worth ₹1.5L in value).',
+    'Participate with family and create your genetic map that empowers future generations to take charge of their health and wellness.',
+    "Here's how you can lead the movement:",
+    '1 Register for yourself, your family, and friends.',
+    '2 Share your unique referral link in your groups.',
+    '3 Invite more → Jump the queue faster for free testing and priority reports!',
+    referralUrl
+  ]
+  
+  // Create formatted message with proper line breaks for each platform
+  const formattedMessage = messageParts.map(part => encodeURIComponent(part)).join('%0A%0A')
 
   const handleCopy = async (text: string) => {
     await navigator.clipboard.writeText(text)
@@ -359,19 +360,19 @@ ${referralUrl}`
       name: 'WhatsApp',
       icon: <MessageCircle className="w-4 h-4" />,
       color: 'from-green-500 to-green-600',
-      action: () => window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank')
+      action: () => window.open(`https://wa.me/?text=${formattedMessage}`, '_blank')
     },
     {
       name: 'X',
       icon: <Share2 className="w-4 h-4" />,
       color: 'from-gray-900 to-black',
-      action: () => window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}`, '_blank')
+      action: () => window.open(`https://twitter.com/intent/tweet?text=${formattedMessage}`, '_blank')
     },
     {
       name: 'Email',
       icon: <Mail className="w-4 h-4" />,
       color: 'from-gray-600 to-gray-700',
-      action: () => window.open(`mailto:?subject=Join Chiranjiv&body=${encodeURIComponent(message)}`, '_blank')
+      action: () => window.open(`mailto:?subject=Join%20Chiranjiv&body=${formattedMessage}`, '_blank')
     },
     {
       name: 'Facebook',
@@ -486,6 +487,7 @@ export function Waitlist() {
   const [showResetPassword, setShowResetPassword] = useState(false)
   const [showResetConfirmPassword, setShowResetConfirmPassword] = useState(false)
   const [waitlistStats, setWaitlistStats] = useState({ totalUsers: 0, totalReferrals: 0 })
+  const [statsLoading, setStatsLoading] = useState(true)
   const [referralLinkCopied, setReferralLinkCopied] = useState(false)
 
   useEffect(() => {
@@ -513,14 +515,16 @@ export function Waitlist() {
   // Fetch waitlist stats on mount
   useEffect(() => {
     const fetchStats = async () => {
+      setStatsLoading(true)
       try {
         const result = await getWaitlistStats()
         if (result.ok && 'totalUsers' in result.data) {
           setWaitlistStats(result.data)
         }
       } catch (error) {
-        // Silent failure - will show default values
         console.error('Failed to fetch waitlist stats:', error)
+      } finally {
+        setStatsLoading(false)
       }
     }
     fetchStats()
@@ -864,17 +868,17 @@ export function Waitlist() {
       />
       <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
-          {!submitted && (
+          {!submitted && !statsLoading && waitlistStats.totalUsers > 0 && (
             <div className="grid grid-cols-2 gap-4 sm:gap-6 mb-8 sm:mb-12 max-w-2xl mx-auto">
               <div className="text-center p-5 sm:p-6 rounded-xl bg-muted/20 backdrop-blur-sm border border-border/30 transition-all duration-300 hover:shadow-lg hover:scale-105">
                 <div className="text-3xl sm:text-4xl font-light text-primary mb-2 tracking-tight">
-                  {waitlistStats.totalUsers > 0 ? waitlistStats.totalUsers.toLocaleString() : '10K+'}
+                  {waitlistStats.totalUsers.toLocaleString()}
                 </div>
                 <div className="text-xs sm:text-sm text-muted-foreground font-light tracking-tight">On Waitlist</div>
               </div>
               <div className="text-center p-5 sm:p-6 rounded-xl bg-muted/20 backdrop-blur-sm border border-border/30 transition-all duration-300 hover:shadow-lg hover:scale-105">
                 <div className="text-3xl sm:text-4xl font-light text-secondary mb-2 tracking-tight">
-                  {waitlistStats.totalReferrals > 0 ? waitlistStats.totalReferrals.toLocaleString() : '5K+'}
+                  {waitlistStats.totalReferrals.toLocaleString()}
                 </div>
                 <div className="text-xs sm:text-sm text-muted-foreground font-light tracking-tight">Total Referrals</div>
               </div>

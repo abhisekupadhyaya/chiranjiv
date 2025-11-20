@@ -21,7 +21,7 @@ export function WhyWeExist() {
         </p>
         <p className="text-base leading-relaxed">
           <strong className="font-semibold text-foreground">
-            Everyone deserves apersonalised health, wellness and longevity plan based on their own genome, and that right should start in India.
+            Everyone deserves a personalised health, wellness and longevity plan based on their own genome, and that right should start in India.
           </strong>
         </p>
         <p className="text-base leading-relaxed">
