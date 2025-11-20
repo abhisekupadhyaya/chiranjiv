@@ -883,6 +883,36 @@ export function Waitlist() {
     setErrors({})
   }
 
+  const resetFormData = () => {
+    setFormData({
+      name: '',
+      email: '',
+      countryCode: '+91',
+      phoneLocal: '',
+      addressLine1: '',
+      addressLine2: '',
+      city: '',
+      addressCountry: 'IN',
+      state: '',
+      pincode: '',
+      age: '',
+      password: '',
+      confirmPassword: '',
+      privacyPolicy: false,
+      termsOfService: false,
+      dataUsagePolicy: false,
+      researchConsent: false,
+      marketingConsent: false,
+    })
+    setEnteredReferralCode('')
+    setErrors({})
+  }
+
+  const resetSigninData = () => {
+    setSigninData({ email: '', password: '' })
+    setErrors({})
+  }
+
   return (
     <section id="waitlist" className="py-16 sm:py-24 lg:py-32 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5" />
@@ -1096,7 +1126,7 @@ export function Waitlist() {
                         {loading ? 'Saving...' : 'Continue'}
                       </Button>
                       <div className="text-center">
-                        <Button type="button" variant="outline" onClick={() => setShowSignin(true)} className="bg-transparent hover:scale-105 transition-transform">
+                        <Button type="button" variant="outline" onClick={() => { resetFormData(); setShowSignin(true) }} className="bg-transparent hover:scale-105 transition-transform">
                           Already have an account? Sign in
                         </Button>
                       </div>
@@ -1247,7 +1277,7 @@ export function Waitlist() {
                         </Button>
                       </div>
                       <div className="text-center">
-                        <Button type="button" variant="outline" onClick={() => setShowSignin(false)} className="bg-transparent hover:scale-105 transition-transform">
+                        <Button type="button" variant="outline" onClick={() => { resetSigninData(); setShowSignin(false) }} className="bg-transparent hover:scale-105 transition-transform">
                           New here? Sign up
                         </Button>
                       </div>
@@ -1421,6 +1451,7 @@ export function Waitlist() {
                       <Button 
                         type="button"
                         onClick={() => {
+                          resetFormData()
                           setStep(1)
                           setShowSignin(true)
                         }}

@@ -67,30 +67,13 @@ def lambda_handler(event, context):
                 "body": json.dumps({"message": "Missing required field: id"}),
             }
 
-        # Attempt a direct get (works if table primary key is HASH on id)
-        target_item = None
-        try:
-            get_resp = table.get_item(
-                Key={"id": user_id},
-                ProjectionExpression="id, referralsCount, createdAt, referralCode",
-            )
-            target_item = get_resp.get("Item")
-        except Exception:
-            target_item = None
-
+        # PASS 1: Scan entire table and collect all items
+        all_items = []
+        last_evaluated_key = None
         target_referrals = None
         target_created_at = None
         target_referral_code = None
-        if target_item:
-            target_referrals = _to_int(target_item.get("referralsCount"), 0)
-            target_created_at = _to_int(target_item.get("createdAt"), 0)
-            target_referral_code = target_item.get("referralCode")
-
-        # Scan the table to compute rank and total users
-        last_evaluated_key = None
-        total_users = 0
-        num_above = 0
-        found_user = target_item is not None
+        found_user = False
 
         while True:
             if last_evaluated_key:
@@ -106,41 +89,30 @@ def lambda_handler(event, context):
             items = resp.get("Items", [])
             for item in items:
                 item_id = item.get("id")
-                item_count = _to_int(item.get("referralsCount"), 0)
+                item_referrals = _to_int(item.get("referralsCount"), 0)
                 item_created_at = _to_int(item.get("createdAt"), 0)
-                total_users += 1
-
+                item_referral_code = item.get("referralCode")
+                
+                # Store item in list
+                all_items.append({
+                    "id": item_id,
+                    "referralsCount": item_referrals,
+                    "createdAt": item_created_at,
+                    "referralCode": item_referral_code
+                })
+                
+                # If this is the target user, save their values
                 if item_id == user_id:
                     found_user = True
-                    if target_referrals is None:
-                        target_referrals = item_count
-                    if target_created_at is None:
-                        target_created_at = item_created_at
-                    if target_referral_code is None:
-                        target_referral_code = item.get("referralCode")
-                    continue
-
-                if target_referrals is not None and target_created_at is not None:
-                    if (
-                        (item_count > target_referrals)
-                        or (
-                            item_count == target_referrals
-                            and item_created_at < target_created_at
-                        )
-                        or (
-                            item_count == target_referrals
-                            and item_created_at == target_created_at
-                            and item_id is not None
-                            and user_id is not None
-                            and str(item_id) < str(user_id)
-                        )
-                    ):
-                        num_above += 1
+                    target_referrals = item_referrals
+                    target_created_at = item_created_at
+                    target_referral_code = item_referral_code
 
             last_evaluated_key = resp.get("LastEvaluatedKey")
             if not last_evaluated_key:
                 break
 
+        # Check if user was found
         if not found_user:
             return {
                 "statusCode": 404,
@@ -148,8 +120,35 @@ def lambda_handler(event, context):
                 "body": json.dumps({"message": f"User not found: {user_id}"}),
             }
 
-        target_referrals = _to_int(target_referrals, 0)
-        target_created_at = _to_int(target_created_at, 0)
+        # Total users
+        total_users = len(all_items)
+
+        # PASS 2: Calculate rank using exact same logic as calculate_rank.py
+        num_above = 0
+        for item in all_items:
+            item_id = item["id"]
+            item_referrals = item["referralsCount"]
+            item_created_at = item["createdAt"]
+            
+            # Skip the target user
+            if item_id == user_id:
+                continue
+            
+            # Count users that rank above the target user
+            # Using the exact logic from calculate_rank.py (lines 139-150)
+            if (
+                (item_referrals > target_referrals)
+                or (
+                    item_referrals == target_referrals
+                    and item_created_at < target_created_at
+                )
+                or (
+                    item_referrals == target_referrals
+                    and item_created_at == target_created_at
+                    and str(item_id) < str(user_id)
+                )
+            ):
+                num_above += 1
 
         rank = num_above + 1
         return {
