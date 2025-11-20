@@ -114,7 +114,7 @@ export function Footer() {
         {/* Tier 2: Bottom bar */}
         <div className="border-t border-border/40 pt-6 sm:pt-8">
           <p className="text-xs sm:text-sm text-muted-foreground text-center font-light">
-            © 2025 Chiranjiv. All rights reserved. Launching soon!
+            © 2025 Chiranjiv. All rights reserved.
           </p>
         </div>
       </div>
