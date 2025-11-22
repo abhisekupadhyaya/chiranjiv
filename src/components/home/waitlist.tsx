@@ -427,12 +427,14 @@ interface SigninFormProps {
   onSwitchToSignup: () => void
   onShowForgotPassword: () => void
   onShowUnverifiedEmail: (email: string) => void
+  initialError?: string
+  initialEmail?: string
 }
 
-const SigninForm = ({ auth, onSwitchToSignup, onShowForgotPassword, onShowUnverifiedEmail }: SigninFormProps) => {
-  const [email, setEmail] = useState('')
+const SigninForm = ({ auth, onSwitchToSignup, onShowForgotPassword, onShowUnverifiedEmail, initialError, initialEmail }: SigninFormProps) => {
+  const [email, setEmail] = useState(initialEmail || '')
   const [password, setPassword] = useState('')
-  const [errors, setErrors] = useState<Record<string, string>>({})
+  const [errors, setErrors] = useState<Record<string, string>>(initialError ? { email: initialError } : {})
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -784,6 +786,8 @@ export function Waitlist() {
   const [loading, setLoading] = useState(false)
   const successRef = useRef<HTMLDivElement>(null)
   const [showSignin, setShowSignin] = useState(false)
+  const [signinError, setSigninError] = useState('')
+  const [signinEmail, setSigninEmail] = useState('')
   const [showForgotPassword, setShowForgotPassword] = useState(false)
   const [forgotPasswordEmail, setForgotPasswordEmail] = useState('')
   const [showResetConfirm, setShowResetConfirm] = useState(false)
@@ -954,6 +958,8 @@ export function Waitlist() {
         
         // If user already exists, suggest signing in
         if (err?.name === 'UsernameExistsException') {
+          setSigninError(message)
+          setSigninEmail(formData.email.trim())
           setShowSignin(true)
           setStep(1)
         }
@@ -1109,9 +1115,10 @@ export function Waitlist() {
               </div>
             </div>
           )}
-          <Card className="p-6 sm:p-8 md:p-10 glass-backdrop glass-border-refractive rounded-3xl shadow-2xl border-border/50 backdrop-blur-sm transition-all duration-300">
+          <Card className="p-6 sm:p-8 md:p-10 glass-backdrop glass-border-refractive rounded-3xl shadow-2xl border-border/50 backdrop-blur-sm transition-all duration-300 min-h-[600px] flex items-center justify-center">
+            <div className="w-full">
             {auth.user ? (
-              <>
+              <div className="animate-in fade-in duration-500">
                 {/* Compact Sign-in Badge */}
                 <div className="flex items-center justify-between mb-6 p-4 rounded-xl border border-border/20 bg-muted/10 backdrop-blur-sm">
                   <div className="flex items-center gap-3">
@@ -1129,12 +1136,12 @@ export function Waitlist() {
                 </div>
 
                 {rankLoading ? (
-                  <div className="py-12 text-center">
+                  <div className="py-32 text-center min-h-[500px] flex flex-col items-center justify-center animate-in fade-in duration-500">
                     <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-primary/30 border-t-primary mb-4"></div>
                     <div className="text-sm text-muted-foreground font-light">Loading your dashboard...</div>
                   </div>
                 ) : rankError ? (
-                  <div className="py-8 px-6 rounded-2xl border border-red-500/30 bg-red-500/10">
+                  <div className="py-8 px-6 rounded-2xl border border-red-500/30 bg-red-500/10 animate-in fade-in duration-500">
                     <div className="text-sm text-red-500 font-light text-center">{rankError}</div>
                   </div>
                 ) : rankData ? (
@@ -1228,9 +1235,9 @@ export function Waitlist() {
                     })()}
                   </>
                 ) : null}
-              </>
+              </div>
             ) : !submitted ? (
-              <>
+              <div className="animate-in fade-in duration-500">
                 {step === 1 && (
                   !showSignin ? (
                     <form onSubmit={handleStep1Submit} className="space-y-4 sm:space-y-6">
@@ -1291,7 +1298,11 @@ export function Waitlist() {
                         {loading ? 'Saving...' : 'Continue'}
                       </Button>
                       <div className="text-center">
-                        <Button type="button" variant="outline" onClick={() => setShowSignin(true)} className="bg-transparent hover:scale-105 transition-transform">
+                        <Button type="button" variant="outline" onClick={() => {
+                          setShowSignin(true)
+                          setSigninError('')
+                          setSigninEmail('')
+                        }} className="bg-transparent hover:scale-105 transition-transform">
                           Already have an account? Sign in
                         </Button>
                       </div>
@@ -1326,9 +1337,15 @@ export function Waitlist() {
                   ) : (
                     <SigninForm
                       auth={auth}
-                      onSwitchToSignup={() => setShowSignin(false)}
+                      onSwitchToSignup={() => {
+                        setShowSignin(false)
+                        setSigninError('')
+                        setSigninEmail('')
+                      }}
                       onShowForgotPassword={() => setShowForgotPassword(true)}
                       onShowUnverifiedEmail={(email) => setUnverifiedEmail(email)}
+                      initialError={signinError}
+                      initialEmail={signinEmail}
                     />
                   )
                 )}
@@ -1512,7 +1529,7 @@ export function Waitlist() {
                     </p>
                   </div>
                 )}
-              </>
+              </div>
             ) : (
               <div ref={successRef} className="text-center py-8 sm:py-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <div className="w-20 h-20 bg-gradient-to-br from-primary/30 to-secondary/20 rounded-full flex items-center justify-center mx-auto mb-6 backdrop-blur-sm border border-primary/20 shadow-lg shadow-primary/10">
@@ -1533,6 +1550,7 @@ export function Waitlist() {
                 </p>
               </div>
             )}
+            </div>
           </Card>
         </div>
       </div>
