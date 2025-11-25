@@ -1,5 +1,6 @@
 import type { UserManagerSettings } from 'oidc-client-ts'
 import type { ResourcesConfig } from 'aws-amplify'
+import config from '../config/env'
 
 type RuntimeAuthConfig = {
   authority: string
@@ -20,39 +21,15 @@ function getUserPoolIdFromAuthority(authority: string): string {
 }
 
 export function getRuntimeAuthConfig(): RuntimeAuthConfig {
-  const authority =
-    import.meta.env.VITE_OIDC_AUTHORITY ||
-    'https://cognito-idp.us-east-2.amazonaws.com/us-east-2_GV16bcF7q'
-
-  const clientId =
-    import.meta.env.VITE_OIDC_CLIENT_ID || '146k1biivtve0064088ei715ns'
-
-  const redirectUri =
-    import.meta.env.VITE_OIDC_REDIRECT_URI || 'https://d84l1y8p4kdic.cloudfront.net'
-
-  const postLogoutRedirectUri =
-    import.meta.env.VITE_OIDC_LOGOUT_REDIRECT_URI ||
-    redirectUri
-
-  const scope =
-    import.meta.env.VITE_OIDC_SCOPE || 'phone openid email'
-
-  const cognitoDomain =
-    import.meta.env.VITE_COGNITO_DOMAIN || undefined
-  const clientSecret =
-    import.meta.env.VITE_OIDC_CLIENT_SECRET || undefined
-  const addressAttrName =
-    import.meta.env.VITE_COGNITO_ADDRESS_ATTR_NAME || 'address'
-
   return {
-    authority,
-    clientId,
-    redirectUri,
-    postLogoutRedirectUri,
-    scope,
-    cognitoDomain,
-    clientSecret,
-    addressAttrName,
+    authority: config.oidcAuthority,
+    clientId: config.oidcClientId,
+    redirectUri: config.oidcRedirectUri,
+    postLogoutRedirectUri: config.oidcLogoutRedirectUri,
+    scope: config.oidcScope,
+    cognitoDomain: config.cognitoDomain,
+    clientSecret: config.oidcClientSecret,
+    addressAttrName: config.cognitoAddressAttrName,
   }
 }
 

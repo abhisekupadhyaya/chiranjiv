@@ -1,5 +1,7 @@
-// AWS Lambda API Base URL
-const API_BASE_URL = 'https://e92h9q3h03.execute-api.us-east-2.amazonaws.com/default'
+import config from '../config/env'
+
+// AWS Lambda API Base URL (centralized via VITE_API_BASE_URL in env config)
+const API_BASE_URL = config.apiBaseUrl
 
 // TypeScript interfaces for API request/response types
 export interface WaitlistSignupRequest {

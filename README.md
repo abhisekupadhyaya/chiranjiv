@@ -9,6 +9,7 @@ Commands:
 Environment:
 - Set VITE_API_BASE_URL to your deployed API base (e.g. https://xxxx.execute-api.ap-south-1.amazonaws.com/dev)
 - For local SAM: VITE_API_BASE_URL=http://127.0.0.1:3000
+- All frontend environment variables are read via `src/config/env.ts`. Add any new env vars there and consume them through the exported `config` object.
 
 ## Backend (AWS SAM, Python)
 Location: lambda/
