@@ -102,7 +102,7 @@ export function FloatingCta({ show = true }: FloatingCtaProps) {
 
               {/* Line 2: Subcopy */}
               <p className="text-[10px] sm:text-xs md:text-sm text-muted-foreground font-light leading-tight sm:leading-relaxed line-clamp-1">
-                Full genome sequencing + lifetime health insights + data co-ownership
+                Whole genome sequencing + lifetime health insights + data co-ownership
               </p>
             </div>
 

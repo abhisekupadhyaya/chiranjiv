@@ -10,6 +10,24 @@ export default function BlogIndex() {
       date: '2025',
       readTime: '5 min read',
     },
+    {
+      slug: 'indian-nutrigenomics-pharmacogenomics',
+      title:
+        'Your DNA Blueprint for Nutrition, Fitness & Low Inflammation: Why Indians Need Indian-Specific Nutrigenomics & Pharmacogenomics',
+      excerpt:
+        'Most DNA diet and drug reports are based on Western genetics. This piece explains how Indian-focused nutrigenomics and pharmacogenomics can personalize your nutrition, exercise, and medication for lower inflammation and healthier aging.',
+      date: '2025',
+      readTime: '6 min read',
+    },
+    {
+      slug: 'indian-genome-testing-disease-prevention',
+      title:
+        'Genomics for a Longer, Fitter Life: Why Indian Genome Testing Outperforms Western Models for Disease Prevention',
+      excerpt:
+        'Western genomic models miss millions of Indian genetic variants. Learn how Indian genome testing can better predict disease risk, guide prevention, and build a more accurate blueprint for long-term health.',
+      date: '2025',
+      readTime: '5 min read',
+    },
   ]
   return (
     <section className="relative pt-24 sm:pt-32 pb-16 sm:pb-24 overflow-hidden">
