@@ -3,14 +3,6 @@ import { Link } from 'react-router-dom'
 export default function BlogIndex() {
   const posts = [
     {
-      slug: 'why-23andme-cant-tell-indian-ancestry',
-      title: "Why 23andMe Can't Tell You You're Maharashtrian, Punjabi, or Tamil — and Why Chiranjiv Can",
-      excerpt:
-        "India is home to more than 4,000 ethnic and linguistic groups, yet global platforms can't tell you if you have roots in Maharashtra, Punjab, or Tamil Nadu. Here's why.",
-      date: '2025',
-      readTime: '5 min read',
-    },
-    {
       slug: 'indian-nutrigenomics-pharmacogenomics',
       title:
         'Your DNA Blueprint for Nutrition, Fitness & Low Inflammation: Why Indians Need Indian-Specific Nutrigenomics & Pharmacogenomics',
@@ -25,6 +17,14 @@ export default function BlogIndex() {
         'Genomics for a Longer, Fitter Life: Why Indian Genome Testing Outperforms Western Models for Disease Prevention',
       excerpt:
         'Western genomic models miss millions of Indian genetic variants. Learn how Indian genome testing can better predict disease risk, guide prevention, and build a more accurate blueprint for long-term health.',
+      date: '2025',
+      readTime: '5 min read',
+    },
+    {
+      slug: 'why-23andme-cant-tell-indian-ancestry',
+      title: "Why 23andMe Can't Tell You You're Maharashtrian, Punjabi, or Tamil — and Why Chiranjiv Can",
+      excerpt:
+        "India is home to more than 4,000 ethnic and linguistic groups, yet global platforms can't tell you if you have roots in Maharashtra, Punjab, or Tamil Nadu. Here's why.",
       date: '2025',
       readTime: '5 min read',
     },

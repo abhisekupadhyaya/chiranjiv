@@ -12,7 +12,7 @@ const founders: TeamMember[] = [
   {
     name: 'Hemant Jain',
     role: 'Co-Founder & Technology Lead',
-    bio: 'Serial entrepreneur and technologist leading product and engineering at Chiranjiv, with deep experience building and scaling data-driven platforms.',
+    bio: 'A serial entrepreneur with 25+ years of experience across the US and India, spanning multiple industry verticals. An alum of IIT Delhi and IIM Calcutta, Hemant is passionate about changing the face of healthcare in India through technology, data, and genomics-driven innovation.',
     imageSrc: '/team/hemant.jpeg',
     linkedin: 'https://www.linkedin.com/in/hemantrjain',
   },
@@ -22,28 +22,28 @@ const advisors: TeamMember[] = [
   {
     name: 'Ashish Chordia',
     role: 'Advisor',
-    bio: 'Entrepreneur and product leader with experience building and scaling technology companies across analytics, media, and consumer internet.',
+    bio: 'A serial entrepreneur, investor, and mentor with 25+ years of experience, Ashish has created several large enterprises around the world including a unicorn. An alum of IIT Bombay and Wharton, he is involved with multiple global ventures and is deeply passionate about changing how healthcare works.',
     imageSrc: '/team/ashish.jpeg',
     linkedin: 'https://www.linkedin.com/in/ashishchordia',
   },
   {
     name: 'Prahalad Simha',
     role: 'Advisor',
-    bio: 'Business and product advisor supporting Chiranjiv on strategy, partnerships, and go-to-market for genomics-led health offerings.',
+    bio: 'A serial entrepreneur with a special interest in genomics, life sciences, and deep tech, Prahalad created his first genomics company in the early 2000s followed by another venture in manufacturing. An alum of IIM Bangalore, he brings a strong strategic and operational lens to building next-generation health and science ventures.',
     imageSrc: '/team/prahalad.png',
     linkedin: 'https://www.linkedin.com/in/prahaladsimha',
   },
   {
     name: 'Chandra Manglani',
     role: 'Advisor',
-    bio: 'Operator and advisor with experience across finance and operations, guiding Chiranjiv on building a resilient and scalable business.',
+    bio: 'An IIT Delhi alum with 25+ years of experience leading advanced computational and EDA software development across global semiconductor organizations. He has built and led high-performance engineering teams, architected complex algorithmic systems, and shaped long-term technology strategy in the computational software space. An AI/ML enthusiast and lifelong learner, Chandra is passionate about leveraging computational innovation to transform healthcare through genomics-driven wellness solutions.',
     imageSrc: '/team/chandra.jpeg',
     linkedin: 'https://www.linkedin.com/in/chandramanglani',
   },
   {
-    name: 'Smita Agrawal',
+    name: 'Dr. Smita Agrawal, PhD',
     role: 'Strategic Advisor',
-    bio: 'Technology executive and board advisor with global leadership experience across product and engineering, helping shape Chiranjiv’s long-term vision.',
+    bio: 'Dr. Smita Agrawal is a seasoned genomics and precision medicine leader with over two decades of experience driving innovation at the intersection of data, biology, and healthcare technology. As a former Senior Director at ConcertAI, she led the creation of a flagship clinico-genomic data product that powered cutting-edge oncology research and real-world evidence generation. She previously held leadership positions at Strand Life Sciences and performed fundamental life sciences research at Genentech, the University of Minnesota, and UC Berkeley. Dr. Agrawal holds a Ph.D. in Chemical Engineering from UC Berkeley and a B.Tech. from IIT Kanpur. She advises on strategies integrating genomics, real-world data, and AI to advance personalized medicine and data-driven healthcare innovation.',
     imageSrc: '/team/smita.jpeg',
     linkedin: 'https://www.linkedin.com/in/smita-agrawal',
   },
@@ -92,70 +92,16 @@ export default function Team() {
             </Card>
           </section>
 
-          {/* Founders */}
-          <section className="space-y-8">
+          {/* Team Members */}
+          <section className="space-y-10">
             <div className="space-y-2" />
-            <div className="space-y-8">
-              {founders.map((member) => (
+            <div className="grid gap-10 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+              {[...founders, ...advisors].map((member) => (
                 <Card
                   key={member.name}
-                  className="group flex flex-col gap-6 rounded-3xl border border-border/40 bg-background/60 p-6 shadow-md backdrop-blur-sm transition-shadow duration-300 hover:border-primary/40 hover:shadow-xl sm:p-8"
+                  className="group flex h-full flex-col items-center rounded-3xl border border-border/40 bg-background/60 p-8 sm:p-9 md:p-10 text-center shadow-md backdrop-blur-sm transition-shadow duration-300 hover:border-primary/40 hover:shadow-xl"
                 >
-                  <div className="flex flex-col items-center gap-6 md:flex-row md:items-center">
-                    <div className="flex shrink-0 justify-center md:justify-start">
-                      <div className="relative h-32 w-32 overflow-hidden rounded-full border border-border/70 bg-gradient-to-tr from-primary/10 via-background to-secondary/10 shadow-md sm:h-36 sm:w-36">
-                        <img
-                          src={member.imageSrc}
-                          alt={member.name}
-                          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="flex-1 space-y-4 text-center md:text-left">
-                      <div>
-                        <h2 className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
-                          {member.name}
-                        </h2>
-                        <p className="mt-1 text-xs font-medium uppercase tracking-[0.2em] text-primary">
-                          {member.role}
-                        </p>
-                      </div>
-
-                      <p className="text-sm leading-relaxed text-muted-foreground">
-                        {member.bio}
-                      </p>
-
-                      <div className="mt-2 flex justify-center md:justify-start">
-                        <a
-                          href={member.linkedin}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="inline-flex items-center gap-1.5 rounded-full border border-border/70 bg-background/60 px-4 py-1.5 text-xs font-medium text-foreground shadow-sm transition-colors hover:border-primary hover:bg-primary/5"
-                        >
-                          <span>View LinkedIn</span>
-                          <span aria-hidden="true" className="text-[10px]">
-                            ↗
-                          </span>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </Card>
-              ))}
-            </div>
-          </section>
-
-          {/* Advisors */}
-          <section className="space-y-6">
-            <div className="space-y-2" />
-            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-              {advisors.map((member) => (
-                <Card
-                  key={member.name}
-                  className="group flex h-full flex-col items-center rounded-3xl border border-border/40 bg-background/60 p-6 text-center shadow-md backdrop-blur-sm transition-shadow duration-300 hover:border-primary/40 hover:shadow-xl"
-                >
-                  <div className="relative mb-4 h-24 w-24 overflow-hidden rounded-full border border-border/70 bg-gradient-to-tr from-primary/10 via-background to-secondary/10 shadow-md sm:h-24 sm:w-24">
+                  <div className="relative mb-6 h-28 w-28 sm:h-32 sm:w-32 shrink-0 overflow-hidden rounded-full border border-border/70 bg-gradient-to-tr from-primary/10 via-background to-secondary/10 shadow-md">
                     <img
                       src={member.imageSrc}
                       alt={member.name}
@@ -163,18 +109,15 @@ export default function Team() {
                     />
                   </div>
 
-                  <h3 className="text-base font-semibold tracking-tight text-foreground sm:text-lg">
+                  <h3 className="mb-4 text-base font-semibold tracking-tight text-foreground sm:text-xl">
                     {member.name}
                   </h3>
-                  <p className="mt-1 text-[11px] font-medium uppercase tracking-[0.2em] text-primary">
-                    {member.role}
-                  </p>
 
-                  <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
+                  <p className="min-h-[140px] flex-1 text-sm leading-relaxed text-muted-foreground sm:text-[15px]">
                     {member.bio}
                   </p>
 
-                  <div className="mt-4">
+                  <div className="mt-4 shrink-0">
                     <a
                       href={member.linkedin}
                       target="_blank"

@@ -2,36 +2,6 @@ import { Card } from '@/components/ui/card'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 
 const faqs = [
-  { 
-    question: 'Why is this free for early users?', 
-    answer: "We are offering early registrants and champions (top referrers) free testing and insights, We want to enroll enough champions of our cause and give them incentive to lead this revolution. Even after the first phase, the testing will be heavily subsidised as we believe genomic data is too important to ask users to pay huge sums for. We want to build the largest Indian genomic database — which benefits everyone, including you. We will sustain ourselves through ethical research partnerships and optional premium features for users (coming soon).",
-    category: 'basics'
-  },
-  { 
-    question: 'How accurate is the test?', 
-    answer: 'We use clinical-grade whole genome sequencing (WGS), the gold standard in genomics. This reads all 3 billion base pairs of your DNA — far more comprehensive than ancestry or genotyping tests.',
-    category: 'basics'
-  },
-  { 
-    question: 'What can I learn from my genome?', 
-    answer: "You'll get insights into disease risks (e.g., heart disease, diabetes), drug responses, carrier status for genetic conditions, ancestry, and wellness traits (e.g., nutrition, fitness). We'll keep updating your dashboard as science evolves.",
-    category: 'basics'
-  },
-  { 
-    question: 'Is this only for Indians?', 
-    answer: "We're starting with India because it's the most genetically diverse and underrepresented population. But we plan to expand globally. If you're of Indian descent living abroad, you're welcome to join!",
-    category: 'basics'
-  },
-  { 
-    question: 'How is my data protected?', 
-    answer: 'Your genome is encrypted end-to-end, stored in Indian data centers, and accessible only by you. We never sell or share your data with third parties. You can revoke research consent or delete your data anytime.',
-    category: 'governance'
-  },
-  { 
-    question: "What does 'co-ownership' mean?", 
-    answer: "As a Founding Genome Member, you co-own the collective Indian genomic database we're building. You'll have a say in how it's used, and if it generates value (e.g., through licensing to ethical researchers), you share in that value.",
-    category: 'governance'
-  },
   {
     question: 'What is genome sequencing?',
     answer: 'Genome sequencing is a technology that reads your entire DNA, revealing your unique genetic makeup. This information can provide important insights into your health, traits, and disease risks.',
@@ -107,6 +77,37 @@ const faqs = [
     answer: 'Once your genome is sequenced, your data remains valid for life and can be re-analyzed whenever new discoveries arise.',
     category: 'future_generations'
   },
+  { 
+    question: 'Why is this free for early users?', 
+    answer: "We are offering early registrants and champions (top referrers) free testing and insights, We want to enroll enough champions of our cause and give them incentive to lead this revolution. Even after the first phase, the testing will be heavily subsidised as we believe genomic data is too important to ask users to pay huge sums for. We want to build the largest Indian genomic database — which benefits everyone, including you. We will sustain ourselves through ethical research partnerships and optional premium features for users (coming soon).",
+    category: 'basics'
+  },
+  { 
+    question: 'How accurate is the test?', 
+    answer: 'We use clinical-grade whole genome sequencing (WGS), the gold standard in genomics. This reads all 3 billion base pairs of your DNA — far more comprehensive than ancestry or genotyping tests.',
+    category: 'basics'
+  },
+  { 
+    question: 'What can I learn from my genome?', 
+    answer: "You'll get insights into disease risks (e.g., heart disease, diabetes), drug responses, carrier status for genetic conditions, ancestry, and wellness traits (e.g., nutrition, fitness). We'll keep updating your dashboard as science evolves.",
+    category: 'basics'
+  },
+  { 
+    question: 'Is this only for Indians?', 
+    answer: "We're starting with India because it's the most genetically diverse and underrepresented population. But we plan to expand globally. If you're of Indian descent living abroad, you're welcome to join!",
+    category: 'basics'
+  },
+  // Merged governance, process_privacy, and long_term_value into a single bottom category
+  { 
+    question: 'How is my data protected?', 
+    answer: 'Your genome is encrypted end-to-end, stored in Indian data centers, and accessible only by you. We never sell or share your data with third parties. You can revoke research consent or delete your data anytime.',
+    category: 'process_privacy'
+  },
+  { 
+    question: "What does 'co-ownership' mean?", 
+    answer: "As a Founding Genome Member, you co-own the collective Indian genomic database we're building. You'll have a say in how it's used, and if it generates value (e.g., through licensing to ethical researchers), you share in that value.",
+    category: 'process_privacy'
+  },
   {
     question: 'How is my genome sequenced?',
     answer: 'Typically, you provide a saliva or blood sample, which is processed in a lab to read and interpret your DNA.',
@@ -135,25 +136,23 @@ const faqs = [
   {
     question: 'Will I get updated information as research advances?',
     answer: 'Yes. New health discoveries can add value to your original genome data without needing additional testing.',
-    category: 'long_term_value'
+    category: 'process_privacy'
   },
   {
     question: 'Can I use my genetic data for future planning?',
     answer: 'Absolutely. Insights about inherited conditions, carrier status, and personal traits can help with family planning, proactive health management, and monitoring.',
-    category: 'long_term_value'
+    category: 'process_privacy'
   },
 ]
 
 const categoryLabels: Record<string, string> = {
-  basics: 'The Basics',
-  governance: 'Governance & Data',
+  basics: 'Our Offerings',
   sequencing_basics: 'Understanding Genome Sequencing Basics',
   health_wellness: 'Health, Longevity & Wellness',
   personalized_medicine: 'Personalized Medicine',
   exome_vs_wgs: 'Exome vs. Whole Genome Sequencing',
   future_generations: 'Importance for Future Generations',
   process_privacy: 'Process, Privacy & Data Use',
-  long_term_value: 'Long-term & Ongoing Value',
 }
 
 export default function FAQ() {

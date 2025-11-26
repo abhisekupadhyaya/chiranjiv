@@ -107,12 +107,17 @@ export function FloatingCta({ show = true }: FloatingCtaProps) {
             </div>
 
             {/* Right badge box: Line 3 */}
-            <div className="flex items-center justify-start sm:justify-end gap-1 sm:gap-2 md:gap-2.5 flex-shrink-0 sm:border-l border-border/30 sm:pl-3 md:pl-4 lg:pl-6">
-              <div className="text-sm sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-extralight tracking-tight text-primary transition-all duration-200 md:group-hover:scale-105 whitespace-nowrap">
-                FREE
+            <div className="flex flex-row sm:flex-col items-center sm:items-end justify-start sm:justify-end gap-1 sm:gap-0.5 md:gap-1 flex-shrink-0 sm:border-l border-border/30 sm:pl-3 md:pl-4 lg:pl-6">
+              <div className="flex items-center justify-start sm:justify-end gap-1 sm:gap-2 md:gap-2.5">
+                <div className="text-sm sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-extralight tracking-tight text-primary transition-all duration-200 md:group-hover:scale-105 whitespace-nowrap">
+                  FREE
+                </div>
+                <div className="text-[8px] sm:text-[10px] md:text-xs lg:text-sm text-primary/80 font-light tracking-wide whitespace-nowrap">
+                  For Early Users
+                </div>
               </div>
-              <div className="text-[8px] sm:text-[10px] md:text-xs lg:text-sm text-primary/80 font-light tracking-wide whitespace-nowrap">
-                For Early Users
+              <div className="ml-auto sm:ml-0 text-[8px] sm:text-[10px] md:text-xs lg:text-sm text-muted-foreground font-light tracking-wide whitespace-nowrap">
+                Offer closes on December 31st
               </div>
             </div>
           </div>

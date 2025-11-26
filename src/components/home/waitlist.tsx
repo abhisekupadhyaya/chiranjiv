@@ -1246,7 +1246,9 @@ export function Waitlist() {
                           Register now. Participate with family and create your genetic map that empowers future generations to take charge of their health and wellness.
                         </p>
                         <p className="text-base sm:text-lg text-muted-foreground font-light leading-relaxed text-center mt-2">
-                          Don't just join—lead the movement!
+                          <span className="font-semibold">
+                            Don't just join—lead the movement!
+                          </span>
                         </p>
                       </div>
                       <div>
