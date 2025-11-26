@@ -32,7 +32,129 @@ const faqs = [
     answer: "As a Founding Genome Member, you co-own the collective Indian genomic database we're building. You'll have a say in how it's used, and if it generates value (e.g., through licensing to ethical researchers), you share in that value.",
     category: 'governance'
   },
+  {
+    question: 'What is genome sequencing?',
+    answer: 'Genome sequencing is a technology that reads your entire DNA, revealing your unique genetic makeup. This information can provide important insights into your health, traits, and disease risks.',
+    category: 'sequencing_basics'
+  },
+  {
+    question: 'How is genome sequencing different from ancestry or trait tests?',
+    answer: 'Genome sequencing analyzes all your DNA, whereas ancestry or trait tests look at selected portions. Genome sequencing provides much more detailed and actionable health information.',
+    category: 'sequencing_basics'
+  },
+  {
+    question: 'What is genetic information used for?',
+    answer: 'It can help predict disease risk, guide lifestyle choices, inform family planning, and help healthcare providers personalize medical care.',
+    category: 'sequencing_basics'
+  },
+  {
+    question: 'How can genome sequencing help improve my health?',
+    answer: 'It identifies genetic risks for certain diseases, shows how you might respond to medications, and suggests preventive lifestyle changes, all based on your unique biology.',
+    category: 'health_wellness'
+  },
+  {
+    question: 'Can genome sequencing increase my lifespan?',
+    answer: 'Knowledge of your risks enables early interventions, which may help prevent disease and promote a longer, healthier life.',
+    category: 'health_wellness'
+  },
+  {
+    question: 'How does genome sequencing enable personalized medicine?',
+    answer: 'It helps doctors select the most effective treatments and drugs for you, while minimizing side effects, based on your genetic profile.',
+    category: 'personalized_medicine'
+  },
+  {
+    question: 'Are genetic recommendations accurate and useful?',
+    answer: 'While genetics provides important probabilities, insights are best used together with personal health history and lifestyle factors.',
+    category: 'personalized_medicine'
+  },
+  {
+    question: 'What is exome sequencing?',
+    answer: 'Exome sequencing looks at only the protein-coding regions of genes (about 1–2% of DNA), where many disease-causing mutations occur.',
+    category: 'exome_vs_wgs'
+  },
+  {
+    question: 'What is whole genome sequencing (WGS)?',
+    answer: 'WGS reads your entire DNA, including coding and non-coding regions, providing the most comprehensive DNA analysis available.',
+    category: 'exome_vs_wgs'
+  },
+  {
+    question: 'How does WGS differ from exome sequencing?',
+    answer: 'WGS captures all genetic information—both within and outside genes—offering more complete insights. Exome sequencing is limited to a small part of the genome.',
+    category: 'exome_vs_wgs'
+  },
+  {
+    question: 'What added value does whole genome sequencing provide?',
+    answer: 'It detects rare or complex genetic variations, regulatory genome regions, and markers influencing drug responses or wellness—insights often missed by exome or targeted tests.',
+    category: 'exome_vs_wgs'
+  },
+  {
+    question: 'Is all my DNA relevant for health, or just the exome?',
+    answer: 'Many important genetic changes lie outside the exome, affecting regulation of genes, disease risks, and drug responses.',
+    category: 'exome_vs_wgs'
+  },
+  {
+    question: 'Why is having my whole genome sequenced important for my children and descendants?',
+    answer: 'Your genetic information helps identify hereditary risks that might affect your family and future generations, enabling better health planning.',
+    category: 'future_generations'
+  },
+  {
+    question: 'Will sequencing my genome now help my family in the future?',
+    answer: 'Yes. Your genome data remains useful for life; as science advances, new disease links or insights can be identified from your existing results.',
+    category: 'future_generations'
+  },
+  {
+    question: 'Is whole genome sequencing a one-time investment?',
+    answer: 'Once your genome is sequenced, your data remains valid for life and can be re-analyzed whenever new discoveries arise.',
+    category: 'future_generations'
+  },
+  {
+    question: 'How is my genome sequenced?',
+    answer: 'Typically, you provide a saliva or blood sample, which is processed in a lab to read and interpret your DNA.',
+    category: 'process_privacy'
+  },
+  {
+    question: 'How is my data protected?',
+    answer: 'We use strict encryption and privacy controls. Only you control who accesses or shares your genomic data.',
+    category: 'process_privacy'
+  },
+  {
+    question: 'Can my results be shared with my doctor?',
+    answer: 'Yes, with your permission, your data can be securely shared with healthcare providers for more informed medical care.',
+    category: 'process_privacy'
+  },
+  {
+    question: 'Could my genetic data affect insurance or employment?',
+    answer: 'Most countries have laws protecting against genetic discrimination, but you should always check your local regulations.',
+    category: 'process_privacy'
+  },
+  {
+    question: 'Can children get genome sequencing?',
+    answer: 'Yes, but parental consent is required, and results need expert medical interpretation.',
+    category: 'process_privacy'
+  },
+  {
+    question: 'Will I get updated information as research advances?',
+    answer: 'Yes. New health discoveries can add value to your original genome data without needing additional testing.',
+    category: 'long_term_value'
+  },
+  {
+    question: 'Can I use my genetic data for future planning?',
+    answer: 'Absolutely. Insights about inherited conditions, carrier status, and personal traits can help with family planning, proactive health management, and monitoring.',
+    category: 'long_term_value'
+  },
 ]
+
+const categoryLabels: Record<string, string> = {
+  basics: 'The Basics',
+  governance: 'Governance & Data',
+  sequencing_basics: 'Understanding Genome Sequencing Basics',
+  health_wellness: 'Health, Longevity & Wellness',
+  personalized_medicine: 'Personalized Medicine',
+  exome_vs_wgs: 'Exome vs. Whole Genome Sequencing',
+  future_generations: 'Importance for Future Generations',
+  process_privacy: 'Process, Privacy & Data Use',
+  long_term_value: 'Long-term & Ongoing Value',
+}
 
 export default function FAQ() {
   return (
@@ -74,7 +196,7 @@ export default function FAQ() {
             <Accordion type="single" collapsible defaultValue="item-0" className="space-y-4">
               {faqs.map((faq, index) => {
                 const isFirstInCategory = index === 0 || faqs[index - 1].category !== faq.category
-                const categoryLabel = faq.category === 'basics' ? 'The Basics' : 'Governance & Data'
+                const categoryLabel = categoryLabels[faq.category] ?? faq.category
                 
                 return (
                   <div key={index}>
