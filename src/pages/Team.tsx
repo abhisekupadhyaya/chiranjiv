@@ -8,23 +8,20 @@ type TeamMember = {
   linkedin: string
 }
 
-const founders: TeamMember[] = [
-  {
-    name: 'Hemant Jain',
-    role: 'Co-Founder & Technology Lead',
-    bio: 'A serial entrepreneur with 25+ years of experience across the US and India, spanning multiple industry verticals. An alum of IIT Delhi and IIM Calcutta, Hemant is passionate about changing the face of healthcare in India through technology, data, and genomics-driven innovation.',
-    imageSrc: '/team/hemant.jpeg',
-    linkedin: 'https://www.linkedin.com/in/hemantrjain',
-  },
-]
-
-const advisors: TeamMember[] = [
+const teamMembers: TeamMember[] = [
   {
     name: 'Ashish Chordia',
     role: 'Advisor',
     bio: 'A serial entrepreneur, investor, and mentor with 25+ years of experience, Ashish has created several large enterprises around the world including a unicorn. An alum of IIT Bombay and Wharton, he is involved with multiple global ventures and is deeply passionate about changing how healthcare works.',
     imageSrc: '/team/ashish.jpeg',
     linkedin: 'https://www.linkedin.com/in/ashishchordia',
+  },
+  {
+    name: 'Hemant Jain',
+    role: 'Co-Founder & Technology Lead',
+    bio: 'A serial entrepreneur with 25+ years of experience across the US and India, spanning multiple industry verticals. An alum of IIT Delhi and IIM Calcutta, Hemant is passionate about changing the face of healthcare in India through technology, data, and genomics-driven innovation.',
+    imageSrc: '/team/hemant.jpeg',
+    linkedin: 'https://www.linkedin.com/in/hemantrjain',
   },
   {
     name: 'Prahalad Simha',
@@ -96,7 +93,7 @@ export default function Team() {
           <section className="space-y-10">
             <div className="space-y-2" />
             <div className="grid gap-10 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
-              {[...founders, ...advisors].map((member) => (
+              {teamMembers.map((member) => (
                 <Card
                   key={member.name}
                   className="group flex h-full flex-col items-center rounded-3xl border border-border/40 bg-background/60 p-8 sm:p-9 md:p-10 text-center shadow-md backdrop-blur-sm transition-shadow duration-300 hover:border-primary/40 hover:shadow-xl"
