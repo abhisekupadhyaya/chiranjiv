@@ -11,6 +11,19 @@ Environment:
 - For local SAM: VITE_API_BASE_URL=http://127.0.0.1:3000
 - All frontend environment variables are read via `src/config/env.ts`. Add any new env vars there and consume them through the exported `config` object.
 
+Required frontend env vars (in `.env` at project root):
+- VITE_API_BASE_URL
+- VITE_OIDC_AUTHORITY
+- VITE_OIDC_CLIENT_ID
+- VITE_OIDC_REDIRECT_URI
+- VITE_OIDC_LOGOUT_REDIRECT_URI
+- VITE_OIDC_SCOPE
+- VITE_COGNITO_ADDRESS_ATTR_NAME
+
+Optional frontend env vars:
+- VITE_COGNITO_DOMAIN
+- VITE_OIDC_CLIENT_SECRET
+
 ## Backend (AWS SAM, Python)
 Location: lambda/
 

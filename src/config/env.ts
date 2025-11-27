@@ -18,21 +18,34 @@ export interface EnvironmentConfig {
   cognitoAddressAttrName: string
 }
 
-const DEFAULT_API_BASE_URL =
-  'https://e92h9q3h03.execute-api.us-east-2.amazonaws.com/default'
+/**
+ * Reads a required environment variable from Vite's import.meta.env.
+ * Throws a runtime error if the variable is missing or empty.
+ */
+function getRequiredEnvVar(name: string): string {
+  const value = (import.meta.env as any)[name] as string | undefined
+
+  if (!value) {
+    throw new Error(`Missing required environment variable: ${name}`)
+  }
+
+  return value
+}
+
+/**
+ * Reads an optional environment variable from Vite's import.meta.env.
+ * Returns undefined when the variable is not set or empty.
+ */
+function getOptionalEnvVar(name: string): string | undefined {
+  const value = (import.meta.env as any)[name] as string | undefined
+  return value || undefined
+}
 
 /**
  * Validates and returns the API base URL from environment variables.
  */
 function getApiBaseUrl(): string {
-  const apiUrl = import.meta.env.VITE_API_BASE_URL
-
-  if (!apiUrl) {
-    console.warn(
-      'VITE_API_BASE_URL is not defined. Falling back to hardcoded default API base URL.'
-    )
-    return DEFAULT_API_BASE_URL
-  }
+  const apiUrl = getRequiredEnvVar('VITE_API_BASE_URL')
 
   // Remove trailing slash if present to keep URL construction consistent
   return apiUrl.replace(/\/$/, '')
@@ -44,28 +57,23 @@ function getApiBaseUrl(): string {
  */
 const apiBaseUrl = getApiBaseUrl()
 
-const oidcAuthority =
-  import.meta.env.VITE_OIDC_AUTHORITY ||
-  'https://cognito-idp.us-east-2.amazonaws.com/us-east-2_GV16bcF7q'
+const oidcAuthority = getRequiredEnvVar('VITE_OIDC_AUTHORITY')
 
-const oidcClientId =
-  import.meta.env.VITE_OIDC_CLIENT_ID || '146k1biivtve0064088ei715ns'
+const oidcClientId = getRequiredEnvVar('VITE_OIDC_CLIENT_ID')
 
-const oidcRedirectUri =
-  import.meta.env.VITE_OIDC_REDIRECT_URI ||
-  'https://d84l1y8p4kdic.cloudfront.net'
+const oidcRedirectUri = getRequiredEnvVar('VITE_OIDC_REDIRECT_URI')
 
-const oidcLogoutRedirectUri =
-  import.meta.env.VITE_OIDC_LOGOUT_REDIRECT_URI || oidcRedirectUri
+const oidcLogoutRedirectUri = getRequiredEnvVar('VITE_OIDC_LOGOUT_REDIRECT_URI')
 
-const oidcScope = import.meta.env.VITE_OIDC_SCOPE || 'phone openid email'
+const oidcScope = getRequiredEnvVar('VITE_OIDC_SCOPE')
 
-const cognitoDomain = import.meta.env.VITE_COGNITO_DOMAIN || undefined
+const cognitoDomain = getOptionalEnvVar('VITE_COGNITO_DOMAIN')
 
-const oidcClientSecret = import.meta.env.VITE_OIDC_CLIENT_SECRET || undefined
+const oidcClientSecret = getOptionalEnvVar('VITE_OIDC_CLIENT_SECRET')
 
-const cognitoAddressAttrName =
-  import.meta.env.VITE_COGNITO_ADDRESS_ATTR_NAME || 'address'
+const cognitoAddressAttrName = getRequiredEnvVar(
+  'VITE_COGNITO_ADDRESS_ATTR_NAME'
+)
 
 export const config: Readonly<EnvironmentConfig> = Object.freeze({
   apiBaseUrl,
