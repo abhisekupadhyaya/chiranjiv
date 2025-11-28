@@ -16,6 +16,8 @@ export interface EnvironmentConfig {
   cognitoDomain?: string
   oidcClientSecret?: string
   cognitoAddressAttrName: string
+
+  gtmId?: string
 }
 
 /**
@@ -75,6 +77,8 @@ const cognitoAddressAttrName = getRequiredEnvVar(
   'VITE_COGNITO_ADDRESS_ATTR_NAME'
 )
 
+const gtmId = getOptionalEnvVar('VITE_GTM_ID')
+
 export const config: Readonly<EnvironmentConfig> = Object.freeze({
   apiBaseUrl,
   isDevelopment: import.meta.env.DEV,
@@ -88,6 +92,8 @@ export const config: Readonly<EnvironmentConfig> = Object.freeze({
   cognitoDomain,
   oidcClientSecret,
   cognitoAddressAttrName,
+
+  gtmId,
 })
 
 export default config
