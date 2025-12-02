@@ -1,9 +1,8 @@
 import { Button } from '@/components/ui/button'
 
 export function ChooseYourStep() {
-  const scrollToWaitlist = () => {
-    const el = document.getElementById('waitlist')
-    if (el) el.scrollIntoView({ behavior: 'smooth' })
+  const viewSampleReport = () => {
+    window.open('/Chiranjiv_Genomics_Report.pdf', '_blank')
   }
 
   const CheckIcon = () => (
@@ -96,11 +95,11 @@ export function ChooseYourStep() {
                 {/* CTA Button - anchored at bottom with separator */}
                 <div className="pt-8 border-t border-border/30">
                   <Button 
-                    onClick={scrollToWaitlist} 
+                    onClick={viewSampleReport} 
                     className="w-full bg-primary text-primary-foreground hover:bg-primary/90 btn-glow hover:scale-[1.02] transition-all"
                     size="lg"
                   >
-                    Join Early Access
+                    View Sample Report
                   </Button>
                 </div>
               </div>
