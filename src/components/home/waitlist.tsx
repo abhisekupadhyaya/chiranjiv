@@ -796,7 +796,6 @@ export function Waitlist() {
   const [rankLoading, setRankLoading] = useState(false)
   const [rankError, setRankError] = useState('')
   const [waitlistStats, setWaitlistStats] = useState({ totalUsers: 0, totalReferrals: 0 })
-  const [statsLoading, setStatsLoading] = useState(true)
   const [referralLinkCopied, setReferralLinkCopied] = useState(false)
 
   // Auto-fill referral code from URL query parameter
@@ -810,7 +809,6 @@ export function Waitlist() {
   // Fetch waitlist stats on mount
   useEffect(() => {
     const fetchStats = async () => {
-      setStatsLoading(true)
       try {
         const result = await getWaitlistStats()
         if (result.ok && 'totalUsers' in result.data) {
@@ -818,8 +816,6 @@ export function Waitlist() {
         }
       } catch (error) {
         console.error('Failed to fetch waitlist stats:', error)
-      } finally {
-        setStatsLoading(false)
       }
     }
     fetchStats()
@@ -1099,22 +1095,6 @@ export function Waitlist() {
       />
       <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
-          {!submitted && !statsLoading && waitlistStats.totalUsers > 0 && (
-            <div className="grid grid-cols-2 gap-4 sm:gap-6 mb-8 sm:mb-12 max-w-2xl mx-auto">
-              <div className="text-center p-5 sm:p-6 rounded-xl bg-muted/20 backdrop-blur-sm border border-border/30 transition-all duration-300 hover:shadow-lg hover:scale-105">
-                <div className="text-3xl sm:text-4xl font-light text-primary mb-2 tracking-tight">
-                  {waitlistStats.totalUsers.toLocaleString()}
-                </div>
-                <div className="text-xs sm:text-sm text-muted-foreground font-light tracking-tight">On Waitlist</div>
-              </div>
-              <div className="text-center p-5 sm:p-6 rounded-xl bg-muted/20 backdrop-blur-sm border border-border/30 transition-all duration-300 hover:shadow-lg hover:scale-105">
-                <div className="text-3xl sm:text-4xl font-light text-secondary mb-2 tracking-tight">
-                  {waitlistStats.totalReferrals.toLocaleString()}
-                </div>
-                <div className="text-xs sm:text-sm text-muted-foreground font-light tracking-tight">Total Referrals</div>
-              </div>
-            </div>
-          )}
           <Card className="p-6 sm:p-8 md:p-10 glass-backdrop glass-border-refractive rounded-3xl shadow-2xl border-border/50 backdrop-blur-sm transition-all duration-300 min-h-[600px] flex items-center justify-center">
             <div className="w-full">
             {auth.user ? (
@@ -1202,8 +1182,8 @@ export function Waitlist() {
                               />
                             </div>
 
-                            {/* Metrics Grid - Vertically Stacked */}
-                            <div className="flex flex-col gap-3">
+                          {/* Metrics Grid - 2x2 */}
+                          <div className="grid grid-cols-2 gap-3">
                               <StatCard
                                 icon={<Trophy className="w-5 h-5" />}
                                 label="Current Rank"
@@ -1215,6 +1195,16 @@ export function Waitlist() {
                                 label="Referrals"
                                 value={rankData.referralsCount}
                                 trend="up"
+                              />
+                            <StatCard
+                              icon={<Users className="w-5 h-5" />}
+                              label="On Waitlist"
+                              value={rankData.totalUsers}
+                            />
+                            <StatCard
+                              icon={<Share2 className="w-5 h-5" />}
+                              label="Total Referrals"
+                              value={waitlistStats.totalReferrals}
                               />
                             </div>
                           </div>
