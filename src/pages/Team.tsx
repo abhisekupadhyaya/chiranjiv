@@ -48,25 +48,11 @@ const teamMembers: TeamMember[] = [
 
 export default function Team() {
   return (
-    <section className="relative pt-24 sm:pt-32 pb-20 sm:pb-28 overflow-hidden">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5" />
-
-      {/* Floating animated orbs */}
-      <div className="pointer-events-none absolute top-1/4 left-1/4 h-64 w-64 rounded-full bg-primary/10 blur-3xl animate-float" />
-      <div
-        className="pointer-events-none absolute bottom-1/4 right-1/4 h-96 w-96 rounded-full bg-secondary/10 blur-3xl animate-float"
-        style={{ animationDelay: '2s' }}
-      />
-      <div
-        className="pointer-events-none absolute top-1/2 right-1/3 h-72 w-72 rounded-full bg-accent/10 blur-3xl animate-float"
-        style={{ animationDelay: '4s' }}
-      />
-
+    <section className="relative pt-24 sm:pt-32 pb-20 sm:pb-28 overflow-hidden bg-background">
       <div className="container relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Hero Section */}
         <div className="mx-auto mb-16 max-w-3xl text-center">
-          <h1 className="text-balance text-4xl font-extralight leading-[1.05] tracking-tight text-foreground sm:text-5xl md:text-6xl">
+          <h1 className="text-balance text-4xl font-medium tracking-tight text-neutral-200 sm:text-5xl md:text-6xl">
             Our Team
           </h1>
         </div>
@@ -74,15 +60,15 @@ export default function Team() {
         <div className="space-y-20">
           {/* Mission & initiative narrative */}
           <section className="mx-auto max-w-4xl">
-            <Card className="glass-backdrop rounded-3xl border border-border/40 bg-background/60 p-6 shadow-md backdrop-blur-sm sm:p-8 md:p-10">
+            <Card className="rounded-2xl border-neutral-1000 bg-white p-6 shadow-soft backdrop-blur-sm sm:p-8 md:p-10">
               <div className="space-y-4">
-                <p className="text-base font-light leading-relaxed text-muted-foreground sm:text-lg">
+                <p className="text-base font-light leading-relaxed text-neutral-600 sm:text-lg">
                   At Chiranjiv, our founding team comprises experienced serial entrepreneurs, health tech innovators, genome science experts, and passionate advocates for accessible healthcare. United by a shared vision, we are dedicated to democratizing genomic-driven wellness for all Indians.
                 </p>
-                <p className="text-base font-light leading-relaxed text-muted-foreground sm:text-lg">
+                <p className="text-base font-light leading-relaxed text-neutral-600 sm:text-lg">
                   We believe everyone deserves the opportunity to take control of their health. To accelerate this mission, we are launching a special initiative: top referring users will receive complimentary full genetic sequencing and a personalized suite of wellness reports. This initiative empowers individuals to understand their unique genetic makeup, make informed health decisions, and lead healthier, longer lives.
                 </p>
-                <p className="text-base font-light leading-relaxed text-muted-foreground sm:text-lg">
+                <p className="text-base font-light leading-relaxed text-neutral-600 sm:text-lg">
                   Together, we are ushering in a new era of preventive healthcare—where knowledge, innovation, and accessibility come together for the benefit of everyone.
                 </p>
               </div>
@@ -96,7 +82,7 @@ export default function Team() {
               {teamMembers.map((member) => (
                 <Card
                   key={member.name}
-                  className="group flex h-full flex-col items-center rounded-3xl border border-border/40 bg-background/60 p-8 sm:p-9 md:p-10 text-center shadow-md backdrop-blur-sm transition-shadow duration-300 hover:border-primary/40 hover:shadow-xl"
+                  className="group flex h-full flex-col items-center rounded-2xl border-neutral-1000 bg-white p-8 sm:p-9 md:p-10 text-center shadow-soft transition-all duration-300 hover:shadow-lift"
                 >
                   <div className="relative mb-6 h-28 w-28 sm:h-32 sm:w-32 shrink-0 overflow-hidden rounded-full border border-border/70 bg-gradient-to-tr from-primary/10 via-background to-secondary/10 shadow-md">
                     <img
@@ -106,11 +92,11 @@ export default function Team() {
                     />
                   </div>
 
-                  <h3 className="mb-4 text-base font-semibold tracking-tight text-foreground sm:text-xl">
+                  <h3 className="mb-4 text-lg font-semibold tracking-tight text-neutral-200 sm:text-xl">
                     {member.name}
                   </h3>
 
-                  <p className="min-h-[140px] flex-1 text-sm leading-relaxed text-muted-foreground sm:text-[15px]">
+                  <p className="min-h-[140px] flex-1 text-sm leading-relaxed text-neutral-600 sm:text-[15px]">
                     {member.bio}
                   </p>
 
@@ -136,4 +122,3 @@ export default function Team() {
     </section>
   )
 }
-

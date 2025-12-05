@@ -1,4 +1,4 @@
-import { Card } from '@/components/ui/card'
+import { Card } from "@/components/ui/card"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 
 const faqs = [
@@ -157,41 +157,21 @@ const categoryLabels: Record<string, string> = {
 
 export default function FAQ() {
   return (
-    <section className="relative pt-24 sm:pt-32 pb-16 sm:pb-24 overflow-hidden">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5" />
-      
-      {/* Floating animated orbs */}
-      <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl animate-float" />
-      <div 
-        className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-float" 
-        style={{ animationDelay: '2s' }}
-      />
-      <div 
-        className="absolute top-1/2 right-1/3 w-72 h-72 bg-accent/10 rounded-full blur-3xl animate-float" 
-        style={{ animationDelay: '4s' }}
-      />
-
-      <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
-        {/* Hero Section */}
-        <div className="text-center mb-10 sm:mb-14">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-muted/30 backdrop-blur-sm border border-border/50 mb-5 sm:mb-7">
-            <span className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse-glow" />
-            <span className="text-[11px] sm:text-xs font-light text-muted-foreground tracking-wide">
-              Answers for Founding Genome Members
-            </span>
-          </div>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extralight text-foreground mb-4 text-balance tracking-tight leading-[1.1]">
+    <div className="min-h-screen bg-background text-foreground font-sans pt-24 sm:pt-32 pb-16">
+      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <div className="mb-8 sm:mb-12 text-center">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-foreground mb-4">
             Frequently Asked Questions
           </h1>
-          <p className="text-base sm:text-lg text-muted-foreground text-pretty leading-relaxed font-light max-w-2xl mx-auto">
+          <p className="text-neutral-500">
             Everything you need to know about Project Chiranjiv
           </p>
         </div>
 
-        {/* FAQ Content Card */}
-        <div className="max-w-4xl mx-auto">
-          <Card className="glass-backdrop backdrop-blur-sm border border-border/50 rounded-3xl p-6 sm:p-8 md:p-10 shadow-lg hover:shadow-2xl transition-all duration-300 animate-in fade-in slide-in-from-bottom-4 duration-700">
+        {/* Content Card */}
+        <Card className="bg-white border-neutral-1000 p-6 sm:p-10 shadow-soft rounded-2xl">
+          <div className="space-y-8">
             <Accordion type="single" collapsible defaultValue="item-0" className="space-y-4">
               {faqs.map((faq, index) => {
                 const isFirstInCategory = index === 0 || faqs[index - 1].category !== faq.category
@@ -199,47 +179,33 @@ export default function FAQ() {
                 
                 return (
                   <div key={index}>
-                    {isFirstInCategory && index > 0 && (
-                      <div className="pt-4 pb-2 border-t border-border/30 mt-2">
-                        <h3 className="text-[11px] sm:text-xs font-medium uppercase tracking-[0.2em] text-primary/70 px-4">
-                          {categoryLabel}
-                        </h3>
-                      </div>
-                    )}
-                    {isFirstInCategory && index === 0 && (
-                      <div className="pb-2">
-                        <h3 className="text-[11px] sm:text-xs font-medium uppercase tracking-[0.2em] text-primary/70 px-4">
+                    {isFirstInCategory && (
+                      <div className={`pb-4 ${index > 0 ? 'pt-8 mt-4' : ''}`}>
+                        <h3 className="text-sm font-semibold uppercase tracking-wider text-primary mb-2">
                           {categoryLabel}
                         </h3>
                       </div>
                     )}
                     <AccordionItem 
                       value={`item-${index}`}
-                      className="border-0"
+                      className="border-none"
                     >
                       <AccordionTrigger 
-                        className="px-4 sm:px-5 py-4 hover:bg-muted/40 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background hover:no-underline"
+                        className="py-4 hover:no-underline text-left text-base font-medium"
                       >
-                        <span className="text-base sm:text-lg font-medium text-foreground tracking-tight text-left pr-4">
-                          {faq.question}
-                        </span>
+                        {faq.question}
                       </AccordionTrigger>
-                      <AccordionContent className="px-4 sm:px-5 pb-4 sm:pb-5">
-                        <div className="border-t border-border/40 mt-1 pt-3">
-                          <p className="text-sm sm:text-base text-muted-foreground leading-relaxed font-light">
-                            {faq.answer}
-                          </p>
-                        </div>
+                      <AccordionContent className="text-neutral-600 leading-relaxed">
+                        {faq.answer}
                       </AccordionContent>
                     </AccordionItem>
                   </div>
                 )
               })}
             </Accordion>
-          </Card>
-        </div>
+          </div>
+        </Card>
       </div>
-    </section>
+    </div>
   )
 }
-

@@ -1,11 +1,11 @@
-import { PolicyLayout } from '@/components/policy/policy-layout'
+import { PolicyLayout } from '@/components/PolicyLayout'
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 export default function TermsOfService() {
   return (
     <PolicyLayout 
       title="Terms Of Service" 
       lastUpdated="November 1, 2025"
-      category="Legal & Data Protection"
     >
       <section id="introduction" className="mb-8">
         <h2 className="text-2xl font-semibold mb-4 mt-0">Introduction and Acceptance of Terms</h2>
@@ -239,11 +239,13 @@ export default function TermsOfService() {
           If you have any questions about these Terms, please contact us at:
         </p>
         
-        <div className="mt-4 p-6 glass-backdrop backdrop-blur-sm border border-border/30 rounded-xl mb-4">
-          <p className="font-semibold text-foreground mb-3">Rapidera Technologies Pvt Ltd.</p>
-          <p className="text-muted-foreground font-light">Email: <a href="mailto:support@chiranjiv.com" className="text-primary hover:underline font-medium">support@chiranjiv.com</a></p>
-          <p className="text-muted-foreground font-light">Address: 703 Deron Heights, Baner Road, Baner, Pune 411045, India</p>
-        </div>
+        <Alert className="mt-4 mb-4 bg-neutral-50">
+          <AlertTitle className="font-semibold text-foreground mb-3">Rapidera Technologies Pvt Ltd.</AlertTitle>
+          <AlertDescription className="text-neutral-600 font-light">
+            <p>Email: <a href="mailto:support@chiranjiv.com" className="text-primary-600 hover:underline font-medium">support@chiranjiv.com</a></p>
+            <p>Address: 703 Deron Heights, Baner Road, Baner, Pune 411045, India</p>
+          </AlertDescription>
+        </Alert>
       </section>
     </PolicyLayout>
   )

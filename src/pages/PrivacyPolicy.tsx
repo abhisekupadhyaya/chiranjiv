@@ -1,11 +1,11 @@
-import { PolicyLayout } from '@/components/policy/policy-layout'
+import { PolicyLayout } from '@/components/PolicyLayout'
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 export default function PrivacyPolicy() {
   return (
     <PolicyLayout 
       title="Privacy Policy" 
       lastUpdated="November 1, 2025"
-      category="Privacy & Data Protection"
     >
       <section id="introduction" className="mb-8">
         <h2 className="text-2xl font-semibold mb-4 mt-0">Introduction and Scope</h2>
@@ -413,12 +413,14 @@ export default function PrivacyPolicy() {
           For questions, concerns, or requests regarding this Privacy Policy or our general data practices, please contact:
         </p>
         
-        <div className="mt-4 p-6 glass-backdrop backdrop-blur-sm border border-border/30 rounded-xl mb-6">
-          <p className="font-semibold text-foreground mb-3">Data Protection Officer</p>
-          <p className="text-muted-foreground font-light">Rapidera Technologies Pvt Ltd.</p>
-          <p className="text-muted-foreground font-light">Email: <a href="mailto:support@chiranjiv.com" className="text-primary hover:underline font-medium">support@chiranjiv.com</a></p>
-          <p className="text-muted-foreground font-light">Address: 703 Deron Heights, Baner Road, Baner, Pune 411045</p>
-        </div>
+        <Alert className="mt-4 mb-6 bg-neutral-50">
+          <AlertTitle className="font-semibold text-foreground mb-3">Data Protection Officer</AlertTitle>
+          <AlertDescription className="text-neutral-600 font-light">
+            <p>Rapidera Technologies Pvt Ltd.</p>
+            <p>Email: <a href="mailto:support@chiranjiv.com" className="text-primary-600 hover:underline font-medium">support@chiranjiv.com</a></p>
+            <p>Address: 703 Deron Heights, Baner Road, Baner, Pune 411045</p>
+          </AlertDescription>
+        </Alert>
         
         <p className="mb-4 leading-relaxed">
           We will acknowledge your inquiry within 72 hours and provide a substantive response within 30 days.

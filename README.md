@@ -1,51 +1,73 @@
-# Chiranjiv Frontend (Vite + React) and AWS SAM Backend
+# React + TypeScript + Vite
 
-## Frontend (Vite + React)
-Commands:
-- npm run dev
-- npm run build
-- npm run preview
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Environment:
-- Set VITE_API_BASE_URL to your deployed API base (e.g. https://xxxx.execute-api.ap-south-1.amazonaws.com/dev)
-- For local SAM: VITE_API_BASE_URL=http://127.0.0.1:3000
-- All frontend environment variables are read via `src/config/env.ts`. Add any new env vars there and consume them through the exported `config` object.
+Currently, two official plugins are available:
 
-Required frontend env vars (in `.env` at project root):
-- VITE_API_BASE_URL
-- VITE_OIDC_AUTHORITY
-- VITE_OIDC_CLIENT_ID
-- VITE_OIDC_REDIRECT_URI
-- VITE_OIDC_LOGOUT_REDIRECT_URI
-- VITE_OIDC_SCOPE
-- VITE_COGNITO_ADDRESS_ATTR_NAME
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-Optional frontend env vars:
-- VITE_COGNITO_DOMAIN
-- VITE_OIDC_CLIENT_SECRET
+## React Compiler
 
-## Backend (AWS SAM, Python)
-Location: lambda/
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-Prereqs:
-- conda activate dev
-- AWS CLI configured, Docker running
+## Expanding the ESLint configuration
 
-Install deps and run locally:
-- cd lambda
-- sam build --use-container
-- sam local start-api
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-Deploy (first time guided):
-- sam deploy --guided
-  - Provide DatabaseUrl (Neon DATABASE_URL with sslmode=require)
-  - Set CorsOrigin (e.g. https://localhost:5173 and your prod domain)
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-After deploy:
-- Copy the output ApiEndpoint to frontend .env as VITE_API_BASE_URL
-- Verify POST /waitlist/step1 and /waitlist/step2 via curl/Postman
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
 
-Notes:
-- Postgres schema matches Prisma models "BasicInfo" and "UserInfo"
-- Passwords hashed with bcrypt (rounds=10)
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
 
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
+
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
