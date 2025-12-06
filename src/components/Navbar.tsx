@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, memo } from "react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import { useAuth } from "@/auth"
 
-export function Navbar() {
+export const Navbar = memo(function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [aboutUsOpen, setAboutUsOpen] = useState(false)
   const location = useLocation()
@@ -18,7 +18,7 @@ export function Navbar() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20)
     }
-    window.addEventListener("scroll", handleScroll)
+    window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
@@ -51,11 +51,11 @@ export function Navbar() {
       className={cn(
         "fixed left-1/2 -translate-x-1/2 z-50 transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]",
         isScrolled
-          ? "top-6 w-[95%] max-w-5xl rounded-full border border-neutral-1000/60 bg-background/80 backdrop-blur-md shadow-sm py-2"
+          ? "top-6 w-[95%] max-w-[76rem] rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-2xl py-2"
           : "top-0 w-full rounded-none border-b-0 border-transparent bg-transparent backdrop-blur-none shadow-none py-4"
       )}
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 sm:px-6">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link to="/" className="flex items-center gap-3">
           <img 
             src="/favicon.ico" 
@@ -195,4 +195,4 @@ export function Navbar() {
       </div>
     </header>
   )
-}
+})
