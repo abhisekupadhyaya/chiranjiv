@@ -15,28 +15,17 @@ export function Hero() {
       />
       <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-muted/40 backdrop-blur-sm border border-border/40 mb-3 sm:mb-4">
-            <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse-glow" />
-            <span className="text-xs sm:text-sm font-medium text-foreground/90 tracking-wider">
-            Welcome to the Future of Healthcare
-            </span>
-          </div>
           <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl hero-headline text-foreground mb-3 sm:mb-4 md:mb-5 text-balance font-extralight leading-[1.1] tracking-tight">
-            <span className="inline-block text-foreground">Your DNA.</span>{' '}
-            <span className="inline-block text-foreground">Your Fitness.</span>{' '}
-            <span className="inline-block text-foreground">Your Longevity.</span>{' '}
-            <span className="inline-block bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-cyan-400 via-blue-500 via-purple-500 via-pink-500 to-orange-400 animate-gradient-x font-extralight">
-              Your Control.
-            </span>
+            Unlock Your Body's Hidden Potential
           </h1>
           <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-3 sm:mb-4 mx-auto text-pretty leading-relaxed max-w-3xl font-light">
-            Unlock your genetic blueprint for a fitter, longer, and more energetic life. Transform your lifestyle and health with proactive recommendations tailored for you.
+            Find out <span className="text-primary font-bold">EXACTLY</span> how your body works — why you gain weight, why you feel tired, why sleep feels broken, and what your <span className="text-primary font-bold">DNA</span> says about improving it.
           </p>
           <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-5 md:mb-6 mx-auto text-pretty leading-relaxed max-w-3xl font-light">
-            Understand your body at the deepest level and make smarter health choices for life, with <span className="font-medium text-foreground">₹1.5 L worth of genetic reports</span> included at no cost to early users
+            Most people try diets, workouts, and supplements blindly. <span className="text-primary font-bold">Your DNA tells you what will actually work for YOU.</span> Chiranjiv analyzes <span className="text-primary font-bold">3 billion genetic data points</span> to reveal your true biology — and gives you clear, personalized steps to improve your everyday health.
           </p>
           <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-5 md:mb-6 mx-auto leading-relaxed max-w-3xl font-light px-4 sm:px-0">
-            <span className="font-medium">Join the waitlist.</span> <span className="inline-block">Share your unique referral code to <span className="font-medium">jump the queue</span>.</span>
+            Join the waitlist for <span className="text-primary font-bold">₹1.5 L worth of genetic reports</span> included at no cost to early users.
           </p>
           <div className="flex items-center justify-center mb-4 sm:mb-5">
             <Button

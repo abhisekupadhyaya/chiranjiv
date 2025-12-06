@@ -1,12 +1,16 @@
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { Hero } from '@/components/home/hero'
+import { FeaturesMarquee } from '@/components/home/features-marquee'
+import { DNAStory } from '@/components/home/dna-story'
 import { ChooseYourStep } from '@/components/home/choose-your-step'
 import { Waitlist } from '@/components/home/waitlist'
 import { HowItWorks } from '@/components/home/how-it-works'
 import { WhyChiranjiv } from '@/components/home/why-chiranjiv'
+import { WhyFree } from '@/components/home/why-free'
 import { IndiaToWorld } from '@/components/home/india-to-world'
 import { PrivacyTrust } from '@/components/home/privacy-trust'
+import { YourDNA } from '@/components/home/your-dna'
 import { FloatingCta } from '@/components/home/floating-cta'
 
 export default function Home() {
@@ -53,12 +57,16 @@ export default function Home() {
   return (
     <div className="home-edge relative pb-12 sm:pb-16 md:pb-20 lg:pb-24 bg-gradient-to-b from-background via-background to-background/95">
       <Hero />
-      <Waitlist />
+      <FeaturesMarquee />
+      <DNAStory />
       <ChooseYourStep />
+      <Waitlist />
       <WhyChiranjiv />
+      <WhyFree />
       <HowItWorks />
       <IndiaToWorld />
       <PrivacyTrust />
+      <YourDNA />
       <FloatingCta show={showFloatingCta} />
     </div>
   )
