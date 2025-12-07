@@ -30,7 +30,7 @@ export function WhyFree() {
                 <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-primary/10 blur-3xl transition-opacity duration-500 group-hover:opacity-80" />
                 <div className="absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-secondary/10 blur-3xl transition-opacity duration-500 group-hover:opacity-80" />
                 
-                <div className="relative z-10 flex h-full flex-col justify-between gap-4">
+                <div className="relative z-10 flex h-full flex-col justify-between gap-4 text-center">
                   <div>
                     <h3 className="mb-3 text-xl sm:text-2xl font-light leading-tight text-foreground text-balance">
                       We're building the <span className="font-normal text-primary">largest Indian genomic reference database</span>.
