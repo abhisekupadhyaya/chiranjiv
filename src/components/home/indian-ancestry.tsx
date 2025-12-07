@@ -43,7 +43,7 @@ export function IndianAncestry() {
                   <p className="text-base sm:text-lg text-foreground/90 font-light leading-relaxed text-center text-pretty">
                     While we provide ancestry information, our biggest value is in actionable health and fitness guidance tailored to Indian bodies and lifestyles.
                   </p>
-                  <p className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed text-center text-pretty">
+                  <p className="text-sm sm:text-base text-foreground/90 font-light leading-relaxed text-center text-pretty">
                     As Indian genetic data grows, your ancestry features will keep getting richer—but you always stay in control, and ancestry insights remain completely optional.
                   </p>
                 </div>

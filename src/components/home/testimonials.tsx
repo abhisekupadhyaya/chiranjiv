@@ -38,7 +38,7 @@ export function Testimonials() {
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-extralight text-foreground mb-4 text-balance tracking-tight leading-[1.1]">
               What Our Users Say
             </h2>
-            <p className="text-base sm:text-lg text-muted-foreground text-pretty leading-relaxed font-light">
+            <p className="text-base sm:text-lg text-foreground/90 text-pretty leading-relaxed font-light">
               Real experiences from early Chiranjiv users
             </p>
           </div>
@@ -66,7 +66,7 @@ export function Testimonials() {
                         {testimonial.quote}
                       </blockquote>
                       {/* Attribution */}
-                      <p className="text-xs sm:text-sm text-muted-foreground font-light tracking-wide">
+                      <p className="text-xs sm:text-sm text-foreground/90 font-light tracking-wide">
                         — {testimonial.attribution}
                       </p>
                     </div>

@@ -54,7 +54,7 @@ export function KeyBenefits() {
                   <h3 className="text-lg sm:text-xl font-light tracking-tight text-foreground mb-2">
                     {benefit.title}
                   </h3>
-                  <p className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed text-pretty">
+                  <p className="text-sm sm:text-base text-foreground/90 font-light leading-relaxed text-pretty">
                     {benefit.description}
                   </p>
                 </div>

@@ -50,7 +50,7 @@ export function WhyChiranjiv() {
               <h2 className="text-4xl sm:text-5xl md:text-6xl font-extralight text-foreground mb-4 text-balance tracking-tight leading-[1.1]">
                 Why Chiranjiv?
               </h2>
-              <p className="text-base sm:text-lg text-muted-foreground text-pretty leading-relaxed font-light">
+              <p className="text-base sm:text-lg text-foreground/90 text-pretty leading-relaxed font-light">
                 Built for active, future-focused Indians who want to live longer and better.
               </p>
             </div>

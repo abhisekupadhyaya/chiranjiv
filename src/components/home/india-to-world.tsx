@@ -26,15 +26,15 @@ export function IndiaToWorld() {
               <h2 className="text-4xl sm:text-5xl md:text-6xl font-extralight text-foreground mb-6 sm:mb-8 text-balance tracking-tight leading-[1.1]">
                 From India, to the World
               </h2>
-              <p className="text-base sm:text-lg text-muted-foreground mb-6 leading-relaxed font-light">
+              <p className="text-base sm:text-lg text-foreground/90 mb-6 leading-relaxed font-light">
                 We're starting with India because it's the world's most genetically diverse nation and the most
                 underrepresented in global genomic databases.
               </p>
-              <p className="text-base sm:text-lg text-muted-foreground mb-6 leading-relaxed font-light">
+              <p className="text-base sm:text-lg text-foreground/90 mb-6 leading-relaxed font-light">
                 Today, 86% of genomic research is based on European ancestry. That means health insights for most
                 Indians are built on incomplete data.
               </p>
-              <p className="text-base sm:text-lg text-muted-foreground leading-relaxed font-light">
+              <p className="text-base sm:text-lg text-foreground/90 leading-relaxed font-light">
                 <strong className="text-foreground font-medium">Chiranjiv changes that.</strong> We're building the largest Indian
                 genomic reference database — and making it accessible to everyone.
               </p>
@@ -47,7 +47,7 @@ export function IndiaToWorld() {
                   <h3 className="text-3xl sm:text-4xl font-extralight bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent mb-3">
                     1.4 Billion People
                   </h3>
-                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed font-light">
+                  <p className="text-sm sm:text-base text-foreground/90 leading-relaxed font-light">
                     India represents 18% of humanity, but less than 2% of genomic research
                   </p>
                 </div>
@@ -59,7 +59,7 @@ export function IndiaToWorld() {
                   <h3 className="text-3xl sm:text-4xl font-extralight bg-gradient-to-r from-emerald-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent mb-3">
                     4,600+ Ethnic Groups
                   </h3>
-                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed font-light">
+                  <p className="text-sm sm:text-base text-foreground/90 leading-relaxed font-light">
                     India's genetic diversity rivals entire continents and we're mapping it all
                   </p>
                 </div>
@@ -71,7 +71,7 @@ export function IndiaToWorld() {
                   <h3 className="text-3xl sm:text-4xl font-extralight bg-gradient-to-r from-purple-400 via-pink-400 to-orange-400 bg-clip-text text-transparent mb-3">
                     Global Impact
                   </h3>
-                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed font-light">
+                  <p className="text-sm sm:text-base text-foreground/90 leading-relaxed font-light">
                     Building India's genomic infrastructure benefits South Asia and the world
                   </p>
                 </div>

@@ -44,7 +44,7 @@ export function HowItWorks() {
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-extralight text-foreground mb-4 text-balance tracking-tight leading-[1.1]">
             How It Works
           </h2>
-          <p className="text-base sm:text-lg text-muted-foreground text-pretty leading-relaxed">
+          <p className="text-base sm:text-lg text-foreground/90 text-pretty leading-relaxed">
             Three simple steps to unlock your genetic insights
           </p>
         </div>
@@ -76,7 +76,7 @@ export function HowItWorks() {
                           {step.title}
                         </h3>
                       </div>
-                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed text-pretty">
+                      <p className="text-sm sm:text-base text-foreground/90 leading-relaxed text-pretty">
                         {step.description}
                       </p>
                     </div>

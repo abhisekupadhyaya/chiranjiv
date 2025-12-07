@@ -8,7 +8,7 @@ export function YourDNA() {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-full bg-gradient-to-b from-primary/5 via-transparent to-transparent blur-3xl pointer-events-none" />
       
       <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           
           {/* Header Section */}
           <div className="mb-12 text-center md:mb-16">

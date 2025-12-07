@@ -24,7 +24,7 @@ export function WhyFree() {
           <div className="grid grid-cols-1 gap-8 lg:gap-10 place-items-center">
             
             {/* Left Column: Manifesto Card */}
-            <div className="flex w-full max-w-3xl flex-col h-full animate-in fade-in slide-in-from-bottom-4 duration-700">
+            <div className="flex w-full max-w-6xl flex-col h-full animate-in fade-in slide-in-from-bottom-4 duration-700">
               <Card className="relative h-full overflow-hidden rounded-3xl border border-border/50 bg-card/80 p-8 sm:p-10 shadow-xl glass-backdrop backdrop-blur-md group">
                 {/* Background Accents */}
                 <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-primary/10 blur-3xl transition-opacity duration-500 group-hover:opacity-80" />
@@ -42,12 +42,12 @@ export function WhyFree() {
 
                   <div className="space-y-8 mt-auto">
                     {/* Trust Signals Grid */}
-                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 pt-4 border-t border-border/30">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 pt-4 border-t border-border/30 justify-items-center">
                       {[
                         { title: "Ethical research partnerships" },
                         { title: "Optional premium features for users" }
                       ].map((item) => (
-                        <div key={item.title} className="relative">
+                        <div key={item.title} className="relative text-center">
                           <h4 className="text-base font-medium text-foreground">{item.title}</h4>
                         </div>
                       ))}

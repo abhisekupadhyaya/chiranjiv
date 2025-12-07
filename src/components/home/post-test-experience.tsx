@@ -49,7 +49,7 @@ export function PostTestExperience() {
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-extralight text-foreground mb-4 text-balance tracking-tight leading-[1.1]">
               Post-Test Experience
             </h2>
-            <p className="text-base sm:text-lg text-muted-foreground text-pretty leading-relaxed font-light">
+            <p className="text-base sm:text-lg text-foreground/90 text-pretty leading-relaxed font-light">
               What happens after you get your results
             </p>
           </div>
@@ -67,7 +67,7 @@ export function PostTestExperience() {
                     <h3 className="text-lg sm:text-xl font-light tracking-tight text-foreground mb-2">
                       {feature.title}
                     </h3>
-                    <p className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed text-pretty">
+                    <p className="text-sm sm:text-base text-foreground/90 font-light leading-relaxed text-pretty">
                       {feature.description}
                     </p>
                   </div>
