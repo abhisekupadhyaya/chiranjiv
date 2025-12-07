@@ -64,7 +64,7 @@ export function DNAStory() {
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-extralight text-foreground mb-4 text-balance tracking-tight leading-[1.1]">
               Your DNA Tells You Your Story.
             </h2>
-            <p className="text-base sm:text-lg md:text-xl text-muted-foreground mx-auto max-w-2xl text-pretty leading-relaxed font-light">
+            <p className="text-base sm:text-lg md:text-xl text-foreground/90 mx-auto max-w-2xl text-pretty leading-relaxed font-light">
               All explained in simple language — no medical jargon.
             </p>
           </div>
@@ -87,7 +87,7 @@ export function DNAStory() {
                   
                   <ul className="space-y-3">
                     {category.items.map((item, i) => (
-                      <li key={i} className="flex items-start gap-2.5 text-sm text-muted-foreground leading-relaxed font-light">
+                      <li key={i} className="flex items-start gap-2.5 text-sm text-foreground/90 leading-relaxed font-light">
                         <span className={`mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full ${category.colorClass}`} />
                         <span>{item}</span>
                       </li>

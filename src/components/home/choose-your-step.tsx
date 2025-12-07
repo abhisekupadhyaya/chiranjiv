@@ -60,19 +60,19 @@ export function ChooseYourStep() {
                   <div className="space-y-3 min-h-[240px] sm:min-h-[260px]">
                     <div className="flex items-start gap-3">
                       <div className="w-1.5 h-1.5 rounded-full bg-primary/60 flex-shrink-0 mt-2" />
-                      <p className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed text-pretty">Unlock your unique genetic profile for a personalized path to better health and wellbeing.</p>
+                      <p className="text-sm sm:text-base text-foreground/90 font-light leading-relaxed text-pretty">Unlock your unique genetic profile for a personalized path to better health and wellbeing.</p>
                     </div>
                     <div className="flex items-start gap-3">
                       <div className="w-1.5 h-1.5 rounded-full bg-primary/60 flex-shrink-0 mt-2" />
-                      <p className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed text-pretty">Receive actionable tips for boosting everyday energy, sleep, immunity, and healthy aging.</p>
+                      <p className="text-sm sm:text-base text-foreground/90 font-light leading-relaxed text-pretty">Receive actionable tips for boosting everyday energy, sleep, immunity, and healthy aging.</p>
                     </div>
                     <div className="flex items-start gap-3">
                       <div className="w-1.5 h-1.5 rounded-full bg-primary/60 flex-shrink-0 mt-2" />
-                      <p className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed text-pretty">Get nutrition suggestions tailored to your genetic needs.</p>
+                      <p className="text-sm sm:text-base text-foreground/90 font-light leading-relaxed text-pretty">Get nutrition suggestions tailored to your genetic needs.</p>
                     </div>
                     <div className="flex items-start gap-3">
                       <div className="w-1.5 h-1.5 rounded-full bg-primary/60 flex-shrink-0 mt-2" />
-                      <p className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed text-pretty">Take control of your data and gain clarity on your ancestry, empowering lifelong wellness choices.</p>
+                      <p className="text-sm sm:text-base text-foreground/90 font-light leading-relaxed text-pretty">Take control of your data and gain clarity on your ancestry, empowering lifelong wellness choices.</p>
                     </div>
                   </div>
                 </div>
@@ -118,7 +118,7 @@ export function ChooseYourStep() {
                   <div className="h-[4rem] flex flex-col justify-center mb-4">
                     <div className="flex items-baseline gap-3">
                       <div className="text-2xl sm:text-3xl font-extralight tracking-tight text-blue-500">
-                        COMING SOON
+                        PREMIUM
                       </div>
                     </div>
                   </div>
@@ -126,23 +126,23 @@ export function ChooseYourStep() {
                   <div className="space-y-3 min-h-[240px] sm:min-h-[260px]">
                     <div className="flex items-start gap-3">
                       <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground/40 flex-shrink-0 mt-2" />
-                      <p className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed text-pretty">Dive into ultra-personalized health tools using your deep regional ancestry.</p>
+                      <p className="text-sm sm:text-base text-foreground/90 font-light leading-relaxed text-pretty">Dive into ultra-personalized health tools using your deep regional ancestry.</p>
                     </div>
                     <div className="flex items-start gap-3">
                       <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground/40 flex-shrink-0 mt-2" />
-                      <p className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed text-pretty">Get a custom nutrition and metabolism plan to fuel your longevity journey.</p>
+                      <p className="text-sm sm:text-base text-foreground/90 font-light leading-relaxed text-pretty">Get a custom nutrition and metabolism plan to fuel your longevity journey.</p>
                     </div>
                     <div className="flex items-start gap-3">
                       <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground/40 flex-shrink-0 mt-2" />
-                      <p className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed text-pretty">Maximize your fitness and recovery with DNA-based insights.</p>
+                      <p className="text-sm sm:text-base text-foreground/90 font-light leading-relaxed text-pretty">Maximize your fitness and recovery with DNA-based insights.</p>
                     </div>
                     <div className="flex items-start gap-3">
                       <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground/40 flex-shrink-0 mt-2" />
-                      <p className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed text-pretty">Proactive wellness: detect early risk factors for chronic conditions and optimize your healthy lifespan.</p>
+                      <p className="text-sm sm:text-base text-foreground/90 font-light leading-relaxed text-pretty">Proactive wellness: detect early risk factors for chronic conditions and optimize your healthy lifespan.</p>
                     </div>
                     <div className="flex items-start gap-3">
                       <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground/40 flex-shrink-0 mt-2" />
-                      <p className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed text-pretty">Medication sensitivity and best-fit recommendations for a future-proof lifestyle.</p>
+                      <p className="text-sm sm:text-base text-foreground/90 font-light leading-relaxed text-pretty">Medication sensitivity and best-fit recommendations for a future-proof lifestyle.</p>
                     </div>
                   </div>
                 </div>

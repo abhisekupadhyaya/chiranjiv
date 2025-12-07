@@ -59,7 +59,7 @@ export function PrivacyTrust() {
                   <h3 className="text-lg sm:text-xl font-light tracking-tight text-foreground mb-2">
                     {feature.title}
                   </h3>
-                  <p className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed">
+                  <p className="text-sm sm:text-base text-foreground/90 font-light leading-relaxed">
                     {feature.description}
                   </p>
                 </div>

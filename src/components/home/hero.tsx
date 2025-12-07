@@ -15,16 +15,16 @@ export function Hero() {
       />
       <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto text-center">
-          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl hero-headline text-foreground mb-3 sm:mb-4 md:mb-5 text-balance font-extralight leading-[1.1] tracking-tight">
+          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl hero-headline text-foreground mb-3 sm:mb-4 md:mb-5 text-balance font-extralight leading-[1.1] tracking-tight px-4 sm:px-0 break-words">
             Unlock Your Body's Hidden Potential
           </h1>
-          <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-3 sm:mb-4 mx-auto text-pretty leading-relaxed max-w-3xl font-light">
+          <p className="text-base sm:text-lg md:text-xl text-foreground/90 mb-3 sm:mb-4 mx-auto text-pretty leading-relaxed max-w-3xl font-light px-4 sm:px-0 break-words">
             Find out <span className="text-primary font-bold">EXACTLY</span> how your body works — why you gain weight, why you feel tired, why sleep feels broken, and what your <span className="text-primary font-bold">DNA</span> says about improving it.
           </p>
-          <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-5 md:mb-6 mx-auto text-pretty leading-relaxed max-w-3xl font-light">
+          <p className="text-sm sm:text-base text-foreground/90 mb-4 sm:mb-5 md:mb-6 mx-auto text-pretty leading-relaxed max-w-3xl font-light px-4 sm:px-0 break-words">
             Most people try diets, workouts, and supplements blindly. <span className="text-primary font-bold">Your DNA tells you what will actually work for YOU.</span> Chiranjiv analyzes <span className="text-primary font-bold">3 billion genetic data points</span> to reveal your true biology — and gives you clear, personalized steps to improve your everyday health.
           </p>
-          <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-5 md:mb-6 mx-auto leading-relaxed max-w-3xl font-light px-4 sm:px-0">
+          <p className="text-sm sm:text-base text-foreground/90 mb-4 sm:mb-5 md:mb-6 mx-auto leading-relaxed max-w-3xl font-light px-4 sm:px-0 break-words">
             Join the waitlist for <span className="text-primary font-bold">₹1.5 L worth of genetic reports</span> included at no cost to early users.
           </p>
           <div className="flex items-center justify-center mb-4 sm:mb-5">
@@ -36,15 +36,7 @@ export function Hero() {
               <a href="#waitlist">Join Early Access</a>
             </Button>
           </div>
-          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-5 text-muted-foreground">
-            <span className="font-light tracking-wide text-xs sm:text-sm">Ethical & Transparent</span>
-            <span className="text-muted-foreground/30">•</span>
-            <span className="font-light tracking-wide text-xs sm:text-sm">Highly Secure</span>
-            <span className="text-muted-foreground/30">•</span>
-            <span className="font-light tracking-wide text-xs sm:text-sm">Data Stored in India</span>
-            <span className="text-muted-foreground/30">•</span>
-            <span className="font-light tracking-wide text-xs sm:text-sm">Science-Backed Insights</span>
-          </div>
+          {/* Removed tagline chips: Ethical & Transparent, Highly Secure, Data Stored in India, Science-Backed Insights */}
         </div>
       </div>
     </section>

@@ -15,7 +15,7 @@ export function YourDNA() {
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-extralight text-foreground mb-4 text-balance tracking-tight leading-[1.1]">
               Your DNA Doesn't Change.
             </h2>
-            <p className="text-base sm:text-lg md:text-xl text-muted-foreground mx-auto max-w-2xl text-pretty leading-relaxed font-light">
+            <p className="text-base sm:text-lg md:text-xl text-foreground/90 mx-auto max-w-2xl text-pretty leading-relaxed font-light">
               But what you do with it can change your life.
             </p>
           </div>
@@ -34,7 +34,7 @@ export function YourDNA() {
                   <h3 className="text-xl font-medium text-foreground group-hover:text-primary transition-colors duration-300">
                     Better Energy
                   </h3>
-                  <p className="text-muted-foreground leading-relaxed font-light">
+                  <p className="text-foreground/90 leading-relaxed font-light">
                     Optimize your daily vitality with insights tailored to your genetic makeup.
                   </p>
                 </div>
@@ -44,7 +44,7 @@ export function YourDNA() {
                   <h3 className="text-xl font-medium text-foreground group-hover:text-primary transition-colors duration-300">
                     Better Sleep
                   </h3>
-                  <p className="text-muted-foreground leading-relaxed font-light">
+                  <p className="text-foreground/90 leading-relaxed font-light">
                     Understand your sleep genetics to improve rest and recovery.
                   </p>
                 </div>
@@ -54,7 +54,7 @@ export function YourDNA() {
                   <h3 className="text-xl font-medium text-foreground group-hover:text-primary transition-colors duration-300">
                     Better Metabolism
                   </h3>
-                  <p className="text-muted-foreground leading-relaxed font-light">
+                  <p className="text-foreground/90 leading-relaxed font-light">
                     Get personalized nutrition insights that work with your body, not against it.
                   </p>
                 </div>
@@ -64,7 +64,7 @@ export function YourDNA() {
                   <h3 className="text-xl font-medium text-foreground group-hover:text-primary transition-colors duration-300">
                     Better Immunity
                   </h3>
-                  <p className="text-muted-foreground leading-relaxed font-light">
+                  <p className="text-foreground/90 leading-relaxed font-light">
                     Strengthen your defenses by understanding your genetic predispositions.
                   </p>
                 </div>
@@ -87,7 +87,7 @@ export function YourDNA() {
                   >
                     <a href="#waitlist">Claim Your Free DNA Report</a>
                   </Button>
-                  <p className="text-sm font-medium text-muted-foreground">
+                  <p className="text-sm font-medium text-foreground/90">
                     Worth ₹1,50,000 — Limited Early Access Spots
                   </p>
                 </div>
@@ -96,7 +96,7 @@ export function YourDNA() {
           </div>
 
           {/* After Card Text */}
-          <p className="mt-12 text-center text-lg text-muted-foreground font-light">
+          <p className="mt-12 text-center text-lg text-foreground/90 font-light">
             Join thousands of Indians upgrading their health through DNA.
           </p>
         </div>
