@@ -25,36 +25,36 @@ export function WhyFree() {
             
             {/* Left Column: Manifesto Card */}
             <div className="flex w-full max-w-6xl flex-col h-full animate-in fade-in slide-in-from-bottom-4 duration-700">
-              <Card className="relative h-full overflow-hidden rounded-3xl border border-border/50 bg-card/80 p-8 sm:p-10 shadow-xl glass-backdrop backdrop-blur-md group">
+              <Card className="relative h-full overflow-hidden rounded-3xl border border-border/50 bg-card/80 p-4 sm:p-6 shadow-xl glass-backdrop backdrop-blur-md group">
                 {/* Background Accents */}
                 <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-primary/10 blur-3xl transition-opacity duration-500 group-hover:opacity-80" />
                 <div className="absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-secondary/10 blur-3xl transition-opacity duration-500 group-hover:opacity-80" />
                 
-                <div className="relative z-10 flex h-full flex-col justify-between gap-8">
+                <div className="relative z-10 flex h-full flex-col justify-between gap-4">
                   <div>
-                    <h3 className="mb-6 text-2xl sm:text-3xl font-light leading-tight text-foreground text-balance">
+                    <h3 className="mb-3 text-xl sm:text-2xl font-light leading-tight text-foreground text-balance">
                       We're building the <span className="font-normal text-primary">largest Indian genomic reference database</span>.
                     </h3>
-                    <p className="text-lg leading-relaxed text-foreground/90 font-light">
+                    <p className="text-base leading-relaxed text-foreground/90 font-light">
                       Early users get full access at no cost — including lifetime wellness insights.
                     </p>
                   </div>
 
-                  <div className="space-y-8 mt-auto">
+                  <div className="space-y-4 mt-auto">
                     {/* Trust Signals Grid */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 pt-4 border-t border-border/30 justify-items-center">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 pt-3 border-t border-border/30 justify-items-center">
                       {[
                         { title: "Ethical research partnerships" },
                         { title: "Optional premium features for users" }
                       ].map((item) => (
                         <div key={item.title} className="relative text-center">
-                          <h4 className="text-base font-medium text-foreground">{item.title}</h4>
+                          <h4 className="text-sm font-medium text-foreground">{item.title}</h4>
                         </div>
                       ))}
                     </div>
 
-                    <div className="border-t border-border/30 pt-6 text-center">
-                      <p className="text-base font-medium text-primary/80 tracking-wide">
+                    <div className="border-t border-border/30 pt-3 text-center">
+                      <p className="text-sm font-medium text-primary/80 tracking-wide">
                         Just science-backed wellness for everyone.
                       </p>
                     </div>

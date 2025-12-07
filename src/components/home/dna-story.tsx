@@ -44,6 +44,15 @@ export function DNAStory() {
         "How your body responds to stressors"
       ],
       colorClass: "bg-destructive"
+    },
+    {
+      title: "Family Health Insights",
+      items: [
+        "Understand genetic patterns across your family",
+        "Identify shared inherited traits & risks",
+        "Plan proactive health for future generations"
+      ],
+      colorClass: "bg-emerald-500"
     }
   ];
 
