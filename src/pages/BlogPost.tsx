@@ -37,9 +37,7 @@ export default function BlogPost() {
       title:
         'Genomic Architecture of Wellness: Evidence for Precision Nutrition, Metabolism, and Lifestyle Modulation ',
       date: '2025',
-      content: `Genomic Architecture of Wellness: Evidence for Precision Nutrition, Metabolism, and Lifestyle Modulation
-
-Advances in human genomics over the past decade have clarified that inter-individual variability in wellness traits—nutrient metabolism, diet responsiveness, exercise adaptation, inflammatory tone, allergy susceptibility, and cardiometabolic risk—is deeply rooted in genetic architecture. Genome-wide association studies (GWAS), polygenic risk scores (PRS), and multi-omics integration now provide compelling evidence that lifestyle outcomes cannot be fully understood without accounting for inherited variation.
+      content: `Advances in human genomics over the past decade have clarified that inter-individual variability in wellness traits—nutrient metabolism, diet responsiveness, exercise adaptation, inflammatory tone, allergy susceptibility, and cardiometabolic risk—is deeply rooted in genetic architecture. Genome-wide association studies (GWAS), polygenic risk scores (PRS), and multi-omics integration now provide compelling evidence that lifestyle outcomes cannot be fully understood without accounting for inherited variation.
 
 Recent work on the genomics of obesity and macronutrient processing demonstrates that SNP-level and polygenic variation significantly modulate responses to carbohydrates, lipids, proteins, and even fiber. These differences extend to insulin secretion, glycaemic control, fat storage pathways, and chrononutrition, reinforcing that “one-size-fits-all” diet strategies are physiologically inadequate in genetically heterogeneous populations. [1]
 
