@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button'
 
 export function ChooseYourStep() {
   const viewSampleReport = () => {
-    window.open('/Chiranjiv_Genomics_Report.pdf', '_blank')
+    window.open('/sample-report', '_blank')
   }
 
   const CheckIcon = () => (

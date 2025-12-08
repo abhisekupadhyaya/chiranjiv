@@ -9,6 +9,7 @@ import TermsOfService from './pages/TermsOfService'
 import DataUsagePolicy from './pages/DataUsagePolicy'
 import Team from './pages/Team'
 import FAQ from './pages/FAQ'
+import SampleReport from './pages/SampleReport'
 import { Layout } from '@/components/layout'
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
         <Route path="/team" element={<Team />} />
         <Route path="/faq" element={<FAQ />} />
       </Route>
+      <Route path="/sample-report" element={<SampleReport />} />
     </Routes>
   )
 }
