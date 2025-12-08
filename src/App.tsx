@@ -20,7 +20,13 @@ function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <div className="flex min-h-screen flex-col font-sans">
+      <div className="flex min-h-screen flex-col font-sans relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5 -z-10 pointer-events-none" />
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl animate-float -z-10 pointer-events-none" />
+        <div
+          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-float -z-10 pointer-events-none"
+          style={{ animationDelay: '2s' }}
+        />
         <Navbar />
         <div className="flex-1">
           <Routes>

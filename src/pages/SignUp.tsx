@@ -5,8 +5,9 @@ import { useAuth } from '@/auth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
-import { Eye, EyeOff, User, Mail, Phone, MapPin, Calendar, Lock, ArrowRight, CheckCircle } from 'lucide-react';
+import { Eye, EyeOff, MapPin, Calendar, Lock, CheckCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { SignUpStep1Form, type Step1Data } from '@/components/auth/SignUpStep1Form';
 
 const SignUp = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -60,11 +61,13 @@ const SignUp = () => {
     const initialEmail = searchParams.get('email');
     const initialName = searchParams.get('name');
     const initialRef = searchParams.get('ref');
+    const initialPhone = searchParams.get('phone');
     
     setFormData(prev => ({
       ...prev,
       email: initialEmail || prev.email,
       name: initialName || prev.name,
+      phoneLocal: initialPhone || prev.phoneLocal,
       referralCode: initialRef || prev.referralCode,
     }));
   }, []); // Run only once on mount to load initial params
@@ -81,20 +84,6 @@ const SignUp = () => {
     setSearchParams(params, { replace: true });
   }, [step, formData.referralCode]);
 
-
-  const validateStep1 = () => {
-    const errors: Record<string, string> = {};
-    
-    if (!formData.name.trim()) errors.name = 'Name is required';
-    if (!formData.email.trim()) errors.email = 'Email is required';
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) errors.email = 'Invalid email address';
-    
-    if (!formData.phoneLocal.trim()) errors.phoneLocal = 'Phone number is required';
-    else if (!/^\d{10}$/.test(formData.phoneLocal.replace(/\D/g, ''))) errors.phoneLocal = 'Phone must be 10 digits';
-
-    setFieldErrors(errors);
-    return Object.keys(errors).length === 0;
-  };
 
   const validateStep2 = () => {
     const errors: Record<string, string> = {};
@@ -123,12 +112,13 @@ const SignUp = () => {
     return Object.keys(errors).length === 0;
   };
 
-  const handleNextStep = (e: FormEvent) => {
-    e.preventDefault();
-    if (step === 1 && validateStep1()) {
-      setStep(2);
-      setFieldErrors({});
-    }
+  const handleStep1Submit = (data: Step1Data) => {
+    setFormData(prev => ({
+      ...prev,
+      ...data
+    }));
+    setStep(2);
+    setFieldErrors({});
   };
 
   const handleSignUp = async (e: FormEvent) => {
@@ -241,78 +231,16 @@ const SignUp = () => {
         
         <CardContent>
           {step === 1 && (
-            <form onSubmit={handleNextStep} className="space-y-4">
-              <div className="space-y-2">
-                <label htmlFor="name" className="text-sm font-medium leading-none">Full Name <span className="text-red-500">*</span></label>
-                <div className="relative">
-                  <User className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-                  <Input 
-                    id="name" 
-                    name="name" 
-                    placeholder="John Doe" 
-                    value={formData.name} 
-                    onChange={handleInputChange} 
-                    className={cn("pl-9", fieldErrors.name && "border-red-500 focus-visible:ring-red-500")}
-                  />
-                </div>
-                {fieldErrors.name && <p className="text-xs text-red-500">{fieldErrors.name}</p>}
-              </div>
-
-              <div className="space-y-2">
-                <label htmlFor="email" className="text-sm font-medium leading-none">Email <span className="text-red-500">*</span></label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-                  <Input 
-                    id="email" 
-                    name="email" 
-                    type="email" 
-                    placeholder="m@example.com" 
-                    value={formData.email} 
-                    onChange={handleInputChange} 
-                    className={cn("pl-9", fieldErrors.email && "border-red-500 focus-visible:ring-red-500")}
-                  />
-                </div>
-                {fieldErrors.email && <p className="text-xs text-red-500">{fieldErrors.email}</p>}
-              </div>
-
-              <div className="space-y-2">
-                <label htmlFor="phoneLocal" className="text-sm font-medium leading-none">Phone Number <span className="text-red-500">*</span></label>
-                <div className="flex gap-2">
-                   <div className="flex items-center justify-center w-[70px] rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm">
-                     {formData.countryCode}
-                   </div>
-                   <div className="relative flex-1">
-                      <Phone className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-                      <Input 
-                        id="phoneLocal" 
-                        name="phoneLocal" 
-                        type="tel" 
-                        placeholder="9876543210" 
-                        value={formData.phoneLocal} 
-                        onChange={handleInputChange} 
-                        className={cn("pl-9", fieldErrors.phoneLocal && "border-red-500 focus-visible:ring-red-500")}
-                      />
-                   </div>
-                </div>
-                {fieldErrors.phoneLocal && <p className="text-xs text-red-500">{fieldErrors.phoneLocal}</p>}
-              </div>
-
-              <div className="space-y-2">
-                <label htmlFor="referralCode" className="text-sm font-medium leading-none">Referral Code <span className="text-muted-foreground font-normal">(Optional)</span></label>
-                <Input 
-                  id="referralCode" 
-                  name="referralCode" 
-                  placeholder="Enter referral code if you have one" 
-                  value={formData.referralCode} 
-                  onChange={handleInputChange} 
-                />
-              </div>
-
-              <Button type="submit" className="w-full group">
-                Next Step 
-                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Button>
-            </form>
+            <SignUpStep1Form 
+              defaultValues={{
+                name: formData.name,
+                email: formData.email,
+                phoneLocal: formData.phoneLocal,
+                countryCode: formData.countryCode,
+                referralCode: formData.referralCode
+              }}
+              onSubmit={handleStep1Submit}
+            />
           )}
 
           {step === 2 && (
