@@ -72,8 +72,11 @@ export default {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
-  		},
-  		boxShadow: {
+        },
+        transitionTimingFunction: {
+            'custom-bezier': 'cubic-bezier(0.25, 1, 0.5, 1)',
+        },
+        boxShadow: {
   			soft: '0 10px 30px rgba(0,0,0,0.06)',
   			lift: '0 20px 60px rgba(0,0,0,0.08)'
   		},

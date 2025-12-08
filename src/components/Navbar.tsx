@@ -49,7 +49,7 @@ export const Navbar = memo(function Navbar() {
   return (
     <header
       className={cn(
-        "fixed left-1/2 -translate-x-1/2 z-50 transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]",
+        "fixed left-1/2 -translate-x-1/2 z-50 transition-all duration-700 ease-custom-bezier",
         isScrolled
           ? "top-6 w-[95%] max-w-[76rem] rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-2xl py-2"
           : "top-0 w-full rounded-none border-b-0 border-transparent bg-transparent backdrop-blur-none shadow-none py-4"
