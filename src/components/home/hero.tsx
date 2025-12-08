@@ -27,7 +27,7 @@ export function Hero() {
           <p className="text-sm sm:text-base text-foreground/90 mb-4 sm:mb-5 md:mb-6 mx-auto leading-relaxed max-w-3xl font-light px-4 sm:px-0 break-words">
             Join the waitlist for <span className="text-primary font-bold">₹1.5 L worth of genetic reports</span> included at no cost to early users.
           </p>
-          <div className="flex items-center justify-center mt-8 sm:mt-10 md:mt-12 mb-16 sm:mb-20 md:mb-24">
+          <div className="flex items-center justify-center mt-4 sm:mt-6 md:mt-8 mb-8 sm:mb-10 md:mb-12">
             <Button
               size="lg"
               className="bg-primary text-primary-foreground hover:bg-primary/90 btn-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background px-8 py-6 text-base"
