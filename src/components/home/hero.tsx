@@ -16,7 +16,7 @@ export function Hero() {
       <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto text-center">
           <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl hero-headline text-foreground mb-3 sm:mb-4 md:mb-5 text-balance font-extralight leading-[1.1] tracking-tight px-4 sm:px-0 break-words">
-            Unlock Your Body's Hidden Potential
+            Unlock Your Body's <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-cyan-400 via-blue-500 via-purple-500 via-pink-500 to-orange-400 animate-gradient-x font-extralight">Hidden Potential</span>
           </h1>
           <p className="text-base sm:text-lg md:text-xl text-foreground/90 mb-3 sm:mb-4 mx-auto text-pretty leading-relaxed max-w-3xl font-light px-4 sm:px-0 break-words">
             Find out <span className="text-primary font-bold">EXACTLY</span> how your body works — why you gain weight, why you feel tired, why sleep feels broken, and what your <span className="text-primary font-bold">DNA</span> says about improving it.
