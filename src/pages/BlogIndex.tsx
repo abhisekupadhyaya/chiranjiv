@@ -3,6 +3,15 @@ import { Link } from 'react-router-dom'
 export default function BlogIndex() {
   const posts = [
     {
+      slug: 'genomic-architecture-wellness',
+      title:
+        'Genomic Architecture of Wellness: Evidence for Precision Nutrition, Metabolism, and Lifestyle Modulation',
+      excerpt:
+        'Advances in human genomics have clarified that variability in wellness traits—nutrient metabolism, diet responsiveness, and cardiometabolic risk—is deeply rooted in genetic architecture. Precision nutrition and personalized lifestyle interventions represent the next evolution in preventive health.',
+      date: '2025',
+      readTime: '4 min read',
+    },
+    {
       slug: 'indian-nutrigenomics-pharmacogenomics',
       title:
         'Your DNA Blueprint for Nutrition, Fitness & Low Inflammation: Why Indians Need Indian-Specific Nutrigenomics & Pharmacogenomics',

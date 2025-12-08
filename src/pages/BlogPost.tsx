@@ -1,8 +1,91 @@
 import { useParams, Link } from 'react-router-dom'
 import { BlogPost as Post } from '@/components/blog-post'
+import type { Reference } from '@/components/blog-post'
 
 export default function BlogPost() {
   const { slug } = useParams()
+  if (slug === 'genomic-architecture-wellness') {
+    const references: Reference[] = [
+      {
+        id: '1',
+        text: 'Gkouskou et al. A genomics perspective of personalized prevention and management of obesity, Human Genomics, 2024',
+        link: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC10823690'
+      },
+      {
+        id: '2',
+        text: 'St Germain et al. Advancing Personalized Nutrition Through Genetic Nutritional Insights, Nutrients, 2025',
+        link: 'https://www.mdpi.com/2072-6643/17/13/2166'
+      },
+      {
+        id: '3',
+        text: 'Karvela et al, Personalized nutrition intervention improves glucose regulation, Nature, 2024',
+        link: 'https://www.nature.com/articles/s41598-024-55105-6'
+      },
+      {
+        id: '4',
+        text: 'Guest et al, Sport Nutrigenomics: Personalized Nutrition for Athletic Performance, Frontiers in Nutrition, 2019',
+        link: 'https://www.frontiersin.org/journals/nutrition/articles/10.3389/fnut.2019.00008/full'
+      },
+      {
+        id: '5',
+        text: 'Bineid et al, A Systematic Review of the Effect of Gene–Lifestyle Interactions on Metabolic-Disease-Related Traits in South Asian Populations, Nutrition Reviews, 2025',
+        link: 'https://academic.oup.com/nutritionreviews/article/83/6/1061/7758654'
+      }
+    ]
+
+    const blogPost = {
+      title:
+        'Genomic Architecture of Wellness: Evidence for Precision Nutrition, Metabolism, and Lifestyle Modulation ',
+      date: '2025',
+      content: `Genomic Architecture of Wellness: Evidence for Precision Nutrition, Metabolism, and Lifestyle Modulation
+
+Advances in human genomics over the past decade have clarified that inter-individual variability in wellness traits—nutrient metabolism, diet responsiveness, exercise adaptation, inflammatory tone, allergy susceptibility, and cardiometabolic risk—is deeply rooted in genetic architecture. Genome-wide association studies (GWAS), polygenic risk scores (PRS), and multi-omics integration now provide compelling evidence that lifestyle outcomes cannot be fully understood without accounting for inherited variation.
+
+Recent work on the genomics of obesity and macronutrient processing demonstrates that SNP-level and polygenic variation significantly modulate responses to carbohydrates, lipids, proteins, and even fiber. These differences extend to insulin secretion, glycaemic control, fat storage pathways, and chrononutrition, reinforcing that “one-size-fits-all” diet strategies are physiologically inadequate in genetically heterogeneous populations. [1]
+
+The mechanistic depth of gene–diet interactions is further illustrated in the Nutrients 2025 Special Issue [2], where studies highlight how variants in PNPLA3, CD36, and thyroid-related polygenic networks influence NAFLD susceptibility, fat-taste perception, metabolic syndrome trajectories, and endocrine modulation. These findings emphasize that nutrient-driven metabolic phenotypes emerge from tightly coupled gene-environment interactions spanning signalling, epigenetics, and metabolic flux.
+
+Critically randomized controlled trials now validate the translational utility of DNA-informed diets. The ASPIRE-DNA study [3] showed that individuals receiving genotype-tailored dietary guidance achieved significant improvements in fasting glucose and HbA1c over 26 weeks compared to population-standard interventions, demonstrating clinically meaningful metabolic benefit at scale.
+
+Parallel insights from sports nutrigenomics [4] reveal that genetic variation shapes nutrient utilization, recovery kinetics, mitochondrial adaptation, and performance outcomes—further supporting the integration of genomics into exercise prescriptions.
+
+Complementary multi-omics perspectives spanning metabolomics, cytokine biology, and nutrient-gene signalling [5], offer additional support for genotype-aligned dietary and anti-inflammatory strategies aimed at long-term wellness.
+
+Taken together, the evidence is unequivocal: wellness is a genomically mediated phenotype. Precision nutrition, personalized exercise planning, and genotype-aware lifestyle interventions represent the next evolution in preventive health—anchored not in generic guidelines, but in the individual’s molecular blueprint.`,
+    }
+    return (
+      <section className="relative pt-24 sm:pt-32 pb-16 sm:pb-24 overflow-hidden">
+        {/* Background gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5" />
+        
+        {/* Floating animated orbs */}
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl animate-float" />
+        <div 
+          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-float" 
+          style={{ animationDelay: '2s' }}
+        />
+        <div 
+          className="absolute top-1/2 right-1/3 w-72 h-72 bg-accent/10 rounded-full blur-3xl animate-float" 
+          style={{ animationDelay: '4s' }}
+        />
+
+        <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
+          <div className="mb-8">
+            <p className="text-[11px] sm:text-xs uppercase tracking-[0.2em] text-primary/70 mb-4">Chiranjiv Blog</p>
+            <Link
+              to="/blog"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors hover:underline"
+            >
+              ← Back to Blog
+            </Link>
+          </div>
+          <div className="max-w-4xl mx-auto">
+            <Post title={blogPost.title} date={blogPost.date} content={blogPost.content} references={references} />
+          </div>
+        </div>
+      </section>
+    )
+  }
   if (slug === 'indian-nutrigenomics-pharmacogenomics') {
     const blogPost = {
       title:
