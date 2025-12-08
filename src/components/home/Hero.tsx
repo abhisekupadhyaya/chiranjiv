@@ -2,6 +2,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { SignUpStep1Form, type Step1Data } from "@/components/auth/SignUpStep1Form";
 import { DNAHelix } from "@/components/home/DNAHelix";
+import { AnimatedPill } from "@/components/ui/animated-pill";
 
 export function Hero() {
   const navigate = useNavigate();
@@ -70,7 +71,7 @@ export function Hero() {
 
             {/* Price/Offer Tag */}
             <div className="flex justify-center w-full">
-              <div className="inline-flex items-center gap-3 rounded-full border border-neutral-200 bg-white/50 p-1 pl-4 pr-2 backdrop-blur-md dark:border-neutral-800 dark:bg-neutral-900/60">
+              <AnimatedPill>
                 <span className="text-sm text-neutral-600 dark:text-neutral-400">
                   <span className="line-through decoration-neutral-400/50 dark:decoration-neutral-600">Worth ₹1,50,000</span>
                   <span className="mx-2"></span>
@@ -80,7 +81,7 @@ export function Hero() {
                 <span className="text-xs font-medium text-neutral-600 dark:text-neutral-400">
                    Only a few spots left
                 </span>
-              </div>
+              </AnimatedPill>
             </div>
           </div>
 
