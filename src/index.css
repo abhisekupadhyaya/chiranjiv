@@ -85,8 +85,13 @@
   * {
     @apply border-border;
   }
+  html {
+    background-color: #F5F5F5;
+    @apply h-full;
+  }
   body {
-    @apply bg-background text-foreground antialiased;
+    background-color: #F5F5F5;
+    @apply text-foreground antialiased min-h-screen h-full overflow-x-hidden;
     font-feature-settings: "cv11", "ss01";
   }
   h1, h2, h3, h4, h5, h6 {

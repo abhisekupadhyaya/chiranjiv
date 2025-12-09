@@ -24,7 +24,7 @@ function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <div className="flex min-h-screen flex-col font-sans relative overflow-hidden">
+      <div className="flex min-h-screen flex-col font-sans relative overflow-x-hidden bg-background">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5 -z-10 pointer-events-none" />
         <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl animate-float -z-10 pointer-events-none" />
         <div
