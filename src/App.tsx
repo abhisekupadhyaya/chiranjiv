@@ -18,6 +18,7 @@ const SignIn = lazy(() => import("@/pages/SignIn"))
 const SignUp = lazy(() => import("@/pages/SignUp"))
 const ForgotPassword = lazy(() => import("@/pages/ForgotPassword"))
 const Profile = lazy(() => import("@/pages/Profile"))
+const SampleReport = lazy(() => import("@/pages/SampleReport"))
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/sample-report" element={<SampleReport />} />
             <Route 
               path="/profile" 
               element={

@@ -58,7 +58,7 @@ export default function Blog() {
               </Link>
             </div>
             <div className="max-w-4xl mx-auto">
-              <BlogPost title={post.title} date={post.date} content={post.content} />
+              <BlogPost title={post.title} date={post.date} content={post.content} references={post.references} />
             </div>
           </div>
         </section>

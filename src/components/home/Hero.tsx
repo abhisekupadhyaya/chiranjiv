@@ -1,5 +1,6 @@
 import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { SignUpStep1Form, type Step1Data } from "@/components/auth/SignUpStep1Form";
 import { DNAHelix } from "@/components/home/DNAHelix";
 import { AnimatedPill } from "@/components/ui/animated-pill";
@@ -22,8 +23,12 @@ export function Hero() {
     navigate(`/signup?${params.toString()}`);
   };
 
+  const viewSampleReport = () => {
+    navigate('/sample-report');
+  };
+
   return (
-    <section className="relative w-full pt-12 md:pt-24 lg:pt-32 xl:pt-48 pb-8 md:pb-12 lg:pb-16 overflow-hidden">
+    <section className="relative w-full pt-16 md:pt-16 lg:pt-24 xl:pt-36 pb-8 md:pb-12 lg:pb-16 overflow-hidden">
       {/* Background DNA Animation */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <DNAHelix />
@@ -49,6 +54,16 @@ export function Hero() {
               <p className="max-w-md mt-6 text-base text-foreground sm:text-lg mx-auto">
                 Chiranjiv analyzes <span className="font-medium text-emerald-600 dark:text-emerald-400">3 billion genetic data points</span> to reveal your <span className="font-medium text-emerald-600 dark:text-emerald-400">true biology</span> — and gives you <span className="font-medium text-emerald-600 dark:text-emerald-400">clear, personalized steps</span> to improve your everyday health.
               </p>
+
+              <div className="mt-8 flex justify-center">
+                <Button 
+                  onClick={viewSampleReport} 
+                  className="bg-primary text-primary-foreground hover:bg-primary/90 hover:scale-[1.02] transition-all shadow-lg hover:shadow-xl"
+                  size="lg"
+                >
+                  View Sample Report
+                </Button>
+              </div>
             </div>
 
             {/* Trust Indicators */}

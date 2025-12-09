@@ -1,3 +1,5 @@
+import type { Reference } from '@/components/BlogPost'
+
 export interface BlogPost {
   slug: string
   title: string
@@ -5,9 +7,59 @@ export interface BlogPost {
   date: string
   readTime: string
   content: string
+  references?: Reference[]
 }
 
 export const blogPosts: BlogPost[] = [
+  {
+    slug: 'genomic-architecture-wellness',
+    title:
+      'Genomic Architecture of Wellness: Evidence for Precision Nutrition, Metabolism, and Lifestyle Modulation',
+    excerpt:
+      'Advances in human genomics have clarified that variability in wellness traits—nutrient metabolism, diet responsiveness, and cardiometabolic risk—is deeply rooted in genetic architecture. Precision nutrition and personalized lifestyle interventions represent the next evolution in preventive health.',
+    date: '2025',
+    readTime: '4 min read',
+    content: `Advances in human genomics over the past decade have clarified that inter-individual variability in wellness traits—nutrient metabolism, diet responsiveness, exercise adaptation, inflammatory tone, allergy susceptibility, and cardiometabolic risk—is deeply rooted in genetic architecture. Genome-wide association studies (GWAS), polygenic risk scores (PRS), and multi-omics integration now provide compelling evidence that lifestyle outcomes cannot be fully understood without accounting for inherited variation.
+
+Recent work on the genomics of obesity and macronutrient processing demonstrates that SNP-level and polygenic variation significantly modulate responses to carbohydrates, lipids, proteins, and even fiber. These differences extend to insulin secretion, glycaemic control, fat storage pathways, and chrononutrition, reinforcing that “one-size-fits-all” diet strategies are physiologically inadequate in genetically heterogeneous populations. [1]
+
+The mechanistic depth of gene–diet interactions is further illustrated in the Nutrients 2025 Special Issue [2], where studies highlight how variants in PNPLA3, CD36, and thyroid-related polygenic networks influence NAFLD susceptibility, fat-taste perception, metabolic syndrome trajectories, and endocrine modulation. These findings emphasize that nutrient-driven metabolic phenotypes emerge from tightly coupled gene-environment interactions spanning signalling, epigenetics, and metabolic flux.
+
+Critically randomized controlled trials now validate the translational utility of DNA-informed diets. The ASPIRE-DNA study [3] showed that individuals receiving genotype-tailored dietary guidance achieved significant improvements in fasting glucose and HbA1c over 26 weeks compared to population-standard interventions, demonstrating clinically meaningful metabolic benefit at scale.
+
+Parallel insights from sports nutrigenomics [4] reveal that genetic variation shapes nutrient utilization, recovery kinetics, mitochondrial adaptation, and performance outcomes—further supporting the integration of genomics into exercise prescriptions.
+
+Complementary multi-omics perspectives spanning metabolomics, cytokine biology, and nutrient-gene signalling [5], offer additional support for genotype-aligned dietary and anti-inflammatory strategies aimed at long-term wellness.
+
+Taken together, the evidence is unequivocal: wellness is a genomically mediated phenotype. Precision nutrition, personalized exercise planning, and genotype-aware lifestyle interventions represent the next evolution in preventive health—anchored not in generic guidelines, but in the individual’s molecular blueprint.`,
+    references: [
+      {
+        id: '1',
+        text: 'Gkouskou et al. A genomics perspective of personalized prevention and management of obesity, Human Genomics, 2024',
+        link: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC10823690'
+      },
+      {
+        id: '2',
+        text: 'St Germain et al. Advancing Personalized Nutrition Through Genetic Nutritional Insights, Nutrients, 2025',
+        link: 'https://www.mdpi.com/2072-6643/17/13/2166'
+      },
+      {
+        id: '3',
+        text: 'Karvela et al, Personalized nutrition intervention improves glucose regulation, Nature, 2024',
+        link: 'https://www.nature.com/articles/s41598-024-55105-6'
+      },
+      {
+        id: '4',
+        text: 'Guest et al, Sport Nutrigenomics: Personalized Nutrition for Athletic Performance, Frontiers in Nutrition, 2019',
+        link: 'https://www.frontiersin.org/journals/nutrition/articles/10.3389/fnut.2019.00008/full'
+      },
+      {
+        id: '5',
+        text: 'Bineid et al, A Systematic Review of the Effect of Gene–Lifestyle Interactions on Metabolic-Disease-Related Traits in South Asian Populations, Nutrition Reviews, 2025',
+        link: 'https://academic.oup.com/nutritionreviews/article/83/6/1061/7758654'
+      }
+    ]
+  },
   {
     slug: 'indian-nutrigenomics-pharmacogenomics',
     title:

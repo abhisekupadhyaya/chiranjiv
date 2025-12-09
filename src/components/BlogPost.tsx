@@ -1,4 +1,11 @@
 import { Card } from '@/components/ui/card'
+import { ExternalLink } from 'lucide-react'
+
+export interface Reference {
+  id: string
+  text: string
+  link?: string
+}
 
 interface BlogPostProps {
   title: string
@@ -6,9 +13,10 @@ interface BlogPostProps {
   date?: string
   content: string
   variant?: 'default' | 'embedded'
+  references?: Reference[]
 }
 
-export function BlogPost({ title, subtitle, date, content, variant = 'default' }: BlogPostProps) {
+export function BlogPost({ title, subtitle, date, content, variant = 'default', references }: BlogPostProps) {
   const parseContent = (text: string) => {
     const sections = text.split(/(?=^## \d+\.)/gm).filter(Boolean)
     return sections.map((section, index) => {
@@ -101,6 +109,34 @@ export function BlogPost({ title, subtitle, date, content, variant = 'default' }
         {subtitle && <p className="text-lg sm:text-xl text-muted-foreground text-balance leading-relaxed font-light">{subtitle}</p>}
       </div>
       <div className="prose-custom">{parseContent(content)}</div>
+      
+      {references && references.length > 0 && (
+        <div className="mt-16 pt-8 border-t border-border/50">
+          <h3 className="text-xl font-light text-foreground mb-6">References</h3>
+          <div className="space-y-4">
+            {references.map((ref, index) => (
+              <div key={ref.id} className="text-sm text-muted-foreground leading-relaxed flex gap-2">
+                <span className="flex-shrink-0">[{index + 1}]</span>
+                <div>
+                  {ref.link ? (
+                    <a 
+                      href={ref.link} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="hover:text-primary transition-colors flex items-inline gap-1 group"
+                    >
+                      {ref.text}
+                      <ExternalLink className="w-3 h-3 inline mt-0.5 opacity-50 group-hover:opacity-100 transition-opacity" />
+                    </a>
+                  ) : (
+                    <span>{ref.text}</span>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </article>
   )
 

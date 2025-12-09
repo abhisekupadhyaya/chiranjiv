@@ -33,15 +33,13 @@ export const WhyFree = memo(function WhyFree() {
               </p>
 
               {/* Trust Signals Inside Card */}
-              <div className="grid grid-cols-1 gap-8 sm:grid-cols-3 w-full max-w-4xl mx-auto mb-10">
+              <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 w-full max-w-2xl mx-auto mb-10">
                 {[
-                  { title: "No Ads", desc: "Your data is never sold" },
-                  { title: "No Insurance", desc: "No third-party sharing" },
-                  { title: "No Hidden Fees", desc: "Always transparent" }
+                  { title: "Ethical research partnerships" },
+                  { title: "Optional premium features for users" }
                 ].map((item) => (
                   <div key={item.title} className="flex flex-col items-center text-center">
                     <h4 className="text-lg font-semibold text-neutral-1000 mb-1">{item.title}</h4>
-                    <p className="text-sm text-neutral-800">{item.desc}</p>
                   </div>
                 ))}
               </div>
