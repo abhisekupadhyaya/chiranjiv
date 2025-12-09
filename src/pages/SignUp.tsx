@@ -5,9 +5,15 @@ import { useAuth } from '@/auth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
-import { Eye, EyeOff, MapPin, Calendar, Lock, CheckCircle } from 'lucide-react';
+import { Eye, EyeOff, MapPin, Calendar, Lock, Mail, Copy } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { SignUpStep1Form, type Step1Data } from '@/components/auth/SignUpStep1Form';
+import { postWaitlistSignup, type WaitlistSignupRequest } from '@/services/api';
+
+const toE164 = (countryCode: string, localNumber: string): string => {
+  const digitsOnly = localNumber.replace(/\D/g, '')
+  return countryCode + digitsOnly
+}
 
 const SignUp = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -56,6 +62,10 @@ const SignUp = () => {
 
   // Validation State
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+
+  // Success State
+  const [generatedReferralCode, setGeneratedReferralCode] = useState('');
+  const [referralLinkCopied, setReferralLinkCopied] = useState(false);
 
   // Sync key state to URL so it persists on refresh
   useEffect(() => {
@@ -107,6 +117,49 @@ const SignUp = () => {
     setFieldErrors({});
   };
 
+  const executeWaitlistSignup = async (cognitoUserId: string) => {
+    const fullPhone = toE164(formData.countryCode, formData.phoneLocal);
+    const fullAddress = [
+      formData.addressLine1,
+      formData.addressLine2,
+      formData.city,
+      formData.state,
+      formData.zip,
+      formData.country
+    ].filter(Boolean).join(', ');
+
+    const waitlistRequest: WaitlistSignupRequest = {
+      id: cognitoUserId,
+      name: formData.name,
+      email: formData.email,
+      phone: fullPhone,
+      address: fullAddress,
+      age: parseInt(formData.age),
+      consentPrivacyPolicy: formData.privacyPolicy ? 'v0.1' : null,
+      consentTermsOfService: formData.termsOfService ? 'v0.1' : null,
+      consentDataUsagePolicy: formData.dataUsagePolicy ? 'v0.1' : null,
+      consentResearchContact: formData.researchConsent ? 'v0.1' : null,
+      consentMarketing: formData.marketingConsent ? 'v0.1' : null,
+      referralCode: formData.referralCode || undefined,
+    };
+
+    const { ok, data } = await postWaitlistSignup(waitlistRequest);
+    
+    if (!ok) {
+      // We log the error but still proceed to step 3 as the account is created
+      console.error('Waitlist API error:', data);
+      // Optional: setError('Account created but waitlist registration failed.');
+    } else {
+       // @ts-ignore
+       if (data.referralCode) {
+         // @ts-ignore
+         setGeneratedReferralCode(data.referralCode);
+         // @ts-ignore
+         try { localStorage.setItem('cjv_referral_code', data.referralCode); } catch(e) {}
+       }
+    }
+  };
+
   const handleSignUp = async (e: FormEvent) => {
     e.preventDefault();
     if (!validateStep2()) return;
@@ -137,48 +190,44 @@ const SignUp = () => {
         'custom:consent_marketing': formData.marketingConsent ? 'true' : 'false',
       };
 
-      await register({ 
-        username: formData.email, 
-        password: formData.password, 
-        options: {
-          userAttributes
+      let result;
+      try {
+        result = await register({ 
+          username: formData.email, 
+          password: formData.password, 
+          options: {
+            userAttributes
+          }
+        });
+      } catch (err: any) {
+        // Retry logic for custom attributes
+        if (err.message?.includes('custom:')) {
+           result = await register({ 
+              username: formData.email, 
+              password: formData.password, 
+              options: {
+                userAttributes: {
+                  email: formData.email,
+                  name: formData.name,
+                  phone_number: fullPhone,
+                  address: fullAddress,
+                }
+              }
+            });
+        } else {
+          throw err;
         }
-      });
+      }
+
+      // If we got here, registration was successful
+      if (result && result.userId) {
+         await executeWaitlistSignup(result.userId);
+      }
       
       setStep(3);
     } catch (err: any) {
       console.error(err);
-      if (err.message?.includes('custom:')) {
-          try {
-               // Fallback for attributes that might not exist in cognito pool yet
-               const fullPhone = `${formData.countryCode}${formData.phoneLocal.replace(/\D/g, '')}`;
-               const fullAddress = [
-                    formData.addressLine1,
-                    formData.addressLine2,
-                    formData.city,
-                    formData.state,
-                    formData.zip,
-                    formData.country
-                  ].filter(Boolean).join(', ');
-
-              await register({ 
-                username: formData.email, 
-                password: formData.password, 
-                options: {
-                  userAttributes: {
-                    email: formData.email,
-                    name: formData.name,
-                    phone_number: fullPhone,
-                    address: fullAddress,
-                  }
-                }
-              });
-              setStep(3);
-              return;
-          } catch (retryErr) {
-              console.error(retryErr);
-          }
-      }
+      setError(err.message || "An error occurred during sign up");
     } finally {
       setLoading(false);
     }
@@ -199,6 +248,13 @@ const SignUp = () => {
     }
   };
 
+  const copyReferralMessage = () => {
+    const message = `Join me on Project Chiranjiv - India's first free full-genome sequencing platform! Use my referral code ${generatedReferralCode} to skip the queue. https://chiranjiv.com`;
+    navigator.clipboard.writeText(message);
+    setReferralLinkCopied(true);
+    setTimeout(() => setReferralLinkCopied(false), 2000);
+  };
+
   return (
     <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-neutral-50">
       <Card className="w-full max-w-lg shadow-lg">
@@ -206,12 +262,12 @@ const SignUp = () => {
           <CardTitle className="text-2xl font-bold text-center">
             {step === 1 && "Create your account"}
             {step === 2 && "Complete your profile"}
-            {step === 3 && "Check your email"}
+            {step === 3 && "Welcome to Chiranjiv!"}
           </CardTitle>
           <CardDescription className="text-center">
             {step === 1 && "Get started with your basic information"}
             {step === 2 && "We need a few more details to set you up"}
-            {step === 3 && `We've sent a verification link to ${formData.email}`}
+            {step === 3 && `Your account has been created successfully`}
           </CardDescription>
         </CardHeader>
         
@@ -448,22 +504,44 @@ const SignUp = () => {
           )}
 
           {step === 3 && (
-             <div className="flex flex-col items-center justify-center py-6 text-center space-y-4">
+             <div className="flex flex-col items-center justify-center py-6 text-center space-y-6">
                 <div className="h-16 w-16 bg-green-100 rounded-full flex items-center justify-center">
-                  <CheckCircle className="h-8 w-8 text-green-600" />
+                  <Mail className="h-8 w-8 text-green-600" />
                 </div>
+                
                 <div className="space-y-2">
                   <h3 className="text-xl font-semibold">Verification Link Sent</h3>
                   <p className="text-muted-foreground max-w-xs mx-auto">
                     Please check your email at <strong>{formData.email}</strong> and click the verification link to activate your account.
                   </p>
                 </div>
-                <Button onClick={() => navigate('/signin')} className="w-full mt-4">
-                  Go to Sign In
-                </Button>
-                <Button variant="ghost" onClick={() => setStep(1)} className="text-sm">
-                  Resend or change email
-                </Button>
+
+                {generatedReferralCode && (
+                  <div className="w-full bg-secondary/10 backdrop-blur-sm rounded-xl p-6 border border-secondary/20 shadow-inner">
+                    <p className="text-xs sm:text-sm text-muted-foreground font-light mb-3 tracking-tight">Your Referral Code</p>
+                    <p className="text-3xl sm:text-4xl font-light text-primary font-mono tracking-tight mb-3">{generatedReferralCode}</p>
+                    <p className="text-xs text-muted-foreground font-light mb-4">Share this code with friends to move up the waitlist</p>
+                    
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={copyReferralMessage} 
+                      className="w-full gap-2"
+                    >
+                      <Copy className="h-3 w-3" />
+                      {referralLinkCopied ? "Copied!" : "Copy Referral Message"}
+                    </Button>
+                  </div>
+                )}
+
+                <div className="flex flex-col gap-3 w-full">
+                  <Button onClick={() => navigate('/signin')} className="w-full">
+                    Go to Sign In
+                  </Button>
+                  <Button variant="ghost" onClick={() => setStep(1)} className="text-sm">
+                    Resend or change email
+                  </Button>
+                </div>
              </div>
           )}
         </CardContent>
