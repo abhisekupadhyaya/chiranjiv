@@ -10,6 +10,7 @@ import { useAuth } from "@/auth"
 export const Navbar = memo(function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [aboutUsOpen, setAboutUsOpen] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const location = useLocation()
   const navigate = useNavigate()
   const { isAuthenticated, logout } = useAuth()
@@ -39,11 +40,17 @@ export const Navbar = memo(function Navbar() {
         }
       }, 50)
     }
+    setMobileMenuOpen(false)
   }
 
   const handleSignOut = async () => {
     await logout();
     navigate('/');
+    setMobileMenuOpen(false)
+  }
+
+  const handleMobileNavClick = () => {
+    setMobileMenuOpen(false)
   }
 
   return (
@@ -132,7 +139,7 @@ export const Navbar = memo(function Navbar() {
         </div>
 
         {/* Mobile Menu */}
-        <Sheet>
+        <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
           <SheetTrigger asChild className="lg:hidden">
             <Button variant="ghost" size="icon">
               <Menu className="h-6 w-6 text-foreground" />
@@ -151,10 +158,10 @@ export const Navbar = memo(function Navbar() {
                 </Button>
                 {aboutUsOpen && (
                   <div className="ml-4 mt-2 flex flex-col gap-2">
-                    <Link to="/team">
+                    <Link to="/team" onClick={handleMobileNavClick}>
                       <Button variant="ghost" className="justify-start h-10 text-base hover:text-primary-600 w-full">Team</Button>
                     </Link>
-                    <Link to="/mission">
+                    <Link to="/mission" onClick={handleMobileNavClick}>
                       <Button variant="ghost" className="justify-start h-10 text-base hover:text-primary-600 w-full">Mission</Button>
                     </Link>
                   </div>
@@ -163,28 +170,28 @@ export const Navbar = memo(function Navbar() {
               <Button variant="ghost" className="justify-start h-12 text-lg hover:text-primary-600" onClick={() => handleHashNavigation('#how-it-works')}>How It Works</Button>
               {isAuthenticated ? (
                 <>
-                   <Link to="/profile">
+                   <Link to="/profile" onClick={handleMobileNavClick}>
                     <Button variant="ghost" className="justify-start h-12 text-lg hover:text-primary-600 w-full">Profile</Button>
                   </Link>
                   <Button variant="ghost" className="justify-start h-12 text-lg hover:text-primary-600 w-full" onClick={handleSignOut}>Sign Out</Button>
                 </>
               ) : (
-                <Link to="/signin">
+                <Link to="/signin" onClick={handleMobileNavClick}>
                   <Button variant="ghost" className="justify-start h-12 text-lg hover:text-primary-600 w-full">Sign In</Button>
                 </Link>
               )}
              
-              <Link to="/blog">
+              <Link to="/blog" onClick={handleMobileNavClick}>
                 <Button variant="ghost" className="justify-start h-12 text-lg hover:text-primary-600 w-full">Blog</Button>
               </Link>
-              <Link to="/faq">
+              <Link to="/faq" onClick={handleMobileNavClick}>
                 <Button variant="ghost" className="justify-start h-12 text-lg hover:text-primary-600">FAQ</Button>
               </Link>
               
               {!isAuthenticated && (
                 <>
                   <div className="my-4 border-t border-neutral-1000/60" />
-                  <Link to="/signup">
+                  <Link to="/signup" onClick={handleMobileNavClick}>
                     <Button className="w-full h-12 text-lg">Join Waitlist</Button>
                   </Link>
                 </>
