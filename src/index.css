@@ -91,7 +91,7 @@
   }
   body {
     background-color: #F5F5F5;
-    @apply text-foreground antialiased min-h-screen h-full overflow-x-hidden;
+    @apply text-foreground antialiased min-h-[100dvh] h-full overflow-x-hidden;
     font-feature-settings: "cv11", "ss01";
   }
   h1, h2, h3, h4, h5, h6 {
