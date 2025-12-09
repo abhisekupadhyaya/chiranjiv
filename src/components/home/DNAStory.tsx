@@ -63,10 +63,7 @@ export const DNAStory = memo(function DNAStory() {
   ];
 
   return (
-    <section className="relative pt-10 sm:pt-16 pb-20 sm:pb-32">
-      {/* Background Strip with Glassmorphism */}
-      <div className="absolute inset-0 bg-neutral-200/5 backdrop-blur-sm opacity-50" />
-      
+    <section className="relative w-full pt-10 sm:pt-16 pb-20 sm:pb-32 backdrop-blur-3xl bg-white/80 border-y border-white/60">
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header Section */}
         <div className="mb-12 text-center md:mb-16">
@@ -89,7 +86,7 @@ export const DNAStory = memo(function DNAStory() {
               <div className={`absolute inset-x-0 top-0 h-2 ${category.barColor}`} />
 
               {/* Glass highlight moved below the color band */}
-              <div className="absolute inset-x-0 top-2 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent opacity-50" />
+              <div className="absolute inset-x-0 top-2 h-px bg-gradient-to-r from-transparent via-neutral-200/20 to-transparent opacity-50" />
               
               <h3 className="mb-3 text-lg font-semibold leading-tight text-neutral-200 pt-2 text-center">
                 {category.title}
