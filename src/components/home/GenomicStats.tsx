@@ -4,8 +4,8 @@ export const GenomicStats = memo(function GenomicStats() {
   return (
     <section className="relative overflow-hidden py-20 sm:py-32">
       {/* Background decorative elements matching Insights */}
-      <div className="absolute top-1/3 right-0 -z-10 h-[30rem] w-[30rem] rounded-full bg-primary-300/5 blur-[100px]" />
-      <div className="absolute bottom-0 left-0 -z-10 h-[30rem] w-[30rem] rounded-full bg-secondary-300/5 blur-[100px]" />
+      <div className="absolute top-1/3 right-0 -z-10 h-[30rem] w-[30rem] rounded-full bg-primary-300/5 blur-[100px] translate-x-1/3" />
+      <div className="absolute bottom-0 left-0 -z-10 h-[30rem] w-[30rem] rounded-full bg-secondary-300/5 blur-[100px] -translate-x-1/3 translate-y-1/3" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         

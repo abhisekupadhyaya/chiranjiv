@@ -21,7 +21,10 @@ export const HowItWorks = memo(function HowItWorks() {
   ];
 
   return (
-    <section id="how-it-works" className="relative py-12 sm:py-20">
+    <section id="how-it-works" className="relative py-12 sm:py-20 overflow-hidden">
+      {/* Decorative background blob */}
+      <div className="absolute top-0 right-0 w-[40rem] h-[40rem] bg-primary-300/5 rounded-full blur-[120px] -z-10 translate-x-1/2 -translate-y-1/4" />
+
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         
         {/* Centered Header */}

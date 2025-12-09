@@ -89,7 +89,7 @@ export function Hero() {
 
           {/* Right Column: Sign Up Form */}
           <div id="waitlist" className="flex items-center justify-center lg:justify-end w-full">
-            <Card className="w-full max-w-md rounded-3xl border border-white/10 !bg-white/5 shadow-2xl backdrop-blur-xl">
+            <Card className="w-full max-w-md rounded-3xl border border-white/60 bg-white/50 shadow-2xl backdrop-blur-xl">
               <CardHeader className="space-y-1 pb-4 text-center items-center">
                 <CardTitle className="text-2xl font-bold">Join Early Access</CardTitle>
                 <p className="text-sm text-muted-foreground">

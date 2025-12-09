@@ -33,10 +33,10 @@ const features = [
 
 export function Insights() {
   return (
-    <section className="bg-neutral-1200/20 py-16 sm:py-24 relative">
+    <section className="relative py-16 sm:py-24 overflow-hidden">
       {/* Subtle background blobs for glass effect depth */}
-      <div className="absolute top-1/4 left-10 w-64 h-64 bg-primary-300/10 rounded-full blur-3xl -z-10" />
-      <div className="absolute bottom-1/4 right-10 w-80 h-80 bg-secondary-300/10 rounded-full blur-3xl -z-10" />
+      <div className="absolute top-0 right-0 w-[30rem] h-[30rem] bg-primary-300/5 rounded-full blur-[100px] -z-10 translate-x-1/3 -translate-y-1/3" />
+      <div className="absolute bottom-0 left-0 w-[30rem] h-[30rem] bg-secondary-300/5 rounded-full blur-[100px] -z-10 -translate-x-1/3 translate-y-1/3" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
