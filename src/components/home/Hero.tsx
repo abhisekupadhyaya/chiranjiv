@@ -35,12 +35,15 @@ export function Hero() {
                 Your DNA Unlocks <br />
                 <span className="bg-gradient-to-br from-secondary-500 via-accent-500 to-primary-500 bg-clip-text text-transparent">
                   Your Best Body.
-                </span>{" "}
-                For Free.
+                </span>
               </h1>
               
-              <p className="max-w-2xl text-base text-neutral-600 sm:text-lg mx-auto">
+              <p className="max-w-2xl text-base text-neutral-600 dark:text-neutral-300 sm:text-lg mx-auto">
                 Discover what your genes say about your fitness, sleep, energy, immunity, and longevity — with India's most advanced DNA analysis.
+              </p>
+
+              <p className="max-w-md mt-6 text-base text-neutral-600 dark:text-neutral-300 sm:text-lg mx-auto">
+                Chiranjiv analyzes <span className="font-medium text-emerald-600 dark:text-emerald-400">3 billion genetic data points</span> to reveal your <span className="font-medium text-emerald-600 dark:text-emerald-400">true biology</span> — and gives you <span className="font-medium text-emerald-600 dark:text-emerald-400">clear, personalized steps</span> to improve your everyday health.
               </p>
             </div>
 
