@@ -39,28 +39,24 @@ export default function BlogIndex() {
     },
   ]
   return (
-    <section className="relative pt-24 sm:pt-32 pb-16 sm:pb-24 overflow-hidden">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5" />
+    <main className="relative w-full min-h-screen overflow-hidden">
+      {/* Fixed Full-Screen Background Overlay - Very Subtle Tint */}
+      <div className="fixed inset-0 z-0 bg-gradient-to-br from-primary/2 via-secondary/2 to-accent/2 pointer-events-none" />
       
-      {/* Floating animated orbs */}
-      <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl animate-float" />
+      {/* Floating Blobs - Vibrant and Distinct */}
+      <div className="fixed top-1/4 left-[60%] w-[40rem] h-[40rem] bg-primary/10 rounded-full blur-[200px] animate-float pointer-events-none z-0" />
       <div 
-        className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-float" 
-        style={{ animationDelay: '2s' }}
-      />
-      <div 
-        className="absolute top-1/2 right-1/3 w-72 h-72 bg-accent/10 rounded-full blur-3xl animate-float" 
-        style={{ animationDelay: '4s' }}
+        className="fixed bottom-1/4 right-0 w-[50rem] h-[50rem] bg-primary/10 rounded-full blur-[200px] animate-float pointer-events-none z-0"
+        style={{ animationDelay: '2s' }} 
       />
 
-      <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+      <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl pt-24 sm:pt-32 pb-16 sm:pb-24">
         {/* Hero Section */}
         <div className="text-center mb-10 sm:mb-14">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extralight text-foreground mb-4 text-balance tracking-tight leading-[1.1]">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extralight text-neutral-200 mb-4 text-balance tracking-tight leading-[1.1]">
             Chiranjiv Blog
           </h1>
-          <p className="text-base sm:text-lg text-muted-foreground text-pretty leading-relaxed font-light max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-neutral-600 text-pretty leading-relaxed font-light max-w-2xl mx-auto">
             Insights on genomics, ancestry, and the future of personalized health in India
           </p>
         </div>
@@ -69,17 +65,20 @@ export default function BlogIndex() {
         <div className="max-w-4xl mx-auto space-y-6">
           {posts.map((post) => (
             <Link key={post.slug} to={`/blog/${post.slug}`} className="group block">
-              <article className="glass-backdrop backdrop-blur-sm border border-border/50 rounded-3xl p-8 sm:p-10 shadow-lg hover:shadow-2xl hover:scale-[1.01] hover:border-primary/50 transition-all duration-300">
-                <div className="flex items-center gap-3 text-xs sm:text-sm text-muted-foreground mb-4 font-light">
+              <article className="relative overflow-hidden rounded-2xl border border-white/40 bg-white/40 p-8 sm:p-10 shadow-lg shadow-black/5 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-white/60 hover:bg-white/60 hover:shadow-xl hover:shadow-black/10">
+                {/* Glass highlight effect on top edge */}
+                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent opacity-50" />
+
+                <div className="flex items-center gap-3 text-xs sm:text-sm text-neutral-500 mb-4 font-light">
                   <time>{post.date}</time>
                   <span>•</span>
                   <span>{post.readTime}</span>
                 </div>
-                <h2 className="text-2xl sm:text-3xl font-light text-foreground mb-4 group-hover:text-primary transition-colors text-balance leading-tight tracking-tight">
+                <h2 className="text-2xl sm:text-3xl font-light text-neutral-200 mb-4 group-hover:text-primary-600 transition-colors text-balance leading-tight tracking-tight">
                   {post.title}
                 </h2>
-                <p className="text-sm sm:text-base text-muted-foreground mb-6 leading-relaxed font-light">{post.excerpt}</p>
-                <div className="text-sm font-medium text-primary">
+                <p className="text-sm sm:text-base text-neutral-600 mb-6 leading-relaxed font-light">{post.excerpt}</p>
+                <div className="text-sm font-medium text-primary-600">
                   Read article →
                 </div>
               </article>
@@ -87,8 +86,6 @@ export default function BlogIndex() {
           ))}
         </div>
       </div>
-    </section>
+    </main>
   )
 }
-
-

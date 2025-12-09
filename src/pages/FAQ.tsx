@@ -157,20 +157,33 @@ const categoryLabels: Record<string, string> = {
 
 export default function FAQ() {
   return (
-    <div className="min-h-screen bg-background text-foreground font-sans pt-24 sm:pt-32 pb-16">
-      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+    <main className="relative w-full min-h-screen overflow-hidden">
+      {/* Fixed Full-Screen Background Overlay - Very Subtle Tint */}
+      <div className="fixed inset-0 z-0 bg-gradient-to-br from-primary/2 via-secondary/2 to-accent/2 pointer-events-none" />
+      
+      {/* Floating Blobs - Vibrant and Distinct */}
+      <div className="fixed top-1/4 left-[60%] w-[40rem] h-[40rem] bg-primary/10 rounded-full blur-[200px] animate-float pointer-events-none z-0" />
+      <div 
+        className="fixed bottom-1/4 right-0 w-[50rem] h-[50rem] bg-primary/10 rounded-full blur-[200px] animate-float pointer-events-none z-0"
+        style={{ animationDelay: '2s' }} 
+      />
+
+      <div className="relative z-10 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 pt-24 sm:pt-32 pb-16">
         {/* Header */}
         <div className="mb-8 sm:mb-12 text-center">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-foreground mb-4">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-neutral-200 mb-4">
             Frequently Asked Questions
           </h1>
-          <p className="text-neutral-500">
+          <p className="text-neutral-600 font-light">
             Everything you need to know about Project Chiranjiv
           </p>
         </div>
 
         {/* Content Card */}
-        <Card className="bg-white border-neutral-1000 p-6 sm:p-10 shadow-soft rounded-2xl">
+        <Card className="relative overflow-hidden rounded-2xl border border-white/40 bg-white/50 p-6 sm:p-10 shadow-lg shadow-black/5 backdrop-blur-md">
+          {/* Glass highlight effect on top edge */}
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent opacity-50" />
+          
           <div className="space-y-8">
             <Accordion type="single" collapsible defaultValue="item-0" className="space-y-4">
               {faqs.map((faq, index) => {
@@ -181,7 +194,7 @@ export default function FAQ() {
                   <div key={index}>
                     {isFirstInCategory && (
                       <div className={`pb-4 ${index > 0 ? 'pt-8 mt-4' : ''}`}>
-                        <h3 className="text-sm font-semibold uppercase tracking-wider text-primary mb-2">
+                        <h3 className="text-sm font-semibold uppercase tracking-wider text-primary-600 mb-2">
                           {categoryLabel}
                         </h3>
                       </div>
@@ -191,11 +204,11 @@ export default function FAQ() {
                       className="border-none"
                     >
                       <AccordionTrigger 
-                        className="py-4 hover:no-underline text-left text-base font-medium"
+                        className="py-4 hover:no-underline text-left text-base font-medium text-neutral-200"
                       >
                         {faq.question}
                       </AccordionTrigger>
-                      <AccordionContent className="text-neutral-600 leading-relaxed">
+                      <AccordionContent className="text-neutral-600 leading-relaxed font-light">
                         {faq.answer}
                       </AccordionContent>
                     </AccordionItem>
@@ -206,6 +219,6 @@ export default function FAQ() {
           </div>
         </Card>
       </div>
-    </div>
+    </main>
   )
 }
