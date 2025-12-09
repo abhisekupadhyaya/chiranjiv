@@ -32,7 +32,7 @@ function Home() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
       <Hero />
       </div>
-      <Suspense fallback={<div className="py-16 sm:py-24 text-center text-neutral-500">Loading...</div>}>
+      <Suspense fallback={<div className="py-16 sm:py-24 text-center text-foreground">Loading...</div>}>
         <Insights />
         <GenomicStats />
         <DNAStory />

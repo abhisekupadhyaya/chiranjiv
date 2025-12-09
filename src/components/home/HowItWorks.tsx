@@ -29,7 +29,7 @@ export const HowItWorks = memo(function HowItWorks() {
           <h2 className="mb-4 text-3xl font-medium tracking-tight text-neutral-200 sm:text-4xl lg:text-5xl">
             How It Works
           </h2>
-          <p className="mx-auto max-w-2xl text-lg text-neutral-600 sm:text-xl">
+          <p className="mx-auto max-w-2xl text-lg text-foreground sm:text-xl">
             Three simple steps to unlock your genetic insights
           </p>
         </div>
@@ -52,7 +52,7 @@ export const HowItWorks = memo(function HowItWorks() {
                 <h3 className="mb-3 text-xl font-semibold text-neutral-200">
                   {step.title}
                 </h3>
-                <p className="text-base leading-relaxed text-neutral-600">
+                <p className="text-base leading-relaxed text-foreground">
                   {step.description}
                 </p>
               </div>

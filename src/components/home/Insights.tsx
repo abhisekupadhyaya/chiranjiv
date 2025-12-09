@@ -53,7 +53,7 @@ export function Insights() {
               <h3 className="mb-3 text-lg font-semibold leading-tight text-neutral-200 group-hover:text-neutral-100 transition-colors">
                 {feature.title}
               </h3>
-              <p className="text-sm text-neutral-600 leading-relaxed group-hover:text-neutral-500 transition-colors">
+              <p className="text-sm text-foreground leading-relaxed group-hover:text-neutral-500 transition-colors">
                 {feature.description}
               </p>
             </div>

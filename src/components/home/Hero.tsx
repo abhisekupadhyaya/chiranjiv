@@ -38,17 +38,17 @@ export function Hero() {
                 </span>
               </h1>
               
-              <p className="max-w-2xl text-base text-neutral-600 dark:text-neutral-300 sm:text-lg mx-auto">
+              <p className="max-w-2xl text-base text-foreground sm:text-lg mx-auto">
                 Discover what your genes say about your fitness, sleep, energy, immunity, and longevity — with India's most advanced DNA analysis.
               </p>
 
-              <p className="max-w-md mt-6 text-base text-neutral-600 dark:text-neutral-300 sm:text-lg mx-auto">
+              <p className="max-w-md mt-6 text-base text-foreground sm:text-lg mx-auto">
                 Chiranjiv analyzes <span className="font-medium text-emerald-600 dark:text-emerald-400">3 billion genetic data points</span> to reveal your <span className="font-medium text-emerald-600 dark:text-emerald-400">true biology</span> — and gives you <span className="font-medium text-emerald-600 dark:text-emerald-400">clear, personalized steps</span> to improve your everyday health.
               </p>
             </div>
 
             {/* Trust Indicators */}
-            <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 text-sm text-neutral-500">
+            <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 text-sm text-foreground">
               <div className="flex items-center gap-2">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75"></span>
@@ -75,7 +75,7 @@ export function Hero() {
             {/* Price/Offer Tag */}
             <div className="flex justify-center w-full">
               <AnimatedPill>
-                <span className="text-sm text-neutral-600 dark:text-neutral-400">
+                <span className="text-sm text-foreground">
                   <span className="line-through decoration-neutral-400/50 dark:decoration-neutral-600">Worth ₹1,50,000</span>
                   <span className="mx-2"></span>
                   <span className="font-medium text-primary-600 dark:text-neutral-200">FREE for early users</span>
@@ -103,7 +103,7 @@ export function Hero() {
                   submitLabel="Get Started Free"
                 />
               </CardContent>
-              <CardFooter className="justify-center text-sm text-neutral-600 dark:text-neutral-400">
+              <CardFooter className="justify-center text-sm text-foreground">
                 Already have an account?{" "}
                 <Link to="/signin" className="ml-1 font-medium text-primary-600 hover:text-primary-500 hover:underline">
                   Sign in

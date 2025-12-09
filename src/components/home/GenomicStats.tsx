@@ -15,7 +15,7 @@ export const GenomicStats = memo(function GenomicStats() {
             Most people try diets, workouts, <br className="hidden sm:block" />
             and supplements blindly.
           </h2>
-          <p className="mx-auto max-w-2xl text-lg text-neutral-600 sm:text-xl">
+          <p className="mx-auto max-w-2xl text-lg text-foreground sm:text-xl">
             Your DNA tells you what will actually work for <span className="font-semibold text-primary-500">YOU</span>.
           </p>
         </div>
@@ -55,7 +55,7 @@ export const GenomicStats = memo(function GenomicStats() {
                 1.4B
               </div>
               <div>
-                <p className="text-neutral-600">India represents 18% of humanity, but less than 2% of genomic research.</p>
+                <p className="text-foreground">India represents 18% of humanity, but less than 2% of genomic research.</p>
               </div>
             </div>
 
@@ -65,7 +65,7 @@ export const GenomicStats = memo(function GenomicStats() {
                 4,600+
               </div>
               <div>
-                <p className="text-neutral-600">Ethnic groups in India with genetic diversity rivaling entire continents.</p>
+                <p className="text-foreground">Ethnic groups in India with genetic diversity rivaling entire continents.</p>
               </div>
             </div>
 
@@ -75,7 +75,7 @@ export const GenomicStats = memo(function GenomicStats() {
                 Global
               </div>
               <div>
-                <p className="text-neutral-600">Building India's genomic infrastructure benefits South Asia and the world.</p>
+                <p className="text-foreground">Building India's genomic infrastructure benefits South Asia and the world.</p>
               </div>
             </div>
           </div>

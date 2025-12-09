@@ -415,7 +415,7 @@ export default function PrivacyPolicy() {
         
         <Alert className="mt-4 mb-6 bg-neutral-50">
           <AlertTitle className="font-semibold text-foreground mb-3">Data Protection Officer</AlertTitle>
-          <AlertDescription className="text-neutral-600 font-light">
+          <AlertDescription className="text-foreground font-light">
             <p>Rapidera Technologies Pvt Ltd.</p>
             <p>Email: <a href="mailto:support@chiranjiv.com" className="text-primary-600 hover:underline font-medium">support@chiranjiv.com</a></p>
             <p>Address: 703 Deron Heights, Baner Road, Baner, Pune 411045</p>

@@ -63,7 +63,7 @@ export const DNAStory = memo(function DNAStory() {
           <h2 className="mb-4 text-3xl font-medium tracking-tight text-neutral-200 sm:text-4xl lg:text-5xl">
             Your DNA Tells You Your story.
           </h2>
-          <p className="mx-auto max-w-2xl text-lg text-neutral-600 sm:text-xl">
+          <p className="mx-auto max-w-2xl text-lg text-foreground sm:text-xl">
             All explained in simple language — no medical jargon.
           </p>
         </div>
@@ -87,7 +87,7 @@ export const DNAStory = memo(function DNAStory() {
               
               <ul className="space-y-2">
                 {category.items.map((item, i) => (
-                  <li key={i} className="flex items-start gap-2 text-sm text-neutral-600 leading-relaxed">
+                  <li key={i} className="flex items-start gap-2 text-sm text-foreground leading-relaxed">
                     <span className={`mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full ${category.dotColor}`} />
                     <span>{item}</span>
                   </li>

@@ -29,7 +29,7 @@ export const WhyFree = memo(function WhyFree() {
           <h2 className="mb-4 text-3xl font-medium tracking-tight text-neutral-200 sm:text-4xl lg:text-5xl">
             Why Is This ₹1.5 Lakh Test Free?
           </h2>
-          <p className="mx-auto max-w-2xl text-lg text-neutral-600 sm:text-xl">
+          <p className="mx-auto max-w-2xl text-lg text-foreground sm:text-xl">
             Because India deserves to be represented in global health science.
           </p>
         </div>
@@ -92,7 +92,7 @@ export const WhyFree = memo(function WhyFree() {
                     <h3 className="mb-2 text-lg font-semibold text-neutral-200">
                       {feature.title}
                     </h3>
-                    <p className="text-sm leading-relaxed text-neutral-600">
+                    <p className="text-sm leading-relaxed text-foreground">
                       {feature.description}
                     </p>
                   </div>

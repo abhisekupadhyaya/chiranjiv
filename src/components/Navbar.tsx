@@ -67,7 +67,7 @@ export const Navbar = memo(function Navbar() {
           </span>
         </Link>
         
-        <nav className="hidden md:flex items-center gap-2 text-sm font-medium text-neutral-600">
+        <nav className="hidden md:flex items-center gap-2 text-sm font-medium text-foreground">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="hover:text-primary-600 flex items-center gap-1">
@@ -79,13 +79,13 @@ export const Navbar = memo(function Navbar() {
               align="start" 
               className="min-w-[160px] rounded-xl border border-neutral-1000/60 bg-background/80 backdrop-blur-md shadow-sm p-1.5"
             >
-              <DropdownMenuItem asChild className="rounded-lg hover:bg-neutral-100/80 focus:bg-neutral-100/80 text-neutral-600 hover:text-primary-600 cursor-pointer">
+              <DropdownMenuItem asChild className="rounded-lg hover:bg-neutral-100/80 focus:bg-neutral-100/80 text-foreground hover:text-primary-600 cursor-pointer">
                 <Link to="/team" className="w-full px-3 py-2">Team</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem asChild className="rounded-lg hover:bg-neutral-100/80 focus:bg-neutral-100/80 text-neutral-600 hover:text-primary-600 cursor-pointer">
+              <DropdownMenuItem asChild className="rounded-lg hover:bg-neutral-100/80 focus:bg-neutral-100/80 text-foreground hover:text-primary-600 cursor-pointer">
                 <Link to="/mission" className="w-full px-3 py-2">Mission</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem asChild className="rounded-lg hover:bg-neutral-100/80 focus:bg-neutral-100/80 text-neutral-600 hover:text-primary-600 cursor-pointer">
+              <DropdownMenuItem asChild className="rounded-lg hover:bg-neutral-100/80 focus:bg-neutral-100/80 text-foreground hover:text-primary-600 cursor-pointer">
                 <Link to="/blog" className="w-full px-3 py-2">Blog</Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -106,10 +106,10 @@ export const Navbar = memo(function Navbar() {
                align="end" 
                className="min-w-[160px] rounded-xl border border-neutral-1000/60 bg-background/80 backdrop-blur-md shadow-sm p-1.5"
              >
-               <DropdownMenuItem asChild className="rounded-lg hover:bg-neutral-100/80 focus:bg-neutral-100/80 text-neutral-600 hover:text-primary-600 cursor-pointer">
+               <DropdownMenuItem asChild className="rounded-lg hover:bg-neutral-100/80 focus:bg-neutral-100/80 text-foreground hover:text-primary-600 cursor-pointer">
                  <Link to="/profile" className="w-full px-3 py-2">My Profile</Link>
                </DropdownMenuItem>
-               <DropdownMenuItem className="rounded-lg hover:bg-neutral-100/80 focus:bg-neutral-100/80 text-neutral-600 hover:text-primary-600 cursor-pointer" onClick={handleSignOut}>
+               <DropdownMenuItem className="rounded-lg hover:bg-neutral-100/80 focus:bg-neutral-100/80 text-foreground hover:text-primary-600 cursor-pointer" onClick={handleSignOut}>
                  <span className="w-full px-3 py-2">Sign Out</span>
                </DropdownMenuItem>
              </DropdownMenuContent>
@@ -135,7 +135,7 @@ export const Navbar = memo(function Navbar() {
         <Sheet>
           <SheetTrigger asChild className="lg:hidden">
             <Button variant="ghost" size="icon">
-              <Menu className="h-6 w-6 text-neutral-600" />
+              <Menu className="h-6 w-6 text-foreground" />
             </Button>
           </SheetTrigger>
           <SheetContent side="right" className="max-w-xs sm:max-w-sm">

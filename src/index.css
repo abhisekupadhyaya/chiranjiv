@@ -5,12 +5,12 @@
 @layer base {
   :root {
     /* Brand Colors - Green (Primary) */
-    --color-primary-300: #81B97F;
-    --color-primary-400: #76AF75;
-    --color-primary-500: #6DA46C;
-    --color-primary-600: #558556;
-    --color-primary-700: #426744;
-    --color-primary-800: #304A32;
+    --color-primary-300: #4CAF50;
+    --color-primary-400: #43A047;
+    --color-primary-500: #388E3C;
+    --color-primary-600: #2E7D32;
+    --color-primary-700: #256428;
+    --color-primary-800: #1B5E20;
 
     /* Brand Colors - Blue (Secondary) */
     --color-secondary-300: #6FB5DE;
@@ -53,7 +53,7 @@
     --popover-foreground: #1F201F;
 
     /* Primary - Brand Green 600 */
-    --primary: #558556;
+    --primary: #2E7D32;
     --primary-foreground: #FFFFFF;
 
     /* Secondary - Brand Blue 500 */
@@ -75,7 +75,7 @@
     /* Borders & Inputs */
     --border: #CACBC9; /* neutral-1000 */
     --input: #CACBC9;
-    --ring: #76AF75; /* primary-400 */
+    --ring: #2E7D32; /* primary-600 */
 
     --radius: 0.75rem; /* 12px */
   }

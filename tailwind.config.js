@@ -14,12 +14,12 @@ export default {
   			background: 'var(--background)',
   			foreground: 'var(--foreground)',
   			primary: {
-  				'300': '#81B97F',
-  				'400': '#76AF75',
-  				'500': '#6DA46C',
-  				'600': '#558556',
-  				'700': '#426744',
-  				'800': '#304A32',
+				'300': '#4CAF50',
+				'400': '#43A047',
+				'500': '#388E3C',
+				'600': '#2E7D32',
+				'700': '#256428',
+				'800': '#1B5E20',
   				DEFAULT: 'var(--primary)',
   				foreground: 'var(--primary-foreground)'
   			},
