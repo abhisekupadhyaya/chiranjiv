@@ -20,8 +20,8 @@ export default {
 				'600': '#2E7D32',
 				'700': '#256428',
 				'800': '#1B5E20',
-  				DEFAULT: 'var(--primary)',
-  				foreground: 'var(--primary-foreground)'
+  				DEFAULT: 'hsl(var(--primary) / <alpha-value>)',
+  				foreground: 'hsl(var(--primary-foreground) / <alpha-value>)'
   			},
   			secondary: {
   				'300': '#6FB5DE',
@@ -29,8 +29,8 @@ export default {
   				'500': '#2E8BBB',
   				'600': '#24709A',
   				'700': '#1B5879',
-  				DEFAULT: 'var(--secondary)',
-  				foreground: 'var(--secondary-foreground)'
+  				DEFAULT: 'hsl(var(--secondary) / <alpha-value>)',
+  				foreground: 'hsl(var(--secondary-foreground) / <alpha-value>)'
   			},
   			destructive: {
   				DEFAULT: 'var(--destructive)',
@@ -42,8 +42,8 @@ export default {
   			},
   			accent: {
   				'500': '#5E9B99',
-  				DEFAULT: 'var(--accent)',
-  				foreground: 'var(--accent-foreground)'
+  				DEFAULT: 'hsl(var(--accent) / <alpha-value>)',
+  				foreground: 'hsl(var(--accent-foreground) / <alpha-value>)'
   			},
   			popover: {
   				DEFAULT: 'var(--popover)',

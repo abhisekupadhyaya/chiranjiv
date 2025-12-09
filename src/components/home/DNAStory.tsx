@@ -55,7 +55,7 @@ export const DNAStory = memo(function DNAStory() {
   return (
     <section className="relative py-20 sm:py-32">
       {/* Background Strip with Glassmorphism */}
-      <div className="absolute inset-0 bg-neutral-200/5 backdrop-blur-sm" />
+      <div className="absolute inset-0 bg-neutral-200/5 backdrop-blur-sm opacity-50" />
       
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header Section */}

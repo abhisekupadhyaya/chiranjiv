@@ -39,7 +39,7 @@ export const HowItWorks = memo(function HowItWorks() {
           {steps.map((step, index) => (
             <div 
               key={index}
-              className="group relative flex flex-col overflow-hidden rounded-3xl border border-white/40 bg-white/40 p-8 shadow-lg shadow-black/5 backdrop-blur-md transition-all duration-300 hover:-translate-y-2 hover:border-white/60 hover:bg-white/60 hover:shadow-xl hover:shadow-black/10"
+              className="group relative flex flex-col overflow-hidden rounded-3xl border border-white/30 bg-white/20 p-8 shadow-lg shadow-black/5 backdrop-blur-md transition-all duration-300 hover:-translate-y-2 hover:border-white/50 hover:bg-white/30 hover:shadow-xl hover:shadow-black/10"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-white/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
               

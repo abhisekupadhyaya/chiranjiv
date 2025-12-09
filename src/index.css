@@ -53,20 +53,20 @@
     --popover-foreground: #1F201F;
 
     /* Primary - Brand Green 600 */
-    --primary: #2E7D32;
-    --primary-foreground: #FFFFFF;
+    --primary: 152 49% 35%; /* #2E7D32 in HSL */
+    --primary-foreground: 0 0% 100%;
 
     /* Secondary - Brand Blue 500 */
-    --secondary: #2E8BBB;
-    --secondary-foreground: #FFFFFF;
+    --secondary: 200 60% 44%; /* #2E8BBB in HSL */
+    --secondary-foreground: 0 0% 100%;
 
     /* Muted */
     --muted: #DFE0DF; /* neutral-1100 */
     --muted-foreground: #747772; /* neutral-600 */
 
     /* Accent - Teal */
-    --accent: #5E9B99;
-    --accent-foreground: #FFFFFF;
+    --accent: 174 24% 50%; /* #5E9B99 in HSL */
+    --accent-foreground: 0 0% 100%;
 
     /* Destructive */
     --destructive: #DC2626;

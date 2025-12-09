@@ -33,7 +33,7 @@ const features = [
 
 export function Insights() {
   return (
-    <section className="bg-neutral-1200/50 py-16 sm:py-24 relative">
+    <section className="bg-neutral-1200/20 py-16 sm:py-24 relative">
       {/* Subtle background blobs for glass effect depth */}
       <div className="absolute top-1/4 left-10 w-64 h-64 bg-primary-300/10 rounded-full blur-3xl -z-10" />
       <div className="absolute bottom-1/4 right-10 w-80 h-80 bg-secondary-300/10 rounded-full blur-3xl -z-10" />

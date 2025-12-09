@@ -18,7 +18,7 @@ export const YourDNA = memo(function YourDNA() {
 
         {/* Message Card */}
         <div className="mx-auto max-w-4xl">
-          <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-neutral-100 p-8 shadow-2xl sm:p-12">
+          <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-neutral-900/60 p-8 shadow-2xl sm:p-12 backdrop-blur-sm">
             {/* Background decoration */}
             <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-primary-500/10 blur-[80px]" />
             <div className="absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-secondary-500/10 blur-[80px]" />
@@ -28,51 +28,51 @@ export const YourDNA = memo(function YourDNA() {
               <div className="grid gap-8 sm:grid-cols-2 sm:gap-y-12">
                 {/* Point 1 */}
                 <div className="flex flex-col gap-2">
-                  <h3 className="text-xl font-semibold text-neutral-900">
+                  <h3 className="text-xl font-semibold text-neutral-200">
                     Better Energy
                   </h3>
-                  <p className="text-neutral-600 leading-relaxed">
+                  <p className="text-neutral-400 leading-relaxed">
                     Optimize your daily vitality with insights tailored to your genetic makeup.
                   </p>
                 </div>
 
                 {/* Point 2 */}
                 <div className="flex flex-col gap-2">
-                  <h3 className="text-xl font-semibold text-neutral-900">
+                  <h3 className="text-xl font-semibold text-neutral-200">
                     Better Sleep
                   </h3>
-                  <p className="text-neutral-600 leading-relaxed">
+                  <p className="text-neutral-400 leading-relaxed">
                     Understand your sleep genetics to improve rest and recovery.
                   </p>
                 </div>
 
                 {/* Point 3 */}
                 <div className="flex flex-col gap-2">
-                  <h3 className="text-xl font-semibold text-neutral-900">
+                  <h3 className="text-xl font-semibold text-neutral-200">
                     Better Metabolism
                   </h3>
-                  <p className="text-neutral-600 leading-relaxed">
+                  <p className="text-neutral-400 leading-relaxed">
                     Get personalized nutrition insights that work with your body, not against it.
                   </p>
                 </div>
 
                 {/* Point 4 */}
                 <div className="flex flex-col gap-2">
-                  <h3 className="text-xl font-semibold text-neutral-900">
+                  <h3 className="text-xl font-semibold text-neutral-200">
                     Better Immunity
                   </h3>
-                  <p className="text-neutral-600 leading-relaxed">
+                  <p className="text-neutral-400 leading-relaxed">
                     Strengthen your defenses by understanding your genetic predispositions.
                   </p>
                 </div>
               </div>
 
               {/* Divider */}
-              <div className="my-10 border-t border-neutral-200/60" />
+              <div className="my-10 border-t border-neutral-800/60" />
 
               {/* Ending & CTA */}
               <div className="flex flex-col items-center text-center">
-                <p className="mb-8 text-lg font-medium text-neutral-800">
+                <p className="mb-8 text-lg font-medium text-neutral-300">
                   All starting with a single test — free for early users.
                 </p>
                 

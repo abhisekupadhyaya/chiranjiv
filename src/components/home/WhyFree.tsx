@@ -38,7 +38,7 @@ export const WhyFree = memo(function WhyFree() {
           
           {/* Left Column: Manifesto Card - Refined Design */}
           <div className="flex flex-col">
-            <div className="relative h-full overflow-hidden rounded-3xl bg-neutral-200 p-8 shadow-2xl shadow-black/20 ring-1 ring-white/10 sm:p-10">
+            <div className="relative h-full overflow-hidden rounded-3xl bg-neutral-200/80 p-8 shadow-2xl shadow-black/20 ring-1 ring-white/10 sm:p-10 backdrop-blur-sm">
               {/* Refined Gradient Blobs */}
               <div className="absolute -right-20 -top-20 h-80 w-80 rounded-full bg-primary-800/20 blur-[100px]" />
               <div className="absolute -bottom-20 -left-20 h-80 w-80 rounded-full bg-secondary-800/15 blur-[100px]" />
