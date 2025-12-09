@@ -85,9 +85,6 @@ export const Navbar = memo(function Navbar() {
               <DropdownMenuItem asChild className="rounded-lg hover:bg-neutral-100/80 focus:bg-neutral-100/80 text-foreground hover:text-primary-600 cursor-pointer">
                 <Link to="/mission" className="w-full px-3 py-2">Mission</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem asChild className="rounded-lg hover:bg-neutral-100/80 focus:bg-neutral-100/80 text-foreground hover:text-primary-600 cursor-pointer">
-                <Link to="/blog" className="w-full px-3 py-2">Blog</Link>
-              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
           <Button variant="ghost" className="hover:text-primary-600" onClick={() => handleHashNavigation('#how-it-works')}>How It Works</Button>
@@ -118,6 +115,9 @@ export const Navbar = memo(function Navbar() {
             </Link>
           )}
 
+          <Link to="/blog">
+            <Button variant="ghost" className="hover:text-primary-600">Blog</Button>
+          </Link>
           <Link to="/faq">
             <Button variant="ghost" className="hover:text-primary-600">FAQ</Button>
           </Link>
@@ -157,9 +157,6 @@ export const Navbar = memo(function Navbar() {
                     <Link to="/mission">
                       <Button variant="ghost" className="justify-start h-10 text-base hover:text-primary-600 w-full">Mission</Button>
                     </Link>
-                    <Link to="/blog">
-                      <Button variant="ghost" className="justify-start h-10 text-base hover:text-primary-600 w-full">Blog</Button>
-                    </Link>
                   </div>
                 )}
               </div>
@@ -177,6 +174,9 @@ export const Navbar = memo(function Navbar() {
                 </Link>
               )}
              
+              <Link to="/blog">
+                <Button variant="ghost" className="justify-start h-12 text-lg hover:text-primary-600 w-full">Blog</Button>
+              </Link>
               <Link to="/faq">
                 <Button variant="ghost" className="justify-start h-12 text-lg hover:text-primary-600">FAQ</Button>
               </Link>

@@ -21,11 +21,11 @@ export const HowItWorks = memo(function HowItWorks() {
   ];
 
   return (
-    <section id="how-it-works" className="relative py-20 sm:py-32">
+    <section id="how-it-works" className="relative py-12 sm:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         
         {/* Centered Header */}
-        <div className="mb-16 text-center md:mb-24">
+        <div className="mb-10 text-center md:mb-16">
           <h2 className="mb-4 text-3xl font-medium tracking-tight text-neutral-200 sm:text-4xl lg:text-5xl">
             How It Works
           </h2>
@@ -61,7 +61,7 @@ export const HowItWorks = memo(function HowItWorks() {
         </div>
 
         {/* CTA Button */}
-        <div className="mt-16 flex justify-center sm:mt-24">
+        <div className="mt-10 flex justify-center sm:mt-16">
           <Button 
             size="lg" 
             className="h-12 px-8 text-base"

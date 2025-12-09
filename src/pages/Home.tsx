@@ -33,7 +33,7 @@ const YourDNA = lazy(() =>
 
 function Home() {
   return (
-    <main className="relative w-full min-h-screen overflow-hidden pb-16 sm:pb-24">
+    <main className="relative w-full min-h-screen overflow-hidden">
       {/* Fixed Full-Screen Background Overlay - Very Subtle Tint */}
       <div className="fixed inset-0 z-0 bg-gradient-to-br from-primary/2 via-secondary/2 to-accent/2 pointer-events-none" />
       

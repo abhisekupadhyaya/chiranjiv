@@ -23,11 +23,6 @@ export function Footer() {
     }
   }
 
-  const handlePlaceholderClick = (e: React.MouseEvent) => {
-    e.preventDefault()
-    // Placeholder action or console log if needed
-  }
-
   return (
     <footer className="bg-neutral-200 border-t border-white/10 py-12 sm:py-16">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
