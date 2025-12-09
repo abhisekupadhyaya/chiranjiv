@@ -91,8 +91,6 @@ export const Navbar = memo(function Navbar() {
             </DropdownMenuContent>
           </DropdownMenu>
           <Button variant="ghost" className="hover:text-primary-600" onClick={() => handleHashNavigation('#how-it-works')}>How It Works</Button>
-          <Button variant="ghost" className="hover:text-primary-600" onClick={() => handleHashNavigation('#why-chiranjiv')}>Why Us</Button>
-          
           {isAuthenticated ? (
              <DropdownMenu>
              <DropdownMenuTrigger asChild>
@@ -127,7 +125,9 @@ export const Navbar = memo(function Navbar() {
 
         <div className="hidden items-center gap-4 lg:flex">
           {!isAuthenticated && (
-             <Button onClick={() => handleHashNavigation('#waitlist')}>Join Waitlist</Button>
+             <Link to="/signup">
+               <Button>Join Waitlist</Button>
+             </Link>
           )}
         </div>
 
@@ -164,8 +164,6 @@ export const Navbar = memo(function Navbar() {
                 )}
               </div>
               <Button variant="ghost" className="justify-start h-12 text-lg hover:text-primary-600" onClick={() => handleHashNavigation('#how-it-works')}>How It Works</Button>
-              <Button variant="ghost" className="justify-start h-12 text-lg hover:text-primary-600" onClick={() => handleHashNavigation('#why-chiranjiv')}>Why Us</Button>
-              
               {isAuthenticated ? (
                 <>
                    <Link to="/profile">
@@ -186,7 +184,9 @@ export const Navbar = memo(function Navbar() {
               {!isAuthenticated && (
                 <>
                   <div className="my-4 border-t border-neutral-1000/60" />
-                  <Button className="w-full h-12 text-lg" onClick={() => handleHashNavigation('#waitlist')}>Join Waitlist</Button>
+                  <Link to="/signup">
+                    <Button className="w-full h-12 text-lg">Join Waitlist</Button>
+                  </Link>
                 </>
               )}
             </nav>

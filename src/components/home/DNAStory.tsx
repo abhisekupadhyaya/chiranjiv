@@ -49,11 +49,21 @@ export const DNAStory = memo(function DNAStory() {
       ],
       barColor: "bg-destructive",
       dotColor: "bg-destructive"
+    },
+    {
+      title: "Family Health Insights",
+      items: [
+        "Understand genetic patterns across your family",
+        "Identify shared inherited traits & risks",
+        "Plan proactive health for future generations"
+      ],
+      barColor: "bg-purple-500",
+      dotColor: "bg-purple-500"
     }
   ];
 
   return (
-    <section className="relative py-20 sm:py-32">
+    <section className="relative pt-10 sm:pt-16 pb-20 sm:pb-32">
       {/* Background Strip with Glassmorphism */}
       <div className="absolute inset-0 bg-neutral-200/5 backdrop-blur-sm opacity-50" />
       
@@ -81,7 +91,7 @@ export const DNAStory = memo(function DNAStory() {
               {/* Glass highlight moved below the color band */}
               <div className="absolute inset-x-0 top-2 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent opacity-50" />
               
-              <h3 className="mb-3 text-lg font-semibold leading-tight text-neutral-200 pt-2">
+              <h3 className="mb-3 text-lg font-semibold leading-tight text-neutral-200 pt-2 text-center">
                 {category.title}
               </h3>
               

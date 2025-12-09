@@ -19,7 +19,7 @@ export function Hero() {
   };
 
   return (
-    <section className="relative w-full py-12 md:py-24 lg:py-32 xl:py-48 overflow-hidden">
+    <section className="relative w-full pt-12 md:pt-24 lg:pt-32 xl:pt-48 pb-8 md:pb-12 lg:pb-16 overflow-hidden">
       {/* Background DNA Animation */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <DNAHelix />
@@ -75,13 +75,12 @@ export function Hero() {
             {/* Price/Offer Tag */}
             <div className="flex justify-center w-full">
               <AnimatedPill>
-                <span className="text-sm text-foreground">
-                  <span className="line-through decoration-neutral-400/50 dark:decoration-neutral-600">Worth ₹1,50,000</span>
-                  <span className="mx-2"></span>
-                  <span className="font-medium text-primary-600 dark:text-neutral-200">FREE for early users</span>
-                  <span className="mx-2 opacity-30">|</span>
-                </span>
-                <span className="text-xs font-medium text-neutral-600 dark:text-neutral-400">
+                <div className="flex flex-wrap items-center gap-x-2 text-sm text-foreground">
+                  <span className="line-through decoration-neutral-400/50 dark:decoration-neutral-600 whitespace-nowrap">Worth ₹1,50,000</span>
+                  <span className="font-medium text-primary-600 dark:text-neutral-200 whitespace-nowrap">FREE for early users</span>
+                </div>
+                <span className="text-foreground/30">|</span>
+                <span className="text-xs font-medium text-neutral-600 dark:text-neutral-400 whitespace-nowrap">
                    Only a few spots left
                 </span>
               </AnimatedPill>
@@ -89,7 +88,7 @@ export function Hero() {
           </div>
 
           {/* Right Column: Sign Up Form */}
-          <div className="flex items-center justify-center lg:justify-end w-full">
+          <div id="waitlist" className="flex items-center justify-center lg:justify-end w-full">
             <Card className="w-full max-w-md shadow-2xl border-neutral-200 dark:border-neutral-800 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md">
               <CardHeader className="space-y-1 pb-4 text-center items-center">
                 <CardTitle className="text-2xl font-bold">Join Early Access</CardTitle>

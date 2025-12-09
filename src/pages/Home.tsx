@@ -2,17 +2,18 @@ import { Suspense, lazy } from "react"
 import { Hero } from "@/components/home/Hero"
 
 // Lazy load components to improve initial page load
-const Insights = lazy(() => 
-  import("@/components/home/Insights").then(module => ({ default: module.Insights }))
+const DNAStory = lazy(() => 
+  import("@/components/home/DNAStory").then(module => ({ default: module.DNAStory }))
 )
 
 const GenomicStats = lazy(() => 
   import("@/components/home/GenomicStats").then(module => ({ default: module.GenomicStats }))
 )
 
-const DNAStory = lazy(() => 
-  import("@/components/home/DNAStory").then(module => ({ default: module.DNAStory }))
+const Insights = lazy(() => 
+  import("@/components/home/Insights").then(module => ({ default: module.Insights }))
 )
+
 
 const WhyFree = lazy(() => 
   import("@/components/home/WhyFree").then(module => ({ default: module.WhyFree }))
@@ -45,9 +46,9 @@ function Home() {
           <Hero />
         </div>
         <Suspense fallback={<div className="py-16 sm:py-24 text-center text-foreground">Loading...</div>}>
-          <Insights />
-          <GenomicStats />
           <DNAStory />
+          <GenomicStats />
+          <Insights />
           <WhyFree />
           <HowItWorks />
           <YourDNA />

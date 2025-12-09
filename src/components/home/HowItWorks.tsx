@@ -21,7 +21,7 @@ export const HowItWorks = memo(function HowItWorks() {
   ];
 
   return (
-    <section className="relative py-20 sm:py-32">
+    <section id="how-it-works" className="relative py-20 sm:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         
         {/* Centered Header */}
@@ -62,7 +62,11 @@ export const HowItWorks = memo(function HowItWorks() {
 
         {/* CTA Button */}
         <div className="mt-16 flex justify-center sm:mt-24">
-          <Button size="lg" className="h-12 px-8 text-base">
+          <Button 
+            size="lg" 
+            className="h-12 px-8 text-base"
+            onClick={() => document.getElementById('waitlist')?.scrollIntoView({ behavior: 'smooth' })}
+          >
             Join Early Access
           </Button>
         </div>
