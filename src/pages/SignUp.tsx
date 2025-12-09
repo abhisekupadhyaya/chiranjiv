@@ -14,19 +14,28 @@ const SignUp = () => {
   const navigate = useNavigate();
   const { register, error, setError } = useAuth();
   
+  // Read URL params once at component initialization
+  const initialStep = parseInt(searchParams.get('step') || '1');
+  const initialRef = searchParams.get('ref') || '';
+  const initialEmail = searchParams.get('email') || '';
+  const initialName = searchParams.get('name') || '';
+  const initialPhone = searchParams.get('phone') || '';
+  
   // Steps: 1 = Basic Info, 2 = Details & Password, 3 = Success
-  const [step, setStep] = useState<number>(1);
+  const [step, setStep] = useState<number>(
+    !isNaN(initialStep) && initialStep >= 1 && initialStep <= 3 ? initialStep : 1
+  );
   const [loading, setLoading] = useState(false);
   
   // Password visibility
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  // Form State
+  // Form State - initialize directly from URL params
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phoneLocal: '',
+    name: initialName,
+    email: initialEmail,
+    phoneLocal: initialPhone,
     countryCode: '+91',
     addressLine1: '',
     addressLine2: '',
@@ -39,7 +48,7 @@ const SignUp = () => {
     confirmPassword: '',
     privacyPolicy: false,
     termsOfService: false,
-    referralCode: '',
+    referralCode: initialRef,
     dataUsagePolicy: false,
     researchConsent: false,
     marketingConsent: false,
@@ -48,41 +57,18 @@ const SignUp = () => {
   // Validation State
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
-  // Initialize from URL params
+  // Sync key state to URL so it persists on refresh
   useEffect(() => {
-    const initialStep = searchParams.get('step');
-    if (initialStep) {
-      const stepNum = parseInt(initialStep);
-      if (!isNaN(stepNum) && stepNum >= 1 && stepNum <= 3) {
-        setStep(stepNum);
-      }
-    }
-
-    const initialEmail = searchParams.get('email');
-    const initialName = searchParams.get('name');
-    const initialRef = searchParams.get('ref');
-    const initialPhone = searchParams.get('phone');
-    
-    setFormData(prev => ({
-      ...prev,
-      email: initialEmail || prev.email,
-      name: initialName || prev.name,
-      phoneLocal: initialPhone || prev.phoneLocal,
-      referralCode: initialRef || prev.referralCode,
-    }));
-  }, []); // Run only once on mount to load initial params
-
-  // Sync step to URL
-  useEffect(() => {
-    const params = new URLSearchParams(searchParams);
+    const params = new URLSearchParams();
     params.set('step', step.toString());
-    // Also sync other fields so refresh keeps state? No, just minimal for now to support back nav potentially
-    // Or at least keep referral code
-    if (formData.referralCode) {
-      params.set('ref', formData.referralCode);
-    }
+    
+    if (formData.referralCode) params.set('ref', formData.referralCode);
+    if (formData.name) params.set('name', formData.name);
+    if (formData.email) params.set('email', formData.email);
+    if (formData.phoneLocal) params.set('phone', formData.phoneLocal);
+    
     setSearchParams(params, { replace: true });
-  }, [step, formData.referralCode]);
+  }, [step, formData.name, formData.email, formData.phoneLocal, formData.referralCode]);
 
 
   const validateStep2 = () => {

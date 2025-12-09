@@ -1,4 +1,4 @@
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { SignUpStep1Form, type Step1Data } from "@/components/auth/SignUpStep1Form";
 import { DNAHelix } from "@/components/home/DNAHelix";
@@ -6,8 +6,11 @@ import { AnimatedPill } from "@/components/ui/animated-pill";
 
 export function Hero() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const referralCode = searchParams.get('ref') || '';
 
   const handleFormSubmit = (data: Step1Data) => {
+    console.log('Form submitted with data:', data);
     const params = new URLSearchParams();
     params.set('step', '2');
     if (data.name) params.set('name', data.name);
@@ -15,6 +18,7 @@ export function Hero() {
     if (data.phoneLocal) params.set('phone', data.phoneLocal);
     if (data.referralCode) params.set('ref', data.referralCode);
     
+    console.log('URL params:', params.toString());
     navigate(`/signup?${params.toString()}`);
   };
 
@@ -98,6 +102,8 @@ export function Hero() {
               </CardHeader>
               <CardContent>
                 <SignUpStep1Form 
+                  key={referralCode}
+                  defaultValues={{ referralCode }}
                   onSubmit={handleFormSubmit} 
                   submitLabel="Get Started Free"
                 />
