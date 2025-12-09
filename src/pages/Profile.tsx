@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/auth';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Users, Trophy, Share2, TrendingUp, Copy, MessageCircle, Mail, Facebook, Linkedin } from 'lucide-react';
 import { getWaitlistRank, getWaitlistStats, type WaitlistRankResponse } from '@/services/api';
 import { cn } from '@/lib/utils';
