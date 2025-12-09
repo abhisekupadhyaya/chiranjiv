@@ -19,6 +19,10 @@ const WhyFree = lazy(() =>
   import("@/components/home/WhyFree").then(module => ({ default: module.WhyFree }))
 )
 
+const TrustFeatures = lazy(() => 
+  import("@/components/home/TrustFeatures").then(module => ({ default: module.TrustFeatures }))
+)
+
 const HowItWorks = lazy(() => 
   import("@/components/home/HowItWorks").then(module => ({ default: module.HowItWorks }))
 )
@@ -50,6 +54,7 @@ function Home() {
           <GenomicStats />
           <Insights />
           <WhyFree />
+          <TrustFeatures />
           <HowItWorks />
           <YourDNA />
         </Suspense>
