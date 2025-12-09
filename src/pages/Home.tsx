@@ -33,9 +33,9 @@ function Home() {
       <div className="fixed inset-0 z-0 bg-gradient-to-br from-primary/2 via-secondary/2 to-accent/2 pointer-events-none" />
       
       {/* Floating Blobs - Vibrant and Distinct */}
-      <div className="fixed top-1/4 left-[60%] w-[40rem] h-[40rem] bg-primary/10 rounded-full blur-[200px] animate-float pointer-events-none z-0" />
+      <div className="fixed top-1/4 left-[60%] w-[40rem] h-[40rem] bg-primary/20 rounded-full blur-[100px] animate-float pointer-events-none z-0" />
       <div 
-        className="fixed bottom-1/4 right-0 w-[50rem] h-[50rem] bg-primary/10 rounded-full blur-[200px] animate-float pointer-events-none z-0"
+        className="fixed bottom-1/4 right-0 w-[50rem] h-[50rem] bg-primary/20 rounded-full blur-[100px] animate-float pointer-events-none z-0"
         style={{ animationDelay: '2s' }} 
       />
 
