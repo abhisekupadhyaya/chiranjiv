@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import * as TagManager from 'react-gtm-module'
+import TagManager from 'react-gtm-module'
 import './index.css'
 import App from './App.tsx'
 import { AuthProvider } from '@/auth'
