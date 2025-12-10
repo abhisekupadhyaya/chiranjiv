@@ -451,7 +451,7 @@ const Profile = () => {
                   <input
                     type="text"
                     readOnly
-                    value={`https://chiranjiv.com/?ref=${rankData.referralCode}`}
+                    value={`https://health.chiranjiv.com/?ref=${rankData.referralCode}`}
                     className="flex-1 glass-input px-4 py-2.5 text-sm font-mono text-foreground rounded-lg border border-border/30 bg-background/50"
                     onClick={(e) => e.currentTarget.select()}
                   />
@@ -459,7 +459,7 @@ const Profile = () => {
                     variant="outline"
                     size="icon"
                     onClick={async () => {
-                      await navigator.clipboard.writeText(`https://chiranjiv.com/?ref=${rankData.referralCode}`);
+                      await navigator.clipboard.writeText(`https://health.chiranjiv.com/?ref=${rankData.referralCode}`);
                       setReferralLinkCopied(true);
                       setTimeout(() => setReferralLinkCopied(false), 2000);
                     }}
