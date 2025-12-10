@@ -31,18 +31,14 @@ export const GenomicStats = memo(function GenomicStats() {
               <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent" />
               
               <div className="relative z-10">
-                <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary-500 to-secondary-500 shadow-lg shadow-primary-500/20">
-                   {/* Abstract DNA/Data Icon constructed with CSS shapes */}
-                   <div className="flex gap-1">
-                      <div className="h-6 w-1.5 rounded-full bg-white/90" />
-                      <div className="h-4 w-1.5 rounded-full bg-white/70 self-end" />
-                      <div className="h-5 w-1.5 rounded-full bg-white/80 self-center" />
-                   </div>
+                <div className="space-y-6 text-lg font-medium leading-relaxed text-neutral-200 sm:text-xl">
+                  <p>
+                    India is the world's most genetically diverse nation and the most underrepresented in global genomic databases.
+                  </p>
+                  <p>
+                    Today, 86% of genomic research is based on European ancestry. That means health insights for most Indians are built on incomplete data. <span className="font-bold text-primary-400">Chiranjiv changes that.</span> We're building the largest Indian genomic reference database — and making it accessible to everyone.
+                  </p>
                 </div>
-                
-                <p className="text-xl font-medium leading-relaxed text-neutral-200 sm:text-2xl">
-                  "Chiranjiv analyzes <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-secondary-300 via-accent-400 to-primary-400">3 billion genetic data points</span> to reveal your true biology — and gives you clear, personalized steps to improve your everyday health."
-                </p>
               </div>
             </div>
           </div>
