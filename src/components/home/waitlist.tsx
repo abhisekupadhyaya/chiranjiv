@@ -331,6 +331,11 @@ const ShareButtonGrid = ({ referralUrl, showReferralLink = true }: ShareButtonGr
   
   // Create formatted message with proper line breaks for each platform
   const formattedMessage = messageParts.map(part => encodeURIComponent(part)).join('%0A%0A')
+  
+  // WhatsApp-specific message
+  const whatsappMessage = encodeURIComponent(
+    `Your genetics hold the key to a healthier future — for you and your family. Claim your FREE Genome Test and unlock actionable insights into aging, metabolism, nutrition, inflammation, fitness, and long-term health - 1.5 L package, free for early users. Offer expires soon.\n\n${referralUrl}`
+  )
 
   const handleCopy = async (text: string) => {
     await navigator.clipboard.writeText(text)
@@ -343,7 +348,7 @@ const ShareButtonGrid = ({ referralUrl, showReferralLink = true }: ShareButtonGr
       name: 'WhatsApp',
       icon: <MessageCircle className="w-4 h-4" />,
       color: 'from-green-500 to-green-600',
-      action: () => window.open(`https://wa.me/?text=${formattedMessage}`, '_blank')
+      action: () => window.open(`https://wa.me/?text=${whatsappMessage}`, '_blank')
     },
     {
       name: 'X',
