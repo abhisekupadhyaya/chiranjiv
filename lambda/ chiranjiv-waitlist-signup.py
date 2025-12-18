@@ -2,6 +2,7 @@ import json
 import time
 import random
 import string
+import secrets
 import re
 import boto3
 from boto3.dynamodb.conditions import Key
@@ -18,9 +19,19 @@ CORS_HEADERS = {
 }
 
 
-def _generate_referral_code(user_id: str) -> str:
-    random_part = "".join(random.choices(string.ascii_uppercase + string.digits, k=8))
+def _generate_referral_code(user_id: str, attempt: int = 0) -> str:
     user_part = re.sub(r"[^A-Z0-9]", "", (user_id[:8] if user_id else "").upper())
+
+    if attempt < 5:
+        # Standard: 8 random chars
+        random_part = "".join(secrets.choice(string.ascii_uppercase + string.digits) for _ in range(8))
+    elif attempt < 9:
+        # High Entropy: 12 random chars
+        random_part = "".join(secrets.choice(string.ascii_uppercase + string.digits) for _ in range(12))
+    else:
+        # Guaranteed Unique: Append timestamp (nanoseconds)
+        random_part = str(time.time_ns())
+
     return f"CHR-{user_part}-{random_part}"
 
 
@@ -102,7 +113,7 @@ def lambda_handler(event, context):
         attempts = 0
         newReferralCode = None
         while attempts < 10:
-            candidate = _generate_referral_code(user_id)
+            candidate = _generate_referral_code(user_id, attempts)
             check = table.query(
                 IndexName="referralCode-index",
                 KeyConditionExpression=Key("referralCode").eq(candidate),
