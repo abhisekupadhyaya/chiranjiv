@@ -318,23 +318,9 @@ interface ShareButtonGridProps {
 const ShareButtonGrid = ({ referralUrl, showReferralLink = true }: ShareButtonGridProps) => {
   const [copied, setCopied] = useState(false)
   
-  // Build message parts
-  const messageParts = [
-    'Claim your FREE Genome Test and unlock actionable insights for your fitness, lifestyle, and long-term health (worth ₹1.5L in value).',
-    'Participate with family and create your genetic map that empowers future generations to take charge of their health and wellness.',
-    "Here's how you can lead the movement:",
-    '1 Register for yourself, your family, and friends.',
-    '2 Share your unique referral link in your groups.',
-    '3 Invite more → Jump the queue faster for free testing and priority reports!',
-    referralUrl
-  ]
-  
-  // Create formatted message with proper line breaks for each platform
-  const formattedMessage = messageParts.map(part => encodeURIComponent(part)).join('%0A%0A')
-  
-  // WhatsApp-specific message
-  const whatsappMessage = encodeURIComponent(
-    `Your genetics hold the key to a healthier future — for you and your family. Claim your FREE Genome Test and unlock actionable insights into aging, metabolism, nutrition, inflammation, fitness, and long-term health - 1.5 L package, free for early users. Offer expires soon.\n\n${referralUrl}`
+  // Unified share message for all platforms
+  const shareMessage = encodeURIComponent(
+    `Your genetics hold the key to a healthier future — for you and your family. Claim your FREE Genome Test and unlock actionable insights into aging, metabolism, nutrition, inflammation, fitness, and long-term health - 1.5 L package, free for early users. Offer expires soon.\n\n${referralUrl}\n\nHere is an example of insights that you can expect\nhttps://health.chiranjiv.com/sample-report`
   )
 
   const handleCopy = async (text: string) => {
@@ -348,19 +334,19 @@ const ShareButtonGrid = ({ referralUrl, showReferralLink = true }: ShareButtonGr
       name: 'WhatsApp',
       icon: <MessageCircle className="w-4 h-4" />,
       color: 'from-green-500 to-green-600',
-      action: () => window.open(`https://wa.me/?text=${whatsappMessage}`, '_blank')
+      action: () => window.open(`https://wa.me/?text=${shareMessage}`, '_blank')
     },
     {
       name: 'X',
       icon: <Share2 className="w-4 h-4" />,
       color: 'from-gray-900 to-black',
-      action: () => window.open(`https://twitter.com/intent/tweet?text=${formattedMessage}`, '_blank')
+      action: () => window.open(`https://twitter.com/intent/tweet?text=${shareMessage}`, '_blank')
     },
     {
       name: 'Email',
       icon: <Mail className="w-4 h-4" />,
       color: 'from-gray-600 to-gray-700',
-      action: () => window.open(`mailto:?subject=Join%20Chiranjiv&body=${formattedMessage}`, '_blank')
+      action: () => window.open(`mailto:?subject=Join%20Chiranjiv&body=${shareMessage}`, '_blank')
     },
     {
       name: 'Facebook',
@@ -1036,7 +1022,7 @@ export function Waitlist() {
   }
 
   const copyReferralMessage = () => {
-    const message = `Join me on Project Chiranjiv - India's first free full-genome sequencing platform! Use my referral code ${referralCode} to skip the queue. https://chiranjiv.com`
+    const message = `Join me on Project Chiranjiv - India's first free full-genome sequencing platform! Use my referral code ${referralCode} to skip the queue. https://health.chiranjiv.com`
     navigator.clipboard.writeText(message)
   }
 
@@ -1134,7 +1120,7 @@ export function Waitlist() {
                     {(() => {
                       const metrics = calculateGamificationMetrics(rankData.rank, rankData.totalUsers, rankData.referralsCount)
                       // const achievements = getUnlockedAchievements(rankData.rank, rankData.referralsCount) // Unused for now
-                      const referralUrl = `https://chiranjiv.com/?ref=${rankData.referralCode}`
+                      const referralUrl = `https://health.chiranjiv.com/?ref=${rankData.referralCode}`
                       
                       return (
                         <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
