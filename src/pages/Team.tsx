@@ -12,7 +12,7 @@ const teamMembers: TeamMember[] = [
   {
     name: 'Ashish Chordia',
     role: 'Advisor',
-    bio: 'A serial entrepreneur, investor, and mentor with 25+ years of experience, Ashish has created several large enterprises around the world including a unicorn. An alum of IIT Bombay and Wharton, he is involved with multiple global ventures and is deeply passionate about changing how healthcare works.',
+    bio: 'Founder, board member at LG Ads; built global CTV company on track to $1B+ revenue & IPO. Now focused on global generational opportunities where AI and healthcare intersect.',
     imageSrc: '/team/ashish.jpeg',
     linkedin: 'https://www.linkedin.com/in/ashishchordia',
   },
