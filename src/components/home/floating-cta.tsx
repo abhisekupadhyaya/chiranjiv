@@ -117,7 +117,7 @@ export function FloatingCta({ show = true }: FloatingCtaProps) {
                 </div>
               </div>
               <div className="ml-auto sm:ml-0 text-sm sm:text-[10px] md:text-xs lg:text-sm text-red-500 font-light tracking-wide whitespace-nowrap">
-                Offer Ends Dec 31
+                Offer Ends Soon
               </div>
             </div>
           </div>
