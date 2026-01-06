@@ -7,6 +7,7 @@ import {
   getCurrentUser, 
   fetchUserAttributes, 
   confirmSignUp, 
+  resendSignUpCode,
   resetPassword, 
   confirmResetPassword,
 } from 'aws-amplify/auth';
@@ -39,7 +40,8 @@ interface AuthContextType {
   confirmRegister: (input: ConfirmSignUpInput) => Promise<any>;
   forgotPassword: (input: ResetPasswordInput) => Promise<ResetPasswordOutput>;
   confirmNewPassword: (input: ConfirmResetPasswordInput) => Promise<void>;
-  checkUser: () => Promise<void>;
+  resendVerificationCode: (username: string) => Promise<any>;
+  checkUser: () => Promise<any>;
   setError: (error: string | null) => void;
 }
 
@@ -63,10 +65,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       } catch (attrErr) {
         console.warn('Error fetching user attributes', attrErr);
       }
+      return null;
     } catch (err) {
       console.log('No authenticated user', err);
       setUser(null);
       setUserAttributes(null);
+      return err;
     } finally {
       setLoading(false);
     }
@@ -81,7 +85,26 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setError(null);
     try {
       const result = await signIn(input);
-      await checkUser();
+      
+      // Match reference implementation: throw if user is not confirmed
+      if (!result.isSignedIn && result.nextStep?.signInStep === 'CONFIRM_SIGN_UP') {
+         const error: any = new Error('User is not confirmed.');
+         error.name = 'UserNotConfirmedException';
+         error.code = 'UserNotConfirmedException';
+         throw error;
+      }
+
+      // Only check user details if fully signed in and not waiting for confirmation
+      if (result.isSignedIn && result.nextStep?.signInStep !== 'CONFIRM_SIGN_UP') {
+        const checkErr = await checkUser();
+        if (checkErr) {
+          throw checkErr;
+        }
+      } else {
+        // If additional steps are needed (like confirmation), stop loading but don't error
+        setLoading(false);
+      }
+      
       return result;
     } catch (err: any) {
       setError(err.message || 'Failed to sign in');
@@ -158,6 +181,20 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   };
 
+  const resendVerificationCode = async (username: string) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const result = await resendSignUpCode({ username });
+      setLoading(false);
+      return result;
+    } catch (err: any) {
+      setError(err.message || 'Failed to resend verification code');
+      setLoading(false);
+      throw err;
+    }
+  };
+
   const value = {
     user,
     userAttributes,
@@ -170,6 +207,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     confirmRegister,
     forgotPassword,
     confirmNewPassword,
+    resendVerificationCode,
     checkUser,
     setError
   };
