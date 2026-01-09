@@ -78,6 +78,22 @@ export function BlogPost({ title, subtitle, date, content, variant = 'default', 
                   </p>
                 )
               }
+              if (paragraph.startsWith('**Disclaimer:**')) {
+                return (
+                  <p key={pIndex} className="text-sm leading-relaxed italic text-muted-foreground/80 mt-6 pt-4 border-t border-border/30">
+                    {paragraph.split(/(\*\*.*?\*\*)/).map((part, partIndex) => {
+                      if (part.startsWith('**') && part.endsWith('**')) {
+                        return (
+                          <strong key={partIndex} className="font-semibold text-foreground/90 not-italic">
+                            {part.replace(/\*\*/g, '')}
+                          </strong>
+                        )
+                      }
+                      return part
+                    })}
+                  </p>
+                )
+              }
               return (
                 <p key={pIndex} className="text-base leading-relaxed">
                   {paragraph.split(/(\*\*.*?\*\*)/).map((part, partIndex) => {

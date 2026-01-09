@@ -4,6 +4,8 @@ import Home from './pages/Home'
 import Mission from './pages/Mission'
 import BlogIndex from './pages/BlogIndex'
 import BlogPost from './pages/BlogPost'
+import LHPostIndex from './pages/LHPostIndex'
+import LHPost from './pages/LHPost'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import TermsOfService from './pages/TermsOfService'
 import DataUsagePolicy from './pages/DataUsagePolicy'
@@ -20,6 +22,8 @@ function App() {
         <Route path="/mission" element={<Mission />} />
         <Route path="/blog" element={<BlogIndex />} />
         <Route path="/blog/:slug" element={<BlogPost />} />
+        <Route path="/learning-hub" element={<LHPostIndex />} />
+        <Route path="/learning-hub/:slug" element={<LHPost />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-of-service" element={<TermsOfService />} />
         <Route path="/data-usage-policy" element={<DataUsagePolicy />} />
