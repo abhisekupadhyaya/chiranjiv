@@ -85,6 +85,9 @@ export function Navigation() {
                   <DropdownMenuItem asChild>
                     <Link to="/blog" className="cursor-pointer dropdown-item-hover rounded-lg px-3 py-2 text-sm font-medium transition-all duration-150">Blog</Link>
                   </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/learning-hub" className="cursor-pointer dropdown-item-hover rounded-lg px-3 py-2 text-sm font-medium transition-all duration-150">Learning Hub</Link>
+                  </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
               <button onClick={() => handleHashNavigation('#how-it-works')} className="text-sm font-medium tracking-tight text-muted-foreground hover:text-foreground transition-all duration-200 nav-link-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-md px-2 py-1">How It Works</button>
@@ -147,6 +150,9 @@ export function Navigation() {
                           </Link>
                           <Link to="/blog" className="px-3 py-2 text-sm font-medium tracking-tight rounded-lg hover:bg-muted/50 nav-link-hover transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background" aria-current={location.pathname.startsWith('/blog') ? 'page' : undefined} onClick={() => setOpen(false)}>
                             Blog
+                          </Link>
+                          <Link to="/learning-hub" className="px-3 py-2 text-sm font-medium tracking-tight rounded-lg hover:bg-muted/50 nav-link-hover transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background" aria-current={location.pathname.startsWith('/learning-hub') ? 'page' : undefined} onClick={() => setOpen(false)}>
+                            Learning Hub
                           </Link>
                         </div>
                       )}
