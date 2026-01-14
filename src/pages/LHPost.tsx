@@ -36,12 +36,12 @@ That's the value of small, personalized insights. They help you make choices tha
         />
         <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
           <div className="mb-8">
-            <p className="text-[11px] sm:text-xs uppercase tracking-[0.2em] text-primary/70 mb-4">Learning Hub</p>
+            <p className="text-[11px] sm:text-xs uppercase tracking-[0.2em] text-primary/70 mb-4">Knowledge Hub</p>
             <Link
-              to="/learning-hub"
+              to="/knowledge-hub"
               className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors hover:underline"
             >
-              ← Back to Learning Hub
+              ← Back to Knowledge Hub
             </Link>
           </div>
           <div className="max-w-4xl mx-auto">
@@ -84,12 +84,12 @@ That's the value of DNA-based insight — helping you work with your biology.
         />
         <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
           <div className="mb-8">
-            <p className="text-[11px] sm:text-xs uppercase tracking-[0.2em] text-primary/70 mb-4">Learning Hub</p>
+            <p className="text-[11px] sm:text-xs uppercase tracking-[0.2em] text-primary/70 mb-4">Knowledge Hub</p>
             <Link
-              to="/learning-hub"
+              to="/knowledge-hub"
               className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors hover:underline"
             >
-              ← Back to Learning Hub
+              ← Back to Knowledge Hub
             </Link>
           </div>
           <div className="max-w-4xl mx-auto">
@@ -128,12 +128,12 @@ Genetics didn't tell Chaitanya what will happen. But it helped him decide what t
         />
         <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
           <div className="mb-8">
-            <p className="text-[11px] sm:text-xs uppercase tracking-[0.2em] text-primary/70 mb-4">Learning Hub</p>
+            <p className="text-[11px] sm:text-xs uppercase tracking-[0.2em] text-primary/70 mb-4">Knowledge Hub</p>
             <Link
-              to="/learning-hub"
+              to="/knowledge-hub"
               className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors hover:underline"
             >
-              ← Back to Learning Hub
+              ← Back to Knowledge Hub
             </Link>
           </div>
           <div className="max-w-4xl mx-auto">
@@ -176,12 +176,12 @@ That's what happens when training aligns with biology.
         />
         <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
           <div className="mb-8">
-            <p className="text-[11px] sm:text-xs uppercase tracking-[0.2em] text-primary/70 mb-4">Learning Hub</p>
+            <p className="text-[11px] sm:text-xs uppercase tracking-[0.2em] text-primary/70 mb-4">Knowledge Hub</p>
             <Link
-              to="/learning-hub"
+              to="/knowledge-hub"
               className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors hover:underline"
             >
-              ← Back to Learning Hub
+              ← Back to Knowledge Hub
             </Link>
           </div>
           <div className="max-w-4xl mx-auto">
@@ -224,12 +224,12 @@ Genomic insight didn't predict a problem - it offered a head start on prevention
         />
         <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
           <div className="mb-8">
-            <p className="text-[11px] sm:text-xs uppercase tracking-[0.2em] text-primary/70 mb-4">Learning Hub</p>
+            <p className="text-[11px] sm:text-xs uppercase tracking-[0.2em] text-primary/70 mb-4">Knowledge Hub</p>
             <Link
-              to="/learning-hub"
+              to="/knowledge-hub"
               className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors hover:underline"
             >
-              ← Back to Learning Hub
+              ← Back to Knowledge Hub
             </Link>
           </div>
           <div className="max-w-4xl mx-auto">
@@ -274,12 +274,12 @@ This is how genomic insight adds clarity—not instructions.
         />
         <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
           <div className="mb-8">
-            <p className="text-[11px] sm:text-xs uppercase tracking-[0.2em] text-primary/70 mb-4">Learning Hub</p>
+            <p className="text-[11px] sm:text-xs uppercase tracking-[0.2em] text-primary/70 mb-4">Knowledge Hub</p>
             <Link
-              to="/learning-hub"
+              to="/knowledge-hub"
               className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors hover:underline"
             >
-              ← Back to Learning Hub
+              ← Back to Knowledge Hub
             </Link>
           </div>
           <div className="max-w-4xl mx-auto">
@@ -324,12 +324,12 @@ This is how genomic insight adds clarity, not instructions.
         />
         <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
           <div className="mb-8">
-            <p className="text-[11px] sm:text-xs uppercase tracking-[0.2em] text-primary/70 mb-4">Learning Hub</p>
+            <p className="text-[11px] sm:text-xs uppercase tracking-[0.2em] text-primary/70 mb-4">Knowledge Hub</p>
             <Link
-              to="/learning-hub"
+              to="/knowledge-hub"
               className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors hover:underline"
             >
-              ← Back to Learning Hub
+              ← Back to Knowledge Hub
             </Link>
           </div>
           <div className="max-w-4xl mx-auto">
@@ -376,12 +376,12 @@ Genomic insight offered perspective, and helped Ravi listen better to his body.
         />
         <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
           <div className="mb-8">
-            <p className="text-[11px] sm:text-xs uppercase tracking-[0.2em] text-primary/70 mb-4">Learning Hub</p>
+            <p className="text-[11px] sm:text-xs uppercase tracking-[0.2em] text-primary/70 mb-4">Knowledge Hub</p>
             <Link
-              to="/learning-hub"
+              to="/knowledge-hub"
               className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors hover:underline"
             >
-              ← Back to Learning Hub
+              ← Back to Knowledge Hub
             </Link>
           </div>
           <div className="max-w-4xl mx-auto">
@@ -406,12 +406,12 @@ Genomic insight offered perspective, and helped Ravi listen better to his body.
       />
       <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
         <div className="mb-8">
-          <p className="text-[11px] sm:text-xs uppercase tracking-[0.2em] text-primary/70 mb-4">Learning Hub</p>
+          <p className="text-[11px] sm:text-xs uppercase tracking-[0.2em] text-primary/70 mb-4">Knowledge Hub</p>
           <Link
-            to="/learning-hub"
+            to="/knowledge-hub"
             className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors hover:underline"
           >
-            ← Back to Learning Hub
+            ← Back to Knowledge Hub
           </Link>
         </div>
         <div className="max-w-4xl mx-auto">

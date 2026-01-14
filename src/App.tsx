@@ -22,8 +22,8 @@ function App() {
         <Route path="/mission" element={<Mission />} />
         <Route path="/blog" element={<BlogIndex />} />
         <Route path="/blog/:slug" element={<BlogPost />} />
-        <Route path="/learning-hub" element={<LHPostIndex />} />
-        <Route path="/learning-hub/:slug" element={<LHPost />} />
+        <Route path="/knowledge-hub" element={<LHPostIndex />} />
+        <Route path="/knowledge-hub/:slug" element={<LHPost />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-of-service" element={<TermsOfService />} />
         <Route path="/data-usage-policy" element={<DataUsagePolicy />} />
