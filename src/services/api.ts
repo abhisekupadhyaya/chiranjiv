@@ -9,6 +9,7 @@ export interface WaitlistSignupRequest {
   name: string
   email: string
   phone: string
+  company?: string
   address: string
   age: number
   consentPrivacyPolicy?: string | null

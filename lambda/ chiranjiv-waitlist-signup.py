@@ -63,6 +63,7 @@ def lambda_handler(event, context):
         name = body.get("name")
         email = body.get("email")
         phone = body.get("phone")
+        company = body.get("company")
         address = body.get("address")
         age = body.get("age")
         consentPrivacyPolicy = body.get("consentPrivacyPolicy")
@@ -128,6 +129,7 @@ def lambda_handler(event, context):
             "name": name,
             "email": email,
             "phone": phone,
+            "company": company,
             "address": address,
             "age": age,
             "consentPrivacyPolicy": consentPrivacyPolicy,

@@ -753,6 +753,7 @@ export function Waitlist() {
     email: '',
     countryCode: '+91',
     phoneLocal: '',
+    company: '',
     addressLine1: '',
     addressLine2: '',
     city: '',
@@ -970,6 +971,7 @@ export function Waitlist() {
         name: formData.name.trim(),
         email: formData.email.trim(),
         phone: combinedPhone,
+        company: formData.company?.trim(),
         address: fullAddress,
         age: parseInt(formData.age),
         consentPrivacyPolicy: formData.privacyPolicy ? 'v0.1' : null,
@@ -1041,6 +1043,7 @@ export function Waitlist() {
       email: '',
       countryCode: '+91',
       phoneLocal: '',
+      company: '',
       addressLine1: '',
       addressLine2: '',
       city: '',
@@ -1259,6 +1262,10 @@ export function Waitlist() {
                           />
                         </div>
                         {errors.phone && <p className="text-xs text-red-500 mt-1">{errors.phone}</p>}
+                      </div>
+                      <div>
+                        <label htmlFor="company" className="block text-sm font-medium text-foreground mb-2 tracking-tight">Company (Optional)</label>
+                        <Input id="company" name="company" type="text" value={formData.company} onChange={handleChange} placeholder="Company / Organization" className="w-full glass-input" />
                       </div>
                       <div>
                         <label htmlFor="enteredReferralCode" className="block text-sm font-medium text-foreground mb-2 tracking-tight">Referral Code (Optional)</label>
