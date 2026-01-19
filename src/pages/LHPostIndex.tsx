@@ -87,7 +87,7 @@ export default function LHPostIndex() {
         {/* Hero Section */}
         <div className="text-center mb-10 sm:mb-14">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extralight text-foreground mb-4 text-balance tracking-tight leading-[1.1]">
-            Learning Hub
+            Knowledge Hub
           </h1>
           <div className="max-w-3xl mx-auto space-y-4">
             <p className="text-lg sm:text-xl text-muted-foreground text-pretty leading-relaxed font-light">
@@ -102,7 +102,7 @@ export default function LHPostIndex() {
         {/* Posts Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-7xl mx-auto">
           {posts.map((post) => (
-            <Link key={post.slug} to={`/learning-hub/${post.slug}`} className="group block">
+            <Link key={post.slug} to={`/knowledge-hub/${post.slug}`} className="group block">
               <article className="glass-backdrop backdrop-blur-sm border border-border/50 rounded-3xl p-8 sm:p-10 shadow-lg hover:shadow-2xl hover:scale-[1.01] hover:border-primary/50 transition-all duration-300 h-full">
                 <div className="flex items-center gap-3 text-xs sm:text-sm text-muted-foreground mb-4 font-light">
                   <time>{post.date}</time>
