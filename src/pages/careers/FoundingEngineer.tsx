@@ -32,7 +32,7 @@ export default function FoundingEngineer() {
             Founding Engineer
           </h1>
           <p className="text-base sm:text-lg text-muted-foreground text-pretty leading-relaxed font-light max-w-2xl mx-auto">
-            Full Stack with AI • Bangalore / Remote
+            Full Stack with AI
           </p>
         </div>
 

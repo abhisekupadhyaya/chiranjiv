@@ -32,7 +32,7 @@ export default function SoftwareEngineeringIntern() {
             Software Engineering Intern
           </h1>
           <p className="text-base sm:text-lg text-muted-foreground text-pretty leading-relaxed font-light max-w-2xl mx-auto">
-            Full Stack / AI • Bangalore / Remote
+            Full Stack / AI
           </p>
         </div>
 
