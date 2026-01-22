@@ -12,6 +12,11 @@ import DataUsagePolicy from './pages/DataUsagePolicy'
 import Team from './pages/Team'
 import FAQ from './pages/FAQ'
 import SampleReport from './pages/SampleReport'
+import Careers from './pages/Careers'
+import FoundingEngineer from './pages/careers/FoundingEngineer'
+import SoftwareEngineeringIntern from './pages/careers/SoftwareEngineeringIntern'
+import ChiefScientificOfficer from './pages/careers/ChiefScientificOfficer'
+import ChiefTechnologyOfficer from './pages/careers/ChiefTechnologyOfficer'
 import { Layout } from '@/components/layout'
 
 function App() {
@@ -29,6 +34,11 @@ function App() {
         <Route path="/data-usage-policy" element={<DataUsagePolicy />} />
         <Route path="/team" element={<Team />} />
         <Route path="/faq" element={<FAQ />} />
+        <Route path="/careers" element={<Careers />} />
+        <Route path="/careers/founding-engineer" element={<FoundingEngineer />} />
+        <Route path="/careers/software-engineering-intern" element={<SoftwareEngineeringIntern />} />
+        <Route path="/careers/chief-scientific-officer" element={<ChiefScientificOfficer />} />
+        <Route path="/careers/chief-technology-officer" element={<ChiefTechnologyOfficer />} />
       </Route>
       <Route path="/sample-report" element={<SampleReport />} />
     </Routes>
