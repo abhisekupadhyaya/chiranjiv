@@ -62,10 +62,10 @@ export default function BlogIndex() {
         </div>
 
         {/* Posts List */}
-        <div className="max-w-4xl mx-auto space-y-6">
+        <div className="flex flex-wrap gap-6 max-w-7xl mx-auto">
           {posts.map((post) => (
-            <Link key={post.slug} to={`/blog/${post.slug}`} className="group block">
-              <article className="relative overflow-hidden rounded-2xl border border-white/40 bg-white/40 p-8 sm:p-10 shadow-lg shadow-black/5 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-white/60 hover:bg-white/60 hover:shadow-xl hover:shadow-black/10">
+            <Link key={post.slug} to={`/blog/${post.slug}`} className="group block w-full md:w-[calc(50%-0.75rem)]">
+              <article className="relative overflow-hidden rounded-2xl border border-white/40 bg-white/40 p-8 sm:p-10 shadow-lg shadow-black/5 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-white/60 hover:bg-white/60 hover:shadow-xl hover:shadow-black/10 h-full">
                 {/* Glass highlight effect on top edge */}
                 <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent opacity-50" />
 

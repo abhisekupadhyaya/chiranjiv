@@ -125,6 +125,12 @@ export const Navbar = memo(function Navbar() {
           <Link to="/blog">
             <Button variant="ghost" className="hover:text-primary-600">Blog</Button>
           </Link>
+          <Link to="/knowledge-hub">
+            <Button variant="ghost" className="hover:text-primary-600">Knowledge Hub</Button>
+          </Link>
+          <Link to="/careers">
+            <Button variant="ghost" className="hover:text-primary-600">Careers</Button>
+          </Link>
           <Link to="/faq">
             <Button variant="ghost" className="hover:text-primary-600">FAQ</Button>
           </Link>
@@ -183,6 +189,12 @@ export const Navbar = memo(function Navbar() {
              
               <Link to="/blog" onClick={handleMobileNavClick}>
                 <Button variant="ghost" className="justify-start h-12 text-lg hover:text-primary-600 w-full">Blog</Button>
+              </Link>
+              <Link to="/knowledge-hub" onClick={handleMobileNavClick}>
+                <Button variant="ghost" className="justify-start h-12 text-lg hover:text-primary-600 w-full">Knowledge Hub</Button>
+              </Link>
+              <Link to="/careers" onClick={handleMobileNavClick}>
+                <Button variant="ghost" className="justify-start h-12 text-lg hover:text-primary-600 w-full">Careers</Button>
               </Link>
               <Link to="/faq" onClick={handleMobileNavClick}>
                 <Button variant="ghost" className="justify-start h-12 text-lg hover:text-primary-600">FAQ</Button>

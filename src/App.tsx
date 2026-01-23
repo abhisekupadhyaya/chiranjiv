@@ -19,6 +19,13 @@ const SignUp = lazy(() => import("@/pages/SignUp"))
 const ForgotPassword = lazy(() => import("@/pages/ForgotPassword"))
 const Profile = lazy(() => import("@/pages/Profile"))
 const SampleReport = lazy(() => import("@/pages/SampleReport"))
+const KnowledgeHub = lazy(() => import("@/pages/KnowledgeHub"))
+const KnowledgeHubPost = lazy(() => import("@/pages/KnowledgeHubPost"))
+const Careers = lazy(() => import("@/pages/Careers"))
+const FoundingEngineer = lazy(() => import("@/pages/careers/FoundingEngineer"))
+const SoftwareEngineeringIntern = lazy(() => import("@/pages/careers/SoftwareEngineeringIntern"))
+const ChiefScientificOfficer = lazy(() => import("@/pages/careers/ChiefScientificOfficer"))
+const ChiefTechnologyOfficer = lazy(() => import("@/pages/careers/ChiefTechnologyOfficer"))
 
 function App() {
   return (
@@ -48,6 +55,13 @@ function App() {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/sample-report" element={<SampleReport />} />
+            <Route path="/knowledge-hub" element={<KnowledgeHub />} />
+            <Route path="/knowledge-hub/:slug" element={<KnowledgeHubPost />} />
+            <Route path="/careers" element={<Careers />} />
+            <Route path="/careers/founding-engineer" element={<FoundingEngineer />} />
+            <Route path="/careers/software-engineering-intern" element={<SoftwareEngineeringIntern />} />
+            <Route path="/careers/chief-scientific-officer" element={<ChiefScientificOfficer />} />
+            <Route path="/careers/chief-technology-officer" element={<ChiefTechnologyOfficer />} />
             <Route 
               path="/profile" 
               element={

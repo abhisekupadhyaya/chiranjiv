@@ -76,6 +76,7 @@ def lambda_handler(event, context):
         phone = body.get("phone")
         address = body.get("address")
         age = body.get("age")
+        company = body.get("company")
         consentPrivacyPolicy = body.get("consentPrivacyPolicy")
         consentTermsOfService = body.get("consentTermsOfService")
         consentDataUsagePolicy = body.get("consentDataUsagePolicy")
@@ -141,6 +142,7 @@ def lambda_handler(event, context):
             "phone": phone,
             "address": address,
             "age": age,
+            "company": company,
             "consentPrivacyPolicy": consentPrivacyPolicy,
             "consentTermsOfService": consentTermsOfService,
             "consentDataUsagePolicy": consentDataUsagePolicy,
@@ -166,7 +168,7 @@ def lambda_handler(event, context):
 
             table.update_item(
                 Key=update_key,
-                ConditionExpression="attribute_not_exists(referredUserIds) OR NOT contains(referredUserIds, :uid)",
+                ConditionExpression="attribute_not_exists(referredUserIds) OR (attribute_exists(referredUserIds) AND NOT contains(referredUserIds, :uid))",
                 UpdateExpression=(
                     "SET referralsCount = if_not_exists(referralsCount, :zero) + :one, "
                     "referredUserIds = list_append(if_not_exists(referredUserIds, :empty), :uid_list)"
