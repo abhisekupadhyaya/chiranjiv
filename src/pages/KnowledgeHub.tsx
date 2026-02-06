@@ -67,6 +67,17 @@ export default function KnowledgeHub() {
       readTime: '2 min read',
     },
   ]
+
+  const featuredArticle = {
+    title: "India's Moment in Genomics: How Chiranjiv Is Enabling Precision Medicine",
+    excerpt: "How genetic research's European bias affects Indian healthcare—and why Chiranjiv is building India-first precision medicine with representative genetic data.",
+    date: 'Jan 15, 2026',
+    readTime: '4 min read',
+    platform: 'Medium',
+    url: 'https://medium.com/@chiranjivhealth/indias-moment-in-genomics-how-chiranjiv-is-enabling-precision-medicine-ce5df573a33a',
+    tags: ['Genomics', 'Precision Medicine', 'Indian Genetics']
+  }
+
   return (
     <main className="relative w-full min-h-screen overflow-hidden">
       {/* Background gradient */}
@@ -118,6 +129,59 @@ export default function KnowledgeHub() {
                 </article>
               </Link>
             ))}
+          </div>
+
+          {/* Featured Article Section */}
+          <div className="mt-16 sm:mt-20 max-w-7xl mx-auto">
+            <div className="mb-6">
+              <h2 className="text-2xl sm:text-3xl font-medium tracking-tight text-neutral-200">
+                Featured Article
+              </h2>
+              <p className="text-base text-neutral-600 mt-2">
+                Deep dives into genomics and precision medicine
+              </p>
+            </div>
+            
+            <a
+              href={featuredArticle.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group block"
+            >
+              <article className="relative overflow-hidden rounded-2xl border border-primary-600/30 bg-gradient-to-br from-primary-600/5 to-accent-600/5 p-8 sm:p-10 shadow-lg shadow-black/5 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-primary-600/50 hover:shadow-xl hover:shadow-primary-600/10">
+                {/* Content */}
+                <div className="flex items-center gap-3 text-xs sm:text-sm text-neutral-500 mb-4 font-light">
+                  <time>{featuredArticle.date}</time>
+                  <span>•</span>
+                  <span>{featuredArticle.readTime}</span>
+                </div>
+                
+                <h3 className="text-2xl sm:text-3xl md:text-4xl font-medium text-neutral-200 mb-4 group-hover:text-primary-600 transition-colors text-balance leading-tight">
+                  {featuredArticle.title}
+                </h3>
+                
+                <p className="text-base sm:text-lg text-neutral-600 mb-6 leading-relaxed font-light">
+                  {featuredArticle.excerpt}
+                </p>
+                
+                {/* Tags */}
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {featuredArticle.tags.map((tag, idx) => (
+                    <span key={idx} className="px-3 py-1 rounded-full bg-white/20 text-neutral-600 text-xs border border-white/30">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                
+                {/* CTA */}
+                <div className="flex items-center gap-2 text-sm font-medium text-primary-600">
+                  Read full article
+                  <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </div>
+              </article>
+            </a>
           </div>
         </div>
       </section>

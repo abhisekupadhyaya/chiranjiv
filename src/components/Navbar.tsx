@@ -10,6 +10,7 @@ import { useAuth } from "@/auth"
 export const Navbar = memo(function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [aboutUsOpen, setAboutUsOpen] = useState(false)
+  const [mediaInsightsOpen, setMediaInsightsOpen] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const location = useLocation()
   const navigate = useNavigate()
@@ -122,12 +123,28 @@ export const Navbar = memo(function Navbar() {
             </Link>
           )}
 
-          <Link to="/blog">
-            <Button variant="ghost" className="hover:text-primary-600">Blog</Button>
-          </Link>
-          <Link to="/knowledge-hub">
-            <Button variant="ghost" className="hover:text-primary-600">Knowledge Hub</Button>
-          </Link>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="hover:text-primary-600 flex items-center gap-1">
+                Media & Insights
+                <ChevronDown className="w-4 h-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent 
+              align="start" 
+              className="min-w-[160px] rounded-xl border border-neutral-1000/60 bg-background/80 backdrop-blur-md shadow-sm p-1.5"
+            >
+              <DropdownMenuItem asChild className="rounded-lg hover:bg-neutral-100/80 focus:bg-neutral-100/80 text-foreground hover:text-primary-600 cursor-pointer">
+                <Link to="/blog" className="w-full px-3 py-2">Blog</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild className="rounded-lg hover:bg-neutral-100/80 focus:bg-neutral-100/80 text-foreground hover:text-primary-600 cursor-pointer">
+                <Link to="/knowledge-hub" className="w-full px-3 py-2">Knowledge Hub</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild className="rounded-lg hover:bg-neutral-100/80 focus:bg-neutral-100/80 text-foreground hover:text-primary-600 cursor-pointer">
+                <Link to="/media-mentions" className="w-full px-3 py-2">Media Mentions</Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
           <Link to="/careers">
             <Button variant="ghost" className="hover:text-primary-600">Careers</Button>
           </Link>
@@ -187,12 +204,29 @@ export const Navbar = memo(function Navbar() {
                 </Link>
               )}
              
-              <Link to="/blog" onClick={handleMobileNavClick}>
-                <Button variant="ghost" className="justify-start h-12 text-lg hover:text-primary-600 w-full">Blog</Button>
-              </Link>
-              <Link to="/knowledge-hub" onClick={handleMobileNavClick}>
-                <Button variant="ghost" className="justify-start h-12 text-lg hover:text-primary-600 w-full">Knowledge Hub</Button>
-              </Link>
+              <div>
+                <Button 
+                  variant="ghost" 
+                  className="justify-start h-12 text-lg hover:text-primary-600 w-full flex items-center justify-between"
+                  onClick={() => setMediaInsightsOpen(!mediaInsightsOpen)}
+                >
+                  Media & Insights
+                  <ChevronDown className={cn("w-4 h-4 transition-transform", mediaInsightsOpen && "rotate-180")} />
+                </Button>
+                {mediaInsightsOpen && (
+                  <div className="ml-4 mt-2 flex flex-col gap-2">
+                    <Link to="/blog" onClick={handleMobileNavClick}>
+                      <Button variant="ghost" className="justify-start h-10 text-base hover:text-primary-600 w-full">Blog</Button>
+                    </Link>
+                    <Link to="/knowledge-hub" onClick={handleMobileNavClick}>
+                      <Button variant="ghost" className="justify-start h-10 text-base hover:text-primary-600 w-full">Knowledge Hub</Button>
+                    </Link>
+                    <Link to="/media-mentions" onClick={handleMobileNavClick}>
+                      <Button variant="ghost" className="justify-start h-10 text-base hover:text-primary-600 w-full">Media Mentions</Button>
+                    </Link>
+                  </div>
+                )}
+              </div>
               <Link to="/careers" onClick={handleMobileNavClick}>
                 <Button variant="ghost" className="justify-start h-12 text-lg hover:text-primary-600 w-full">Careers</Button>
               </Link>
