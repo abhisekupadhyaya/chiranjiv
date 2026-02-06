@@ -43,7 +43,7 @@ export default function MediaMentions() {
             </h1>
             <div className="max-w-3xl mx-auto">
               <p className="text-lg sm:text-xl text-neutral-600 text-pretty leading-relaxed font-light">
-                Chiranjiv in the news and community. Watch our workshops, interviews, and coverage as we work to make genomic health accessible to all Indians.
+                Stay updated with our workshops, interviews, and efforts to make genomic health accessible to all Indians.
               </p>
             </div>
           </div>
