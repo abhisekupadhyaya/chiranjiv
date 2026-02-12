@@ -6,13 +6,17 @@ ses = boto3.client("ses")
 SENDER = "no-reply@chiranjiv.com"   # must be verified in SES
 SUBJECT = "Welcome to Chiranjiv"
 
+SIGNIN_URL = "https://www.chiranjiv.com/signin"
+
 PLAIN_TEXT_BODY = """Hi {name},
 
 Thank you for registering with us at Chiranjiv!
 
 We're excited to welcome you on your journey toward fitness, longevity, and wellness—powered by genomics. Understanding your genetic makeup unlocks personalized solutions for optimal health.
 
-Share your personal referral link with friends, family, or fitness groups. The more people you invite, the faster you move up the queue! Spread the word to jump the queue for testing and reports on a priority basis. You can keep track of your rank and referrals by logging in.
+Share your personal referral link with friends, family, or fitness groups. The more people you invite, the faster you move up the queue! Spread the word to jump the queue for testing and reports on a priority basis.
+
+You can keep a track of your position in the queue and referrals here {signin_url}
 
 Our testing begins in Q1, starting with our top-ranking members. Once your name is shortlisted, you’ll receive timely updates and clear guidance as you move through each step.
 """
@@ -25,7 +29,11 @@ HTML_BODY = """<html>
 
     <p>We're excited to welcome you on your journey toward fitness, longevity, and wellness—powered by genomics. Understanding your genetic makeup unlocks personalized solutions for optimal health.</p>
 
-    <p>Share your personal referral link with friends, family, or fitness groups. The more people you invite, the faster you move up the queue! Spread the word to jump the queue for testing and reports on a priority basis. You can keep track of your rank and referrals by logging in.</p>
+    <p>Share your personal referral link with friends, family, or fitness groups. The more people you invite, the faster you move up the queue! Spread the word to jump the queue for testing and reports on a priority basis.</p>
+
+    <p>You can keep a track of your position in the queue and referrals here
+      <a href="{signin_url}">{signin_url}</a>
+    </p>
 
     <p>Our testing begins in Q1, starting with our top-ranking members. Once your name is shortlisted, you’ll receive timely updates and clear guidance as you move through each step.</p>
   </body>
@@ -64,8 +72,8 @@ def lambda_handler(event, context):
             Message={
                 "Subject": {"Data": SUBJECT},
                 "Body": {
-                    "Text": {"Data": PLAIN_TEXT_BODY.format(name=name)},
-                    "Html": {"Data": HTML_BODY.format(name=name)},
+                    "Text": {"Data": PLAIN_TEXT_BODY.format(name=name, signin_url=SIGNIN_URL)},
+                    "Html": {"Data": HTML_BODY.format(name=name, signin_url=SIGNIN_URL)},
                 },
             },
         )
