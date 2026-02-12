@@ -1,7 +1,10 @@
 import json
 import boto3
+from boto3.dynamodb.conditions import Key
 
 ses = boto3.client("ses")
+dynamodb = boto3.resource("dynamodb")
+table = dynamodb.Table("chiranjivSignup")
 
 SENDER = "no-reply@chiranjiv.com"   # must be verified in SES
 SUBJECT = "Welcome to Chiranjiv"
@@ -81,6 +84,78 @@ def lambda_handler(event, context):
     except Exception as e:
         # Log the error but don't break the Cognito flow
         print(f"Error sending SES email: {e}")
+
+    # Update DynamoDB to mark email as verified (chiranjivSignup.id is the Cognito sub from result.userId on signup)
+    sub = user_attrs.get("sub") or event.get("userName")
+    if sub:
+        try:
+            # Query the user by id (partition key) to get the full item
+            user_response = table.query(
+                KeyConditionExpression=Key("id").eq(sub),
+                Limit=1
+            )
+            items = user_response.get("Items", [])
+            user_item = items[0] if items else None
+            
+            if not user_item:
+                print(f"User {sub} not found in chiranjivSignup; skipping DynamoDB update")
+            else:
+                # Build the proper key for user update
+                user_key = {"id": sub}
+                if user_item.get("createdAt"):
+                    user_key["createdAt"] = user_item["createdAt"]
+                
+                # Update emailVerified
+                table.update_item(
+                    Key=user_key,
+                    UpdateExpression="SET emailVerified = :verified",
+                    ExpressionAttributeValues={":verified": True}
+                )
+                print(f"Updated emailVerified for user {sub}")
+                
+                # After updating emailVerified, update the referrer's counts if applicable
+                referrer_id = user_item.get("referredBy")
+                
+                if referrer_id and referrer_id != sub:
+                    try:
+                        # Query referrer by id (partition key) to get their full item
+                        referrer_response = table.query(
+                            KeyConditionExpression=Key("id").eq(referrer_id),
+                            Limit=1
+                        )
+                        items = referrer_response.get("Items", [])
+                        referrer_item = items[0] if items else None
+                        
+                        if referrer_item:
+                            # Build key for referrer update
+                            referrer_key = {"id": referrer_id}
+                            if referrer_item.get("createdAt"):
+                                referrer_key["createdAt"] = referrer_item["createdAt"]
+                            
+                            # Update referrer's counts atomically
+                            table.update_item(
+                                Key=referrer_key,
+                                ConditionExpression="attribute_not_exists(referredUserIds) OR (attribute_exists(referredUserIds) AND NOT contains(referredUserIds, :uid))",
+                                UpdateExpression=(
+                                    "SET referralsCount = if_not_exists(referralsCount, :zero) + :one, "
+                                    "referredUserIds = list_append(if_not_exists(referredUserIds, :empty), :uid_list)"
+                                ),
+                                ExpressionAttributeValues={
+                                    ":zero": 0,
+                                    ":one": 1,
+                                    ":empty": [],
+                                    ":uid_list": [sub],
+                                    ":uid": sub,
+                                },
+                            )
+                            print(f"Updated referralsCount for referrer {referrer_id}")
+                        else:
+                            print(f"Referrer {referrer_id} not found in DynamoDB")
+                    except Exception as e:
+                        print(f"Error updating referrer counts for {sub}: {e}")
+                        
+        except Exception as e:
+            print(f"Error updating DynamoDB for {sub}: {e}")
 
     # IMPORTANT: must return the *event* object, not a string
     return event

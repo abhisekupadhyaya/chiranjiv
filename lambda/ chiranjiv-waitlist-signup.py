@@ -137,6 +137,7 @@ def lambda_handler(event, context):
         item = {
             "id": user_id,
             "createdAt": createdAt,
+            "emailVerified": False,
             "name": name,
             "email": email,
             "phone": phone,
@@ -158,29 +159,6 @@ def lambda_handler(event, context):
 
         # Put item into DynamoDB
         table.put_item(Item=item, ConditionExpression="attribute_not_exists(id)")
-
-        # If there is a valid referrer, update their metrics atomically (avoid double counting)
-        if referrer_id and referrer_id != user_id:
-            # Build the key dynamically to match the table's key schema (HASH only or HASH+RANGE)
-            update_key = {"id": referrer_id}
-            if referrer_createdAt is not None:
-                update_key["createdAt"] = referrer_createdAt
-
-            table.update_item(
-                Key=update_key,
-                ConditionExpression="attribute_not_exists(referredUserIds) OR (attribute_exists(referredUserIds) AND NOT contains(referredUserIds, :uid))",
-                UpdateExpression=(
-                    "SET referralsCount = if_not_exists(referralsCount, :zero) + :one, "
-                    "referredUserIds = list_append(if_not_exists(referredUserIds, :empty), :uid_list)"
-                ),
-                ExpressionAttributeValues={
-                    ":zero": 0,
-                    ":one": 1,
-                    ":empty": [],
-                    ":uid_list": [user_id],
-                    ":uid": user_id,
-                },
-            )
 
         return {
             "statusCode": 200,

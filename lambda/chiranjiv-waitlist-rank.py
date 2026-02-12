@@ -27,6 +27,21 @@ def _to_int(value, default=0):
         return default
 
 
+def _is_verified(item):
+    """Treat missing emailVerified as verified (backward compatibility)."""
+    verified = item.get("emailVerified")
+    # None/missing = backward compat, count as verified
+    if verified is None:
+        return True
+    # Explicit False or string "false" = unverified
+    if verified is False:
+        return False
+    if isinstance(verified, str) and verified.lower() == "false":
+        return False
+    # True or string "true" = verified
+    return True
+
+
 def _parse_body(event):
     body = {}
     if "body" in event and event["body"]:
@@ -78,16 +93,20 @@ def lambda_handler(event, context):
         while True:
             if last_evaluated_key:
                 resp = table.scan(
-                    ProjectionExpression="id, referralsCount, createdAt, referralCode",
+                    ProjectionExpression="id, referralsCount, createdAt, referralCode, emailVerified",
                     ExclusiveStartKey=last_evaluated_key,
                 )
             else:
                 resp = table.scan(
-                    ProjectionExpression="id, referralsCount, createdAt, referralCode"
+                    ProjectionExpression="id, referralsCount, createdAt, referralCode, emailVerified"
                 )
 
             items = resp.get("Items", [])
             for item in items:
+                # Skip unverified users
+                if not _is_verified(item):
+                    continue
+                
                 item_id = item.get("id")
                 item_referrals = _to_int(item.get("referralsCount"), 0)
                 item_created_at = _to_int(item.get("createdAt"), 0)

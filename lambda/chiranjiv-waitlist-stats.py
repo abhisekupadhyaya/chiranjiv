@@ -30,6 +30,12 @@ def _to_int(value, default=0):
         return default
 
 
+def _is_verified(item):
+    """Treat missing emailVerified as verified (backward compatibility)."""
+    verified = item.get("emailVerified")
+    return verified is not False
+
+
 def lambda_handler(event, context):
     """
     Returns total registered users and total referrals count across all users.
@@ -61,16 +67,20 @@ def lambda_handler(event, context):
         while True:
             if last_evaluated_key:
                 resp = table.scan(
-                    ProjectionExpression="id, referralsCount",
+                    ProjectionExpression="id, referralsCount, emailVerified",
                     ExclusiveStartKey=last_evaluated_key,
                 )
             else:
                 resp = table.scan(
-                    ProjectionExpression="id, referralsCount"
+                    ProjectionExpression="id, referralsCount, emailVerified"
                 )
 
             items = resp.get("Items", [])
             for item in items:
+                # Skip unverified users
+                if not _is_verified(item):
+                    continue
+                
                 total_users += 1
                 referrals_count = _to_int(item.get("referralsCount"), 0)
                 total_referrals += referrals_count
