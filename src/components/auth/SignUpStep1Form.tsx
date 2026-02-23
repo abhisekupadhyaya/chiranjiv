@@ -73,14 +73,13 @@ export function SignUpStep1Form({
 
   return (
     <form onSubmit={handleSubmit} className={cn("space-y-4", className)}>
-      <div className="space-y-2 text-left">
-        <label htmlFor="name" className="text-sm font-medium leading-none">Full Name <span className="text-red-500">*</span></label>
+      <div className="space-y-1 text-left">
         <div className="relative">
           <User className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input 
             id="name" 
             name="name" 
-            placeholder="John Doe" 
+            placeholder="Full Name *" 
             value={formData.name} 
             onChange={handleInputChange} 
             className={cn("pl-9", fieldErrors.name && "border-red-500 focus-visible:ring-red-500")}
@@ -89,15 +88,14 @@ export function SignUpStep1Form({
         {fieldErrors.name && <p className="text-xs text-red-500">{fieldErrors.name}</p>}
       </div>
 
-      <div className="space-y-2 text-left">
-        <label htmlFor="email" className="text-sm font-medium leading-none">Email <span className="text-red-500">*</span></label>
+      <div className="space-y-1 text-left">
         <div className="relative">
           <Mail className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input 
             id="email" 
             name="email" 
             type="email" 
-            placeholder="m@example.com" 
+            placeholder="Email *" 
             value={formData.email} 
             onChange={handleInputChange} 
             className={cn("pl-9", fieldErrors.email && "border-red-500 focus-visible:ring-red-500")}
@@ -106,19 +104,18 @@ export function SignUpStep1Form({
         {fieldErrors.email && <p className="text-xs text-red-500">{fieldErrors.email}</p>}
       </div>
 
-      <div className="space-y-2 text-left">
-        <label htmlFor="phoneLocal" className="text-sm font-medium leading-none">Phone Number <span className="text-red-500">*</span></label>
+      <div className="space-y-1 text-left">
         <div className="flex gap-2">
            <div className="flex items-center justify-center w-[70px] rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm">
              {formData.countryCode}
            </div>
            <div className="relative flex-1">
               <Phone className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-              <Input 
+              <Input
                 id="phoneLocal" 
                 name="phoneLocal" 
                 type="tel" 
-                placeholder="9876543210" 
+                placeholder="Phone Number *" 
                 value={formData.phoneLocal} 
                 onChange={handleInputChange} 
                 className={cn("pl-9", fieldErrors.phoneLocal && "border-red-500 focus-visible:ring-red-500")}
@@ -128,12 +125,11 @@ export function SignUpStep1Form({
         {fieldErrors.phoneLocal && <p className="text-xs text-red-500">{fieldErrors.phoneLocal}</p>}
       </div>
 
-      <div className="space-y-2 text-left">
-        <label htmlFor="referralCode" className="text-sm font-medium leading-none">Referral Code <span className="text-muted-foreground font-normal">(Optional)</span></label>
-        <Input 
+      <div className="space-y-1 text-left">
+        <Input
           id="referralCode" 
           name="referralCode" 
-          placeholder="Enter referral code if you have one" 
+          placeholder="Referral Code (optional)" 
           value={formData.referralCode} 
           onChange={handleInputChange} 
         />

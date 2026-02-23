@@ -11,7 +11,7 @@ export default function PrivacyPolicy() {
         <h2 className="text-2xl font-semibold mb-4 mt-0">Introduction and Scope</h2>
         
         <p className="mb-4 leading-relaxed">
-          This Privacy Policy ("Privacy Policy") governs the collection, use, processing, storage, and disclosure of personal data by Rapidera Technologies Pvt Ltd. ("we", "us", or "our"), a company incorporated under the laws of India through our website https://chiranjiv.com/ ("Website") and related genomic testing services ("Services").
+          This Privacy Policy ("Privacy Policy") governs the collection, use, processing, storage, and disclosure of personal data by Chiranjeev India Private Limited ("we", "us", or "our"), a company incorporated under the laws of India through our website https://chiranjiv.com/ ("Website") and related genomic testing services ("Services").
         </p>
         
         <p className="mb-4 leading-relaxed">
@@ -416,7 +416,7 @@ export default function PrivacyPolicy() {
         <Alert className="mt-4 mb-6 bg-neutral-50">
           <AlertTitle className="font-semibold text-foreground mb-3">Data Protection Officer</AlertTitle>
           <AlertDescription className="text-foreground font-light">
-            <p>Rapidera Technologies Pvt Ltd.</p>
+            <p>Chiranjeev India Private Limited</p>
             <p>Email: <a href="mailto:support@chiranjiv.com" className="text-primary-600 hover:underline font-medium">support@chiranjiv.com</a></p>
             <p>Address: 703 Deron Heights, Baner Road, Baner, Pune 411045</p>
           </AlertDescription>

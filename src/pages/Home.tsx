@@ -1,5 +1,6 @@
 import { Suspense, lazy } from "react"
 import { Hero } from "@/components/home/Hero"
+import { LedByVeterans } from "@/components/home/LedByVeterans"
 
 // Lazy load components to improve initial page load
 const DNAStory = lazy(() => 
@@ -49,6 +50,7 @@ function Home() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <Hero />
         </div>
+        <LedByVeterans />
         <Suspense fallback={<div className="py-16 sm:py-24 text-center text-foreground">Loading...</div>}>
           <DNAStory />
           <GenomicStats />
