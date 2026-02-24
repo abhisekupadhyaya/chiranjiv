@@ -23,6 +23,23 @@ export interface MediaMention {
 
 export const mediaMentions: MediaMention[] = [
   {
+    id: '3',
+    slug: 'linkedin-aipod-startup-showcase',
+    title: 'Chiranjiv Life OS Featured in AIPod Startups Showcase on LinkedIn',
+    description: 'M D Ramaswami highlighted Chiranjiv in the AIPod Startups showcase, featuring our India-first genomic health approach and Life OS vision for proactive care.',
+    date: '2026',
+    platform: 'article',
+    thumbnailUrl: '/media/chiranjiv-linkedin-aipod.jpg',
+    heroImage: '/media/chiranjiv-linkedin-aipod.jpg',
+    externalUrl: 'https://www.linkedin.com/posts/m-d-ramaswami_aipod-aipodstartups-startupshowcase-activity-7427205746875973632-9nj2?utm_source=share&utm_medium=member_ios&rcm=ACoAAAAmcy8BDFZHifnkC2L1H2s1ioqRB-nKUFs',
+    tags: ['linkedin', 'startup-showcase', 'aipod', 'genomics', 'life-os'],
+    fullContent: `This LinkedIn startup showcase features Chiranjiv Life OS and the team’s vision to make healthcare more proactive, personalized, and India-first through whole-genome insights.
+
+The post discusses how Chiranjiv combines genomic intelligence with AI-driven interpretation to turn one-time sequencing into lifelong, actionable health guidance.
+
+It also reinforces the broader mission: building representative Indian genomic data so health recommendations and preventive strategies better reflect local biology and real-world outcomes.`
+  },
+  {
     id: '2',
     slug: 'boldsky-your-wellness-lies-in-your-genes',
     title: 'Your Wellness Lies in Your Genes? How Chiranjiv Is Changing the Future of India’s Health System',

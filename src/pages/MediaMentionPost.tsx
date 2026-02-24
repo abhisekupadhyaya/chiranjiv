@@ -60,6 +60,7 @@ export default function MediaMentionPost() {
 
   const getCoverageCtaLabel = () => {
     if (!media.externalUrl) return 'View Full Coverage'
+    if (media.externalUrl.includes('linkedin.com')) return 'View Post on LinkedIn'
     if (media.externalUrl.includes('boldsky.com')) return 'Read Full Article on Boldsky'
     if (media.platform === 'article') return 'Read Full Article'
     return 'View Full Coverage'
