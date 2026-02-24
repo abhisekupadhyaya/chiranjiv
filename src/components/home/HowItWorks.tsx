@@ -5,18 +5,23 @@ export const HowItWorks = memo(function HowItWorks() {
   const steps = [
     {
       number: "01",
-      title: "Join the Waitlist",
-      description: "Secure your free genome test."
+      title: "Request Access",
+      description: "Sign up and secure your spot for a free genome test. No payment, no commitment — just your interest."
     },
     {
       number: "02",
       title: "At-Home Sample Collection",
-      description: "We send a professional to collect your saliva sample."
+      description: "We send a professional to your home to collect a simple saliva sample. Takes under 5 minutes, completely non-invasive."
     },
     {
       number: "03",
       title: "Get Your Insights",
-      description: "Receive your personalized DNA report in the Chiranjiv app."
+      description: "Receive your personalized DNA report in the Chiranjiv app — covering metabolism, fitness, sleep, immunity, and more."
+    },
+    {
+      number: "04",
+      title: "Lifetime Updates",
+      description: "Your genome doesn't change — but science does. As new research links gene variants to conditions, your report updates automatically. What's unknown today becomes an insight tomorrow."
     }
   ];
 
@@ -33,12 +38,12 @@ export const HowItWorks = memo(function HowItWorks() {
             How It Works
           </h2>
           <p className="mx-auto max-w-2xl text-lg text-foreground sm:text-xl">
-            Three simple steps to unlock your genetic insights
+            Four simple steps to unlock your genetic insights
           </p>
         </div>
 
         {/* Steps Grid */}
-        <div className="grid gap-8 md:grid-cols-3 lg:gap-12">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {steps.map((step, index) => (
             <div 
               key={index}
@@ -47,14 +52,14 @@ export const HowItWorks = memo(function HowItWorks() {
               <div className="absolute inset-0 bg-gradient-to-br from-white/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
               
               <div className="relative z-10 flex flex-col h-full">
-                {/* Large Number */}
-                <span className="mb-6 font-mono text-6xl font-bold tracking-tighter bg-gradient-to-br from-primary-500 to-secondary-500 bg-clip-text text-transparent opacity-80 transition-all duration-300 group-hover:opacity-100 group-hover:scale-110 group-hover:from-primary-400 group-hover:to-secondary-400 origin-left">
-                  {step.number}
-                </span>
-                
-                <h3 className="mb-3 text-xl font-semibold text-neutral-200">
-                  {step.title}
-                </h3>
+                <div className="mb-3 flex min-h-[3.25rem] items-start gap-3">
+                  <span className="font-mono text-2xl font-black tracking-tight bg-gradient-to-br from-primary-500 to-secondary-500 bg-clip-text text-transparent opacity-90 transition-all duration-300 group-hover:from-primary-400 group-hover:to-secondary-400">
+                    {step.number}
+                  </span>
+                  <h3 className="text-xl font-semibold text-neutral-200">
+                    {step.title}
+                  </h3>
+                </div>
                 <p className="text-base leading-relaxed text-foreground">
                   {step.description}
                 </p>
@@ -70,7 +75,7 @@ export const HowItWorks = memo(function HowItWorks() {
             className="h-12 px-8 text-base"
             onClick={() => document.getElementById('waitlist')?.scrollIntoView({ behavior: 'smooth' })}
           >
-            Join Early Access
+            Request Access
           </Button>
         </div>
 

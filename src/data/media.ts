@@ -23,6 +23,23 @@ export interface MediaMention {
 
 export const mediaMentions: MediaMention[] = [
   {
+    id: '2',
+    slug: 'boldsky-your-wellness-lies-in-your-genes',
+    title: 'Your Wellness Lies in Your Genes? How Chiranjiv Is Changing the Future of India’s Health System',
+    description: 'Boldsky features Chiranjiv\'s population-scale genomics vision for India, highlighting how preventive, personalized healthcare can be guided by DNA insights.',
+    date: 'February 2026',
+    platform: 'article',
+    thumbnailUrl: '/media/chiranjiv-boldsky-genes.webp',
+    heroImage: '/media/chiranjiv-boldsky-genes.webp',
+    externalUrl: 'https://www.boldsky.com/health/your-wellness-lies-in-your-genes-how-chiranjiv-is-changing-the-future-of-indias-health-system-167983.html',
+    tags: ['article', 'boldsky', 'genomics', 'preventive-care', 'personalized-health'],
+    fullContent: `This Boldsky feature explores how Chiranjiv is helping shift Indian healthcare from reactive treatment toward predictive, preventive, and personalized care through genomics.
+
+The article highlights Chiranjiv’s mission to build a large indigenous genomic database, improve India-relevant health insights, and enable tailored wellness guidance through whole-genome analysis and AI-powered interpretation.
+
+It also emphasizes the larger public-health opportunity: using earlier genetic risk awareness for lifestyle diseases such as diabetes, obesity, and cardiovascular conditions to support proactive interventions before symptoms appear.`
+  },
+  {
     id: '1',
     slug: 'health-awareness-workshop',
     title: 'Awareness Session on Genome Studies at DM Hospitals',

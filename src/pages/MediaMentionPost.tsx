@@ -58,6 +58,13 @@ export default function MediaMentionPost() {
     return platform.charAt(0).toUpperCase() + platform.slice(1)
   }
 
+  const getCoverageCtaLabel = () => {
+    if (!media.externalUrl) return 'View Full Coverage'
+    if (media.externalUrl.includes('boldsky.com')) return 'Read Full Article on Boldsky'
+    if (media.platform === 'article') return 'Read Full Article'
+    return 'View Full Coverage'
+  }
+
   return (
     <main className="relative w-full min-h-screen overflow-hidden">
       {/* Background gradient */}
@@ -166,13 +173,16 @@ export default function MediaMentionPost() {
             {/* External Link */}
             {media.externalUrl && (
               <div className="mb-8 p-6 rounded-2xl border border-white/40 bg-white/40 backdrop-blur-md">
+                <p className="text-xs uppercase tracking-[0.16em] text-neutral-500 mb-3">
+                  External Coverage
+                </p>
                 <a
                   href={media.externalUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-primary-600 hover:underline text-lg font-medium flex items-center gap-2"
+                  className="text-primary-600 hover:underline text-lg font-medium inline-flex items-center gap-2"
                 >
-                  View Full Coverage
+                  {getCoverageCtaLabel()}
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>

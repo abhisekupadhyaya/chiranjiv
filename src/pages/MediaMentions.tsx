@@ -61,7 +61,7 @@ export default function MediaMentions() {
                   <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent opacity-50" />
                   
                   {/* Thumbnail Image */}
-                  {media.thumbnailUrl && (
+                  {media.thumbnailUrl ? (
                     <div className="relative aspect-video w-full overflow-hidden bg-neutral-900">
                       <img
                         src={media.thumbnailUrl}
@@ -71,6 +71,15 @@ export default function MediaMentions() {
                       />
                       {/* Subtle overlay on hover */}
                       <div className="absolute inset-0 bg-black/0 transition-colors group-hover:bg-black/10" />
+                    </div>
+                  ) : (
+                    <div className="relative aspect-video w-full overflow-hidden bg-gradient-to-br from-primary/15 via-secondary/10 to-accent/15 border-b border-white/30">
+                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.25),transparent_60%)]" />
+                      <div className="relative h-full w-full flex items-end p-6">
+                        <p className="text-sm sm:text-base font-medium tracking-wide text-neutral-200/90">
+                          Media Coverage
+                        </p>
+                      </div>
                     </div>
                   )}
                   

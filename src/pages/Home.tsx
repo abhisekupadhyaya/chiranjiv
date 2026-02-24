@@ -7,15 +7,6 @@ const DNAStory = lazy(() =>
   import("@/components/home/DNAStory").then(module => ({ default: module.DNAStory }))
 )
 
-const GenomicStats = lazy(() => 
-  import("@/components/home/GenomicStats").then(module => ({ default: module.GenomicStats }))
-)
-
-const Insights = lazy(() => 
-  import("@/components/home/Insights").then(module => ({ default: module.Insights }))
-)
-
-
 const WhyFree = lazy(() => 
   import("@/components/home/WhyFree").then(module => ({ default: module.WhyFree }))
 )
@@ -28,8 +19,8 @@ const HowItWorks = lazy(() =>
   import("@/components/home/HowItWorks").then(module => ({ default: module.HowItWorks }))
 )
 
-const YourDNA = lazy(() => 
-  import("@/components/home/YourDNA").then(module => ({ default: module.YourDNA }))
+const LifeOS = lazy(() =>
+  import("@/components/home/LifeOS").then(module => ({ default: module.LifeOS }))
 )
 
 function Home() {
@@ -52,13 +43,11 @@ function Home() {
         </div>
         <LedByVeterans />
         <Suspense fallback={<div className="py-16 sm:py-24 text-center text-foreground">Loading...</div>}>
+          <LifeOS />
           <DNAStory />
-          <GenomicStats />
-          <Insights />
           <WhyFree />
           <TrustFeatures />
           <HowItWorks />
-          <YourDNA />
         </Suspense>
       </div>
     </main>

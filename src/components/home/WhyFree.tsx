@@ -2,57 +2,48 @@ import { memo } from "react";
 
 export const WhyFree = memo(function WhyFree() {
   return (
-    <section className="relative pt-20 pb-8 sm:pt-32 sm:pb-12 overflow-hidden">
-      {/* Background Gradient Blobs - Global for section */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40rem] h-[40rem] rounded-full bg-primary-800/10 blur-[120px] pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[30rem] h-[30rem] rounded-full bg-secondary-800/10 blur-[100px] pointer-events-none mix-blend-overlay" />
+    <section className="relative w-full overflow-hidden pt-10 sm:pt-16 pb-20 sm:pb-24 bg-gradient-to-br from-neutral-200 via-neutral-300 to-neutral-400">
+      <div className="absolute top-0 right-0 h-[28rem] w-[28rem] rounded-full bg-neutral-900/20 blur-[120px] translate-x-1/3 -translate-y-1/3 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 h-[26rem] w-[26rem] rounded-full bg-neutral-1000/15 blur-[120px] -translate-x-1/3 translate-y-1/3 pointer-events-none" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        
-        {/* Centered Header Content */}
-        <div className="flex flex-col items-center text-center max-w-4xl mx-auto mb-8">
-          <h2 className="mb-6 text-3xl font-medium tracking-tight text-neutral-200 sm:text-4xl lg:text-5xl">
+        <div className="mb-12 text-center md:mb-16">
+          <h2 className="mb-4 text-3xl font-medium tracking-tight text-white sm:text-4xl lg:text-5xl">
             Why Is This ₹1.5 Lakh Test Free?
           </h2>
-          <p className="mb-10 text-xl text-foreground/90 sm:text-2xl max-w-2xl mx-auto leading-relaxed">
+          <p className="mx-auto max-w-2xl text-lg text-white/80 sm:text-xl leading-relaxed">
             Because India deserves to be represented in global health science.
           </p>
-          
-          {/* The "Card" Look Restored */}
-          <div className="relative w-full overflow-hidden rounded-3xl bg-neutral-200/80 p-8 shadow-2xl shadow-black/20 ring-1 ring-white/10 sm:p-12 backdrop-blur-sm">
-            {/* Internal Card Blobs */}
-            <div className="absolute -right-20 -top-20 h-80 w-80 rounded-full bg-primary-800/20 blur-[100px]" />
-            <div className="absolute -bottom-20 -left-20 h-80 w-80 rounded-full bg-secondary-800/15 blur-[100px]" />
-            
-            <div className="relative z-10 flex flex-col items-center">
-              <h3 className="mb-6 text-2xl font-medium leading-tight text-neutral-1000 sm:text-3xl lg:text-4xl max-w-3xl">
-                We're building the largest Indian genomic reference database.
-              </h3>
-              <p className="text-lg leading-relaxed text-neutral-900 max-w-2xl mb-12">
-                Early users get full access at no cost — including lifetime wellness insights.
-              </p>
+        </div>
 
-              {/* Trust Signals Inside Card */}
-              <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 w-full max-w-2xl mx-auto mb-10">
-                {[
-                  { title: "Ethical research partnerships" },
-                  { title: "Optional premium features for users" }
-                ].map((item) => (
-                  <div key={item.title} className="flex flex-col items-center text-center">
-                    <h4 className="text-lg font-semibold text-neutral-1000 mb-1">{item.title}</h4>
-                  </div>
-                ))}
-              </div>
-              
-              <div className="border-t border-neutral-900/10 pt-8 w-full">
-                <p className="text-base font-medium text-primary-300">
-                   Just science-backed wellness for everyone.
-                </p>
-              </div>
-            </div>
+        <div className="flex flex-wrap justify-center gap-6 text-center">
+          <div className="group relative w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 shadow-lg shadow-black/5 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-neutral-1000/30 sm:p-8">
+            <h3 className="mb-3 text-xl font-semibold text-white">We Pay</h3>
+            <p className="leading-relaxed text-neutral-900">
+              We cover the sequencing cost. There are no hidden fees or subscription charges.
+            </p>
+          </div>
+
+          <div className="group relative w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 shadow-lg shadow-black/5 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-neutral-1000/30 sm:p-8">
+            <h3 className="mb-3 text-xl font-semibold text-white">You Contribute</h3>
+            <p className="leading-relaxed text-neutral-900">
+              You provide anonymized genomic data to help build the first Indian longevity model.
+            </p>
+          </div>
+
+          <div className="group relative w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 shadow-lg shadow-black/5 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-neutral-1000/30 sm:p-8">
+            <h3 className="mb-3 text-xl font-semibold text-white">India Benefits</h3>
+            <p className="leading-relaxed text-neutral-900">
+              Together, we build the first comprehensive Indian longevity model to solve diseases specific to our population.
+            </p>
           </div>
         </div>
 
+        <div className="mt-10 text-center">
+          <p className="text-base font-medium text-primary-300">
+            Just science-backed wellness for everyone.
+          </p>
+        </div>
       </div>
     </section>
   );
