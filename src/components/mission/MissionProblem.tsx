@@ -5,7 +5,7 @@ import { problemItems } from "@/components/mission/content";
 export function MissionProblem() {
   return (
     <section className="mb-24">
-      <MissionSectionIntro eyebrow="The Challenge" title="2. The Problem" />
+      <MissionSectionIntro eyebrow="The Challenge" title="The Challenge" />
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         {problemItems.map((item) => (
           <MissionNumberedCard

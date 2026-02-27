@@ -9,7 +9,7 @@ export const missionHero = {
 
 export const whyWeExist = {
   eyebrow: "Why We Exist",
-  title: "1. Why We Exist",
+  title: "Why We Exist",
   summary:
     "Your DNA is the most personal data you'll ever own. Yet today, understanding it is expensive, fragmented, and often locked behind corporate paywalls in other countries.",
   quote:
@@ -107,7 +107,7 @@ export const principles = [
 
 export const futureVision = {
   eyebrow: "Our Vision",
-  title: "5. The Future We See",
+  title: "Our Vision",
   intro: "Imagine a world where:",
   items: [
     "Preventive healthcare is tailored to your exact genome.",

@@ -38,9 +38,7 @@ function Home() {
 
       {/* Content Container */}
       <div className="relative z-10">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <Hero />
-        </div>
+        <Hero />
         <LedByVeterans />
         <Suspense fallback={<div className="py-16 sm:py-24 text-center text-foreground">Loading...</div>}>
           <LifeOS />

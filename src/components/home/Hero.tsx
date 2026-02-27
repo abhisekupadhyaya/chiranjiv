@@ -42,11 +42,11 @@ export function Hero() {
         <DNAHelix />
       </div>
       
-      <div className="relative z-10 mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8">
-        <div className="grid gap-6 sm:gap-8 lg:gap-12 lg:grid-cols-[1fr_28rem] lg:gap-8 items-center">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid items-center gap-6 sm:gap-8 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] lg:gap-8 xl:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)]">
           
-          {/* Left Column: Text Content */}
-          <div className="flex flex-col items-start justify-center space-y-5 text-left z-10 w-full">
+            {/* Left Column: Text Content */}
+            <div className="z-10 flex w-full flex-col items-start justify-center space-y-5 text-left">
             {/* Badge + headline use full width so "Understand your body" stays one line */}
             <div className="flex flex-col items-start w-full">
               {/* Hero Badge */}
@@ -250,11 +250,11 @@ export function Hero() {
               </div>
             </div>
 
-          </div>
+            </div>
 
-          {/* Right Column: Sign Up Form */}
-          <div id="waitlist" className="flex items-center justify-center lg:justify-end w-full">
-            <Card className="w-full max-w-md rounded-2xl sm:rounded-3xl border border-white/60 bg-white/50 shadow-2xl backdrop-blur-xl">
+            {/* Right Column: Sign Up Form */}
+            <div id="waitlist" className="flex w-full items-center justify-center lg:justify-end">
+              <Card className="w-full max-w-md rounded-2xl border border-white/60 bg-white/50 shadow-2xl backdrop-blur-xl sm:rounded-3xl">
               <CardHeader className="space-y-1 p-4 pb-2 sm:p-6 sm:pb-4 text-center items-center">
                 <CardTitle className="text-xl sm:text-2xl font-bold">Join Early Access</CardTitle>
                 <p className="text-xs sm:text-sm text-muted-foreground">
@@ -286,10 +286,10 @@ export function Hero() {
                   </Link>
                 </p>
               </CardFooter>
-            </Card>
+              </Card>
+            </div>
+
           </div>
-          
-        </div>
       </div>
     </section>
   );

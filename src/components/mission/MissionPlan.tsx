@@ -80,7 +80,7 @@ export function MissionPlan() {
 
   return (
     <section className="mb-24">
-      <MissionSectionIntro eyebrow="Our Roadmap" title="3. The Plan" />
+      <MissionSectionIntro eyebrow="Our Roadmap" title="Our Roadmap" />
 
       <div ref={railContainerRef} className="relative pl-10">
         <div
