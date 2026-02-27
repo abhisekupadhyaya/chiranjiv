@@ -214,6 +214,31 @@ export function Hero() {
                 foundational research database.
               </p>
 
+              {/* Trust Indicators */}
+              <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 sm:gap-x-8 sm:gap-y-4 text-xs sm:text-sm text-foreground">
+                <div className="flex items-center gap-2">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-primary-500" />
+                  </span>
+                  <span>Ethical & Transparent</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-primary-500" />
+                  </span>
+                  <span>Highly Secure</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-primary-500" />
+                  </span>
+                  <span>Data Stored in India</span>
+                </div>
+              </div>
+
               <div className="mt-4 flex w-full sm:w-auto">
                 <Button
                   onClick={viewSampleReport}
@@ -225,30 +250,6 @@ export function Hero() {
               </div>
             </div>
 
-            {/* Trust Indicators */}
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 sm:gap-x-8 sm:gap-y-4 text-xs sm:text-sm text-foreground">
-              <div className="flex items-center gap-2">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-primary-500" />
-                </span>
-                <span>Ethical & Transparent</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-primary-500" />
-                </span>
-                <span>Highly Secure</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-primary-500" />
-                </span>
-                <span>Data Stored in India</span>
-              </div>
-            </div>
           </div>
 
           {/* Right Column: Sign Up Form */}

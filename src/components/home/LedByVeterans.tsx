@@ -9,26 +9,26 @@ const institutions = [
 
 export function LedByVeterans() {
   return (
-    <section className="py-5 sm:py-6 border-y border-neutral-1100/80 bg-white/90 backdrop-blur-sm">
+    <section className="py-4 border-y border-neutral-1100 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <p className="mb-4 text-[11px] sm:text-xs font-semibold text-neutral-700 uppercase tracking-[0.2em]">
+        <p className="mb-3 text-xs font-semibold text-neutral-600 uppercase tracking-widest">
           Led by veterans from
         </p>
-        <div className="flex flex-wrap justify-center items-center gap-x-6 gap-y-4 md:gap-x-8">
+        <div className="flex flex-wrap justify-center items-center gap-x-6 gap-y-3 md:gap-x-8">
           {institutions.map(({ name, logo, label }) => (
-            <div key={name} className="flex items-center gap-2">
+            <div key={name} className={label === undefined ? "flex items-center" : "flex items-center gap-1.5"}>
               <img
                 src={logo}
                 alt={name}
                 loading="lazy"
                 className={
                   label === undefined
-                    ? "h-7 md:h-8 w-auto object-contain max-w-[104px]"
-                    : "w-7 h-7 md:w-8 md:h-8 object-contain"
+                    ? "h-5 w-auto object-contain max-w-[90px] opacity-70"
+                    : "w-6 h-6 object-contain"
                 }
               />
               {label !== undefined && (
-                <span className="text-base md:text-lg font-semibold text-neutral-200">
+                <span className="text-sm font-semibold text-neutral-400">
                   {label}
                 </span>
               )}
