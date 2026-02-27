@@ -11,7 +11,7 @@ export default function TermsOfService() {
         <h2 className="text-2xl font-semibold mb-4 mt-0">Introduction and Acceptance of Terms</h2>
         
         <p className="mb-4 leading-relaxed">
-          These Terms of Service ("Terms") constitute a legally binding agreement between you ("User", "you", or "your") and Chiranjeev India Private Limited, a company incorporated under the laws of India with its registered office at 703 Deron Heights, Baner Road, Baner, Pune 411045, India ("Chiranjeev", "we", "us", or "our"). By accessing, browsing, or using our website located at https://chiranjiv.com/ (the "Website") or any of our related services, you acknowledge that you have read, understood, and agree to be bound by these Terms. If you do not agree to these Terms, please do not use our Website or Services.
+          These Terms of Service ("Terms") constitute a legally binding agreement between you ("User", "you", or "your") and Chiranjiv India Private Limited, a company incorporated under the laws of India with its registered office at 703 Deron Heights, Baner Road, Baner, Pune 411045, India ("Chiranjiv", "we", "us", or "our"). By accessing, browsing, or using our website located at https://chiranjiv.com/ (the "Website") or any of our related services, you acknowledge that you have read, understood, and agree to be bound by these Terms. If you do not agree to these Terms, please do not use our Website or Services.
         </p>
       </section>
 
@@ -30,7 +30,7 @@ export default function TermsOfService() {
             <strong>"Intellectual Property Rights"</strong> means all intellectual property rights worldwide, including without limitation, copyrights, trademarks, patents, trade secrets, moral rights, and any other proprietary rights;
           </li>
           <li>
-            <strong>"Services"</strong> means all products, services, applications, and functionalities provided by Chiranjeev through the Website;
+            <strong>"Services"</strong> means all products, services, applications, and functionalities provided by Chiranjiv through the Website;
           </li>
           <li>
             <strong>"User Content"</strong> means any content that you submit, post, upload, or otherwise transmit through the Website;
@@ -45,7 +45,7 @@ export default function TermsOfService() {
         <h2 className="text-2xl font-semibold mb-4 mt-8">Services Description</h2>
         
         <p className="mb-4 leading-relaxed">
-          Chiranjeev provides genomic testing, analysis and reporting services, along with associated research. Chiranjeev reserves the right to modify, suspend, or discontinue any aspect of the Services at any time without prior notice.
+          Chiranjiv provides genomic testing, analysis and reporting services, along with associated research. Chiranjiv reserves the right to modify, suspend, or discontinue any aspect of the Services at any time without prior notice.
         </p>
       </section>
 
@@ -96,7 +96,7 @@ export default function TermsOfService() {
         <h2 className="text-2xl font-semibold mb-4 mt-8">Intellectual Property Rights</h2>
         
         <p className="mb-4 leading-relaxed">
-          <strong>Chiranjeev IP:</strong> All Content on the Website, including but not limited to text, graphics, logos, images, audio clips, digital downloads, and software, is the property of Chiranjeev or its licensors and is protected by Indian and international copyright, trademark, and other intellectual property laws.
+          <strong>Chiranjiv IP:</strong> All Content on the Website, including but not limited to text, graphics, logos, images, audio clips, digital downloads, and software, is the property of Chiranjiv or its licensors and is protected by Indian and international copyright, trademark, and other intellectual property laws.
         </p>
         
         <p className="mb-4 leading-relaxed">
@@ -104,7 +104,7 @@ export default function TermsOfService() {
         </p>
         
         <p className="mb-4 leading-relaxed">
-          <strong>Trademarks:</strong> The Chiranjiv and Chiranjeev names, logos, and all related names, logos, product and service names, designs, and slogans are trademarks of Chiranjeev. You shall not use such marks without our prior written permission.
+          <strong>Trademarks:</strong> The Chiranjiv name, logos, and all related names, logos, product and service names, designs, and slogans are trademarks of Chiranjiv. You shall not use such marks without our prior written permission.
         </p>
       </section>
 
@@ -168,7 +168,7 @@ export default function TermsOfService() {
         <h2 className="text-2xl font-semibold mb-4 mt-8">Indemnification</h2>
         
         <p className="mb-4 leading-relaxed">
-          You agree to indemnify, defend, and hold harmless Chiranjeev, its officers, directors, employees, agents, and affiliates from and against any and all third-party claims, damages, losses, costs, and expenses (including reasonable attorneys' fees) arising out of or relating to your use of the Website or Services, your User Content, or your violation of these Terms.
+          You agree to indemnify, defend, and hold harmless Chiranjiv, its officers, directors, employees, agents, and affiliates from and against any and all third-party claims, damages, losses, costs, and expenses (including reasonable attorneys' fees) arising out of or relating to your use of the Website or Services, your User Content, or your violation of these Terms.
         </p>
       </section>
 
@@ -176,7 +176,7 @@ export default function TermsOfService() {
         <h2 className="text-2xl font-semibold mb-4 mt-8">Third-Party Links</h2>
         
         <p className="mb-4 leading-relaxed">
-          The Website may contain links to third-party websites or services. Chiranjeev is not responsible for the content, privacy policies, or practices of any third-party websites or services. You access such third-party websites or services at your own risk.
+          The Website may contain links to third-party websites or services. Chiranjiv is not responsible for the content, privacy policies, or practices of any third-party websites or services. You access such third-party websites or services at your own risk.
         </p>
       </section>
 
@@ -184,7 +184,7 @@ export default function TermsOfService() {
         <h2 className="text-2xl font-semibold mb-4 mt-8">Modification of Terms</h2>
         
         <p className="mb-4 leading-relaxed">
-          Chiranjeev reserves the right to modify these Terms at any time. We will provide notice of material changes by posting the updated Terms on the Website with a new "Last Updated" date. Your continued use of the Website after such changes constitutes acceptance of the modified Terms.
+          Chiranjiv reserves the right to modify these Terms at any time. We will provide notice of material changes by posting the updated Terms on the Website with a new "Last Updated" date. Your continued use of the Website after such changes constitutes acceptance of the modified Terms.
         </p>
       </section>
 
@@ -192,7 +192,7 @@ export default function TermsOfService() {
         <h2 className="text-2xl font-semibold mb-4 mt-8">Termination</h2>
         
         <p className="mb-4 leading-relaxed">
-          <strong>Termination Rights:</strong> Chiranjeev may terminate or suspend your access to the Website or Services immediately, without prior notice or liability, for any reason, including breach of these Terms.
+          <strong>Termination Rights:</strong> Chiranjiv may terminate or suspend your access to the Website or Services immediately, without prior notice or liability, for any reason, including breach of these Terms.
         </p>
         
         <p className="mb-4 leading-relaxed">
@@ -228,7 +228,7 @@ export default function TermsOfService() {
         <h2 className="text-2xl font-semibold mb-4 mt-8">Entire Agreement</h2>
         
         <p className="mb-4 leading-relaxed">
-          These Terms, together with our Privacy Policy and any other legal notices published on the Website, constitute the entire agreement between you and Chiranjeev regarding your use of the Website and Services.
+          These Terms, together with our Privacy Policy and any other legal notices published on the Website, constitute the entire agreement between you and Chiranjiv regarding your use of the Website and Services.
         </p>
       </section>
 
@@ -240,7 +240,7 @@ export default function TermsOfService() {
         </p>
         
         <Alert className="mt-4 mb-4 bg-neutral-50">
-          <AlertTitle className="font-semibold text-foreground mb-3">Chiranjeev India Private Limited</AlertTitle>
+          <AlertTitle className="font-semibold text-foreground mb-3">Chiranjiv India Private Limited</AlertTitle>
           <AlertDescription className="text-neutral-600 font-light">
             <p>Email: <a href="mailto:support@chiranjiv.com" className="text-primary-600 hover:underline font-medium">support@chiranjiv.com</a></p>
             <p>Address: 703 Deron Heights, Baner Road, Baner, Pune 411045, India</p>
