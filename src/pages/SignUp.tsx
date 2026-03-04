@@ -1,6 +1,6 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import type { ChangeEvent, FormEvent } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate, useSearchParams } from "react-router-dom"
 import { useAuth } from "@/auth"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -8,18 +8,48 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { SignUpStep1Form, type Step1Data } from "@/components/auth/SignUpStep1Form"
 
 type Step = 1 | 2 | 3
-
-function splitName(fullName: string): { firstName: string; lastName: string } {
-  const trimmed = fullName.trim()
-  const [first, ...rest] = trimmed.split(/\s+/)
-  return {
-    firstName: first || trimmed,
-    lastName: rest.join(" ") || first || trimmed,
-  }
-}
+const INDIAN_STATES = [
+  "Andhra Pradesh",
+  "Arunachal Pradesh",
+  "Assam",
+  "Bihar",
+  "Chhattisgarh",
+  "Goa",
+  "Gujarat",
+  "Haryana",
+  "Himachal Pradesh",
+  "Jharkhand",
+  "Karnataka",
+  "Kerala",
+  "Madhya Pradesh",
+  "Maharashtra",
+  "Manipur",
+  "Meghalaya",
+  "Mizoram",
+  "Nagaland",
+  "Odisha",
+  "Punjab",
+  "Rajasthan",
+  "Sikkim",
+  "Tamil Nadu",
+  "Telangana",
+  "Tripura",
+  "Uttar Pradesh",
+  "Uttarakhand",
+  "West Bengal",
+  "Andaman and Nicobar Islands",
+  "Chandigarh",
+  "Dadra and Nagar Haveli and Daman and Diu",
+  "Delhi",
+  "Jammu and Kashmir",
+  "Ladakh",
+  "Lakshadweep",
+  "Puducherry",
+]
 
 const SignUp = () => {
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
   const { signup, login, error, setError } = useAuth()
   const [step, setStep] = useState<Step>(1)
   const [loading, setLoading] = useState(false)
@@ -27,7 +57,8 @@ const SignUp = () => {
   const [signupMessage, setSignupMessage] = useState("")
 
   const [formData, setFormData] = useState({
-    name: "",
+    firstName: "",
+    lastName: "",
     email: "",
     phoneLocal: "",
     countryCode: "+91",
@@ -45,6 +76,28 @@ const SignUp = () => {
     dataUsagePolicy: false,
     marketingConsent: false,
   })
+
+  useEffect(() => {
+    const stepParam = searchParams.get("step")
+    const firstName = searchParams.get("firstName")?.trim() ?? ""
+    const lastName = searchParams.get("lastName")?.trim() ?? ""
+    const email = searchParams.get("email")?.trim() ?? ""
+    const phoneFromQuery = searchParams.get("phone")?.trim() ?? searchParams.get("phoneLocal")?.trim() ?? ""
+    const referralCode = searchParams.get("ref")?.trim() ?? ""
+
+    setFormData((prev) => ({
+      ...prev,
+      firstName: firstName || prev.firstName,
+      lastName: lastName || prev.lastName,
+      email: email || prev.email,
+      phoneLocal: phoneFromQuery || prev.phoneLocal,
+      referralCode: referralCode || prev.referralCode,
+    }))
+
+    if (stepParam === "2") {
+      setStep(2)
+    }
+  }, [searchParams])
 
   const handleStep1Submit = (data: Step1Data) => {
     setFormData((prev) => ({ ...prev, ...data }))
@@ -88,15 +141,14 @@ const SignUp = () => {
     setError(null)
     setLoading(true)
     try {
-      const { firstName, lastName } = splitName(formData.name)
       const phoneDigits = formData.phoneLocal.replace(/\D/g, "")
       const phone = `${formData.countryCode}${phoneDigits}`
       const street = [formData.addressLine1, formData.addressLine2].filter(Boolean).join(", ")
       const result = await signup({
         email: formData.email.trim(),
         phone,
-        firstName,
-        lastName,
+        firstName: formData.firstName.trim(),
+        lastName: formData.lastName.trim(),
         biologicalSex: formData.biologicalSex,
         dateOfBirth: formData.dateOfBirth,
         consentPrivacyPolicy: formData.privacyPolicy,
@@ -140,7 +192,8 @@ const SignUp = () => {
           {step === 1 && (
             <SignUpStep1Form
               defaultValues={{
-                name: formData.name,
+                firstName: formData.firstName,
+                lastName: formData.lastName,
                 email: formData.email,
                 phoneLocal: formData.phoneLocal,
                 countryCode: formData.countryCode,
@@ -223,14 +276,23 @@ const SignUp = () => {
                     <label htmlFor="state" className="text-sm font-medium leading-none">
                       State <span className="text-red-500">*</span>
                     </label>
-                    <Input
+                    <select
                       id="state"
                       name="state"
-                      placeholder="State"
                       value={formData.state}
                       onChange={handleInputChange}
-                      className={fieldErrors.state ? "border-red-500" : ""}
-                    />
+                      className={`flex h-9 w-full rounded-md border bg-transparent px-3 py-1 text-sm shadow-sm ${
+                        fieldErrors.state ? "border-red-500" : "border-input"
+                      }`}
+                    >
+                      <option value="">Select state</option>
+                      {INDIAN_STATES.map((stateName) => (
+                        <option key={stateName} value={stateName}>
+                          {stateName}
+                        </option>
+                      ))}
+                    </select>
+                    {fieldErrors.state && <p className="text-xs text-red-500">{fieldErrors.state}</p>}
                   </div>
                 </div>
 

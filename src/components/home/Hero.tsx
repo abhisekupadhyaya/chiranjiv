@@ -22,7 +22,8 @@ export function Hero() {
     console.log('Form submitted with data:', data);
     const params = new URLSearchParams();
     params.set('step', '2');
-    if (data.name) params.set('name', data.name);
+    if (data.firstName) params.set('firstName', data.firstName);
+    if (data.lastName) params.set('lastName', data.lastName);
     if (data.email) params.set('email', data.email);
     if (data.phoneLocal) params.set('phone', data.phoneLocal);
     if (data.referralCode) params.set('ref', data.referralCode);
