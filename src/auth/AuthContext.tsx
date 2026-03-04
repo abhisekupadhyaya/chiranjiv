@@ -1,224 +1,98 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import type { ReactNode } from 'react';
-import { 
-  signIn, 
-  signUp, 
-  signOut, 
-  getCurrentUser, 
-  fetchUserAttributes, 
-  confirmSignUp, 
-  resendSignUpCode,
-  resetPassword, 
-  confirmResetPassword,
-} from 'aws-amplify/auth';
-
-import type {
-  SignInInput,
-  SignUpInput,
-  ConfirmSignUpInput,
-  ResetPasswordOutput,
-  ResetPasswordInput,
-  ConfirmResetPasswordInput,
-  AuthUser,
-  FetchUserAttributesOutput
-} from 'aws-amplify/auth';
-
-import { configureAmplify } from './amplify-config';
-
-// Initialize Amplify
-configureAmplify();
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react"
+import type { ReactNode } from "react"
+import {
+  getCurrentUser,
+  isUnauthorizedError,
+  signupUser,
+  startLoginRedirect,
+  startLogoutRedirect,
+  type AuthUser,
+  type SignupInput,
+} from "./session"
 
 interface AuthContextType {
-  user: AuthUser | null;
-  userAttributes: FetchUserAttributesOutput | null;
-  loading: boolean;
-  error: string | null;
-  isAuthenticated: boolean;
-  login: (input: SignInInput) => Promise<any>;
-  register: (input: SignUpInput) => Promise<any>;
-  logout: () => Promise<void>;
-  confirmRegister: (input: ConfirmSignUpInput) => Promise<any>;
-  forgotPassword: (input: ResetPasswordInput) => Promise<ResetPasswordOutput>;
-  confirmNewPassword: (input: ConfirmResetPasswordInput) => Promise<void>;
-  resendVerificationCode: (username: string) => Promise<any>;
-  checkUser: () => Promise<any>;
-  setError: (error: string | null) => void;
+  user: AuthUser | null
+  loading: boolean
+  error: string | null
+  isAuthenticated: boolean
+  refreshAuth: () => Promise<void>
+  login: (returnTo?: string) => Promise<void>
+  logout: () => Promise<void>
+  signup: (payload: SignupInput) => Promise<{ success: boolean; message: string }>
+  setError: (error: string | null) => void
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<AuthUser | null>(null);
-  const [userAttributes, setUserAttributes] = useState<FetchUserAttributesOutput | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const [user, setUser] = useState<AuthUser | null>(null)
+  const [loading, setLoading] = useState<boolean>(true)
+  const [error, setError] = useState<string | null>(null)
 
-  const checkUser = async () => {
-    setLoading(true);
+  const refreshAuth = useCallback(async () => {
     try {
-      const currentUser = await getCurrentUser();
-      setUser(currentUser);
-      
-      try {
-        const attributes = await fetchUserAttributes();
-        setUserAttributes(attributes);
-      } catch (attrErr) {
-        console.warn('Error fetching user attributes', attrErr);
-      }
-      return null;
+      const current = await getCurrentUser()
+      setUser(current)
     } catch (err) {
-      console.log('No authenticated user', err);
-      setUser(null);
-      setUserAttributes(null);
-      return err;
+      if (isUnauthorizedError(err)) {
+        setUser(null)
+      } else {
+        const message = err instanceof Error ? err.message : "Failed to load session"
+        setError(message)
+        setUser(null)
+      }
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }, [])
 
   useEffect(() => {
-    checkUser();
-  }, []);
+    void refreshAuth()
+  }, [refreshAuth])
 
-  const login = async (input: SignInInput) => {
-    setLoading(true);
-    setError(null);
+  const login = useCallback(async (returnTo?: string) => {
+    setError(null)
+    startLoginRedirect(returnTo ?? window.location.href)
+  }, [])
+
+  const logout = useCallback(async () => {
+    setUser(null)
+    startLogoutRedirect()
+  }, [])
+
+  const signup = useCallback(async (payload: SignupInput) => {
+    setError(null)
     try {
-      const result = await signIn(input);
-      
-      // Match reference implementation: throw if user is not confirmed
-      if (!result.isSignedIn && result.nextStep?.signInStep === 'CONFIRM_SIGN_UP') {
-         const error: any = new Error('User is not confirmed.');
-         error.name = 'UserNotConfirmedException';
-         error.code = 'UserNotConfirmedException';
-         throw error;
-      }
-
-      // Only check user details if fully signed in and not waiting for confirmation
-      if (result.isSignedIn && result.nextStep?.signInStep !== 'CONFIRM_SIGN_UP') {
-        const checkErr = await checkUser();
-        if (checkErr) {
-          throw checkErr;
-        }
-      } else {
-        // If additional steps are needed (like confirmation), stop loading but don't error
-        setLoading(false);
-      }
-      
-      return result;
-    } catch (err: any) {
-      setError(err.message || 'Failed to sign in');
-      setLoading(false);
-      throw err;
+      return await signupUser(payload)
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Signup failed"
+      setError(message)
+      throw err
     }
-  };
+  }, [])
 
-  const register = async (input: SignUpInput) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const result = await signUp(input);
-      setLoading(false);
-      return result;
-    } catch (err: any) {
-      setError(err.message || 'Failed to sign up');
-      setLoading(false);
-      throw err;
-    }
-  };
+  const value = useMemo<AuthContextType>(
+    () => ({
+      user,
+      loading,
+      error,
+      isAuthenticated: !!user,
+      refreshAuth,
+      login,
+      logout,
+      signup,
+      setError,
+    }),
+    [user, loading, error, refreshAuth, login, logout, signup]
+  )
 
-  const confirmRegister = async (input: ConfirmSignUpInput) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const result = await confirmSignUp(input);
-      setLoading(false);
-      return result;
-    } catch (err: any) {
-      setError(err.message || 'Failed to confirm sign up');
-      setLoading(false);
-      throw err;
-    }
-  };
-
-  const logout = async () => {
-    setLoading(true);
-    try {
-      await signOut();
-      setUser(null);
-      setUserAttributes(null);
-    } catch (err: any) {
-      setError(err.message || 'Failed to sign out');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const forgotPassword = async (input: ResetPasswordInput) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const result = await resetPassword(input);
-      setLoading(false);
-      return result;
-    } catch (err: any) {
-      setError(err.message || 'Failed to initiate password reset');
-      setLoading(false);
-      throw err;
-    }
-  };
-
-  const confirmNewPassword = async (input: ConfirmResetPasswordInput) => {
-    setLoading(true);
-    setError(null);
-    try {
-      await confirmResetPassword(input);
-      setLoading(false);
-    } catch (err: any) {
-      setError(err.message || 'Failed to confirm new password');
-      setLoading(false);
-      throw err;
-    }
-  };
-
-  const resendVerificationCode = async (username: string) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const result = await resendSignUpCode({ username });
-      setLoading(false);
-      return result;
-    } catch (err: any) {
-      setError(err.message || 'Failed to resend verification code');
-      setLoading(false);
-      throw err;
-    }
-  };
-
-  const value = {
-    user,
-    userAttributes,
-    loading,
-    error,
-    isAuthenticated: !!user,
-    login,
-    register,
-    logout,
-    confirmRegister,
-    forgotPassword,
-    confirmNewPassword,
-    resendVerificationCode,
-    checkUser,
-    setError
-  };
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-};
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
+}
 
 export const useAuth = () => {
-  const context = useContext(AuthContext);
+  const context = useContext(AuthContext)
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider")
   }
-  return context;
-};
+  return context
+}

@@ -14,7 +14,7 @@ export const Navbar = memo(function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const location = useLocation()
   const navigate = useNavigate()
-  const { isAuthenticated, logout } = useAuth()
+  const { isAuthenticated, login, logout } = useAuth()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -118,9 +118,9 @@ export const Navbar = memo(function Navbar() {
              </DropdownMenuContent>
            </DropdownMenu>
           ) : (
-            <Link to="/signin">
-              <Button variant="ghost" className="hover:text-primary-600">Sign In</Button>
-            </Link>
+            <Button variant="ghost" className="hover:text-primary-600" onClick={() => void login(window.location.href)}>
+              Sign In
+            </Button>
           )}
 
           <DropdownMenu>
@@ -199,9 +199,16 @@ export const Navbar = memo(function Navbar() {
                   <Button variant="ghost" className="justify-start h-12 text-lg hover:text-primary-600 w-full" onClick={handleSignOut}>Sign Out</Button>
                 </>
               ) : (
-                <Link to="/signin" onClick={handleMobileNavClick}>
-                  <Button variant="ghost" className="justify-start h-12 text-lg hover:text-primary-600 w-full">Sign In</Button>
-                </Link>
+                <Button
+                  variant="ghost"
+                  className="justify-start h-12 text-lg hover:text-primary-600 w-full"
+                  onClick={() => {
+                    handleMobileNavClick()
+                    void login(window.location.href)
+                  }}
+                >
+                  Sign In
+                </Button>
               )}
              
               <div>
