@@ -231,6 +231,7 @@ const SignUp = () => {
                     id="dateOfBirth"
                     name="dateOfBirth"
                     type="date"
+                    lang="en-IN"
                     value={formData.dateOfBirth}
                     onChange={handleInputChange}
                     className={fieldErrors.dateOfBirth ? "border-red-500" : ""}
