@@ -14,9 +14,7 @@ const Team = lazy(() => import("@/pages/Team"))
 const Mission = lazy(() => import("@/pages/Mission"))
 const Blog = lazy(() => import("@/pages/Blog"))
 const FAQ = lazy(() => import("@/pages/FAQ"))
-const SignIn = lazy(() => import("@/pages/SignIn"))
 const SignUp = lazy(() => import("@/pages/SignUp"))
-const ForgotPassword = lazy(() => import("@/pages/ForgotPassword"))
 const Profile = lazy(() => import("@/pages/Profile"))
 const SampleReport = lazy(() => import("@/pages/SampleReport"))
 const KnowledgeHub = lazy(() => import("@/pages/KnowledgeHub"))
@@ -53,9 +51,7 @@ function App() {
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<Blog />} />
             <Route path="/faq" element={<FAQ />} />
-            <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/sample-report" element={<SampleReport />} />
             <Route path="/knowledge-hub" element={<KnowledgeHub />} />
             <Route path="/knowledge-hub/:slug" element={<KnowledgeHubPost />} />

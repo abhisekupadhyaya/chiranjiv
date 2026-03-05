@@ -51,6 +51,7 @@ const SignUp = () => {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const { signup, login, error, setError } = useAuth()
+  const profileReturnTo = `${window.location.origin}/profile`
   const [step, setStep] = useState<Step>(1)
   const [loading, setLoading] = useState(false)
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
@@ -416,7 +417,7 @@ const SignUp = () => {
                 </p>
               </div>
               <div className="flex flex-col gap-3 w-full">
-                <Button onClick={() => void login(`${window.location.origin}/profile`)} className="w-full">
+                <Button onClick={() => void login(profileReturnTo)} className="w-full">
                   Continue to sign in
                 </Button>
                 <Button variant="ghost" onClick={() => navigate("/")} className="text-sm">
@@ -431,9 +432,13 @@ const SignUp = () => {
           <CardFooter className="flex flex-col gap-2">
             <div className="text-center text-sm text-muted-foreground">
               Already have an account?{" "}
-              <Link to="/signin" className="font-medium text-primary hover:underline">
+              <button
+                type="button"
+                className="font-medium text-primary hover:underline"
+                onClick={() => void login(profileReturnTo)}
+              >
                 Sign in
-              </Link>
+              </button>
             </div>
           </CardFooter>
         )}

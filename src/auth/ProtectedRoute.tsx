@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import type { ReactNode } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
+import { startLoginRedirect } from './session';
 
 interface ProtectedRouteProps {
   children: ReactNode;
@@ -9,13 +9,13 @@ interface ProtectedRouteProps {
 
 export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const { isAuthenticated, loading } = useAuth();
-  const navigate = useNavigate();
+  const profileReturnTo = `${window.location.origin}/profile`;
 
   useEffect(() => {
     if (!loading && !isAuthenticated) {
-      navigate('/signin');
+      startLoginRedirect(profileReturnTo);
     }
-  }, [isAuthenticated, loading, navigate]);
+  }, [isAuthenticated, loading, profileReturnTo]);
 
   if (loading) {
     return <div className="flex justify-center items-center min-h-screen">Loading...</div>;

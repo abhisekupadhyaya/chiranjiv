@@ -1,6 +1,7 @@
 import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/auth";
 import {
   Dialog,
   DialogClose,
@@ -16,7 +17,9 @@ import { DNAHelix } from "@/components/home/DNAHelix";
 export function Hero() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const { login } = useAuth();
   const referralCode = searchParams.get('ref') || '';
+  const profileReturnTo = `${window.location.origin}/profile`;
 
   const handleFormSubmit = (data: Step1Data) => {
     console.log('Form submitted with data:', data);
@@ -273,9 +276,13 @@ export function Hero() {
               <CardFooter className="flex flex-col items-center gap-1 p-4 pt-0 sm:p-6 sm:pt-0 text-xs sm:text-sm text-foreground">
                 <div>
                   Already have an account?{" "}
-                  <Link to="/signin" className="ml-1 font-medium text-primary-600 hover:text-primary-500 hover:underline">
+                  <button
+                    type="button"
+                    className="ml-1 font-medium text-primary-600 hover:text-primary-500 hover:underline"
+                    onClick={() => void login(profileReturnTo)}
+                  >
                     Sign in
-                  </Link>
+                  </button>
                 </div>
                 <p className="text-xs text-muted-foreground text-center">
                   Your data is encrypted and never shared.{" "}

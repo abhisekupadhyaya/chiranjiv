@@ -15,6 +15,7 @@ export const Navbar = memo(function Navbar() {
   const location = useLocation()
   const navigate = useNavigate()
   const { isAuthenticated, login, logout } = useAuth()
+  const profileReturnTo = `${window.location.origin}/profile`
 
   useEffect(() => {
     const handleScroll = () => {
@@ -118,7 +119,7 @@ export const Navbar = memo(function Navbar() {
              </DropdownMenuContent>
            </DropdownMenu>
           ) : (
-            <Button variant="ghost" className="hover:text-primary-600" onClick={() => void login(window.location.href)}>
+            <Button variant="ghost" className="hover:text-primary-600" onClick={() => void login(profileReturnTo)}>
               Sign In
             </Button>
           )}
@@ -204,7 +205,7 @@ export const Navbar = memo(function Navbar() {
                   className="justify-start h-12 text-lg hover:text-primary-600 w-full"
                   onClick={() => {
                     handleMobileNavClick()
-                    void login(window.location.href)
+                    void login(profileReturnTo)
                   }}
                 >
                   Sign In
