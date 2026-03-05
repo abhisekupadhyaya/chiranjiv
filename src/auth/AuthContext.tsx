@@ -14,6 +14,7 @@ interface AuthContextType {
   user: AuthUser | null
   loading: boolean
   error: string | null
+  isLoggingOut: boolean
   isAuthenticated: boolean
   refreshAuth: () => Promise<void>
   login: (returnTo?: string) => Promise<void>
@@ -28,6 +29,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [user, setUser] = useState<AuthUser | null>(null)
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
+  const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false)
 
   const refreshAuth = useCallback(async () => {
     try {
@@ -52,10 +54,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const login = useCallback(async (returnTo?: string) => {
     setError(null)
+    setIsLoggingOut(false)
     startLoginRedirect(returnTo ?? window.location.href)
   }, [])
 
   const logout = useCallback(async () => {
+    setError(null)
+    setIsLoggingOut(true)
     setUser(null)
     startLogoutRedirect()
   }, [])
@@ -76,6 +81,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       user,
       loading,
       error,
+      isLoggingOut,
       isAuthenticated: !!user,
       refreshAuth,
       login,
@@ -83,7 +89,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       signup,
       setError,
     }),
-    [user, loading, error, refreshAuth, login, logout, signup]
+    [user, loading, error, isLoggingOut, refreshAuth, login, logout, signup]
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

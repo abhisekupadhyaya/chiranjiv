@@ -14,7 +14,7 @@ export const Navbar = memo(function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const location = useLocation()
   const navigate = useNavigate()
-  const { isAuthenticated, login, logout } = useAuth()
+  const { isAuthenticated, isLoggingOut, login, logout } = useAuth()
   const profileReturnTo = `${window.location.origin}/profile`
 
   useEffect(() => {
@@ -46,8 +46,10 @@ export const Navbar = memo(function Navbar() {
   }
 
   const handleSignOut = async () => {
-    await logout();
-    navigate('/');
+    if (isLoggingOut) {
+      return
+    }
+    await logout()
     setMobileMenuOpen(false)
   }
 
@@ -113,7 +115,10 @@ export const Navbar = memo(function Navbar() {
                <DropdownMenuItem asChild className="rounded-lg hover:bg-neutral-100/80 focus:bg-neutral-100/80 text-foreground hover:text-primary-600 cursor-pointer">
                  <Link to="/profile" className="w-full px-3 py-2">My Profile</Link>
                </DropdownMenuItem>
-               <DropdownMenuItem className="rounded-lg hover:bg-neutral-100/80 focus:bg-neutral-100/80 text-foreground hover:text-primary-600 cursor-pointer" onClick={handleSignOut}>
+              <DropdownMenuItem
+                className="rounded-lg hover:bg-neutral-100/80 focus:bg-neutral-100/80 text-foreground hover:text-primary-600 cursor-pointer"
+                onSelect={() => void handleSignOut()}
+              >
                  <span className="w-full px-3 py-2">Sign Out</span>
                </DropdownMenuItem>
              </DropdownMenuContent>
@@ -197,7 +202,14 @@ export const Navbar = memo(function Navbar() {
                    <Link to="/profile" onClick={handleMobileNavClick}>
                     <Button variant="ghost" className="justify-start h-12 text-lg hover:text-primary-600 w-full">Profile</Button>
                   </Link>
-                  <Button variant="ghost" className="justify-start h-12 text-lg hover:text-primary-600 w-full" onClick={handleSignOut}>Sign Out</Button>
+                  <Button
+                    variant="ghost"
+                    className="justify-start h-12 text-lg hover:text-primary-600 w-full"
+                    onClick={() => void handleSignOut()}
+                    disabled={isLoggingOut}
+                  >
+                    Sign Out
+                  </Button>
                 </>
               ) : (
                 <Button

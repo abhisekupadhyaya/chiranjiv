@@ -8,17 +8,21 @@ interface ProtectedRouteProps {
 }
 
 export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-  const { isAuthenticated, loading } = useAuth();
+  const { isAuthenticated, loading, isLoggingOut } = useAuth();
   const profileReturnTo = `${window.location.origin}/profile`;
 
   useEffect(() => {
-    if (!loading && !isAuthenticated) {
+    if (!loading && !isAuthenticated && !isLoggingOut) {
       startLoginRedirect(profileReturnTo);
     }
-  }, [isAuthenticated, loading, profileReturnTo]);
+  }, [isAuthenticated, loading, isLoggingOut, profileReturnTo]);
 
   if (loading) {
     return <div className="flex justify-center items-center min-h-screen">Loading...</div>;
+  }
+
+  if (isLoggingOut) {
+    return null;
   }
 
   if (!isAuthenticated) {

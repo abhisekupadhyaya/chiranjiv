@@ -303,7 +303,7 @@ const ShareButtonGrid = ({ referralUrl, showReferralLink = true }: ShareButtonGr
 }
 
 const Profile = () => {
-  const { user, logout } = useAuth()
+  const { user, logout, isLoggingOut } = useAuth()
   const [stats, setStats] = useState<WaitlistStats | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
@@ -352,8 +352,13 @@ const Profile = () => {
         <div className="flex flex-col gap-1 mb-8">
           <div className="flex items-center justify-between">
             <h1 className="text-3xl font-light tracking-tight text-foreground">My Profile</h1>
-            <Button variant="outline" onClick={() => void logout()} className="hover:scale-105 transition-transform">
-              Sign Out
+            <Button
+              variant="outline"
+              onClick={() => void logout()}
+              className="hover:scale-105 transition-transform"
+              disabled={isLoggingOut}
+            >
+              {isLoggingOut ? "Signing Out..." : "Sign Out"}
             </Button>
           </div>
           <p className="text-muted-foreground">Manage your account and track your waitlist status</p>
