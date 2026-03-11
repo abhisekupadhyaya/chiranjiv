@@ -1,40 +1,5 @@
 import { config } from "@/config/env"
-import { ApiError, apiFetch } from "@/lib/api/client"
-
-export type AccountStatus = "waitlisted" | "onboarding" | "onboarded" | "blocked"
-
-export type AuthUser = {
-  id: string
-  email: string
-  name: string
-  roles: string[]
-  accountStatus: AccountStatus
-  onboardingStage?: string | null
-}
-
-type AuthMeResponse = {
-  userId: string
-  email: string
-  displayName?: string | null
-  roles: string[]
-  accountStatus: AccountStatus
-  onboardingStage?: string | null
-}
-
-export async function getCurrentUser(): Promise<AuthUser> {
-  const response = await apiFetch<AuthMeResponse>("/auth/me", {
-    method: "GET",
-  })
-
-  return {
-    id: response.userId,
-    email: response.email,
-    name: response.displayName?.trim() || response.email.split("@")[0] || response.email,
-    roles: response.roles.map((item) => item.toLowerCase()),
-    accountStatus: response.accountStatus,
-    onboardingStage: response.onboardingStage,
-  }
-}
+import { apiFetch } from "@/lib/api/client"
 
 function authBaseUrl(): URL {
   const base = config.apiBaseUrl.endsWith("/") ? config.apiBaseUrl : `${config.apiBaseUrl}/`
@@ -47,14 +12,6 @@ export function startLoginRedirect(returnTo?: string): void {
     url.searchParams.set("return_to", returnTo)
   }
   window.location.assign(url.toString())
-}
-
-export function startLogoutRedirect(): void {
-  window.location.assign(new URL("auth/logout/start", authBaseUrl()).toString())
-}
-
-export function isUnauthorizedError(error: unknown): boolean {
-  return error instanceof ApiError && error.status === 401
 }
 
 export type SignupAddressInput = {
@@ -89,17 +46,3 @@ export async function signupUser(payload: SignupInput) {
   })
 }
 
-export type WaitlistStats = {
-  status?: AccountStatus | null
-  rank?: number | null
-  totalUsers: number
-  totalReferrals: number
-  referralsCount?: number | null
-  referralCode?: string | null
-}
-
-export async function getWaitlistStats() {
-  return apiFetch<WaitlistStats>("/waitlist/stats", {
-    method: "GET",
-  })
-}

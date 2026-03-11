@@ -2,7 +2,7 @@ import { useState, useEffect, memo } from "react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Menu, ChevronDown, User } from "lucide-react"
+import { Menu, ChevronDown } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import { useAuth } from "@/auth"
@@ -14,8 +14,7 @@ export const Navbar = memo(function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const location = useLocation()
   const navigate = useNavigate()
-  const { isAuthenticated, isLoggingOut, login, logout } = useAuth()
-  const profileReturnTo = `${window.location.origin}/profile`
+  const { login } = useAuth()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,14 +41,6 @@ export const Navbar = memo(function Navbar() {
         }
       }, 50)
     }
-    setMobileMenuOpen(false)
-  }
-
-  const handleSignOut = async () => {
-    if (isLoggingOut) {
-      return
-    }
-    await logout()
     setMobileMenuOpen(false)
   }
 
@@ -99,35 +90,9 @@ export const Navbar = memo(function Navbar() {
             </DropdownMenuContent>
           </DropdownMenu>
           <Button variant="ghost" className="hover:text-primary-600" onClick={() => handleHashNavigation('#how-it-works')}>How It Works</Button>
-          {isAuthenticated ? (
-             <DropdownMenu>
-             <DropdownMenuTrigger asChild>
-               <Button variant="ghost" className="hover:text-primary-600 flex items-center gap-1">
-                 <User className="w-4 h-4" />
-                 Profile
-                 <ChevronDown className="w-4 h-4" />
-               </Button>
-             </DropdownMenuTrigger>
-             <DropdownMenuContent 
-               align="end" 
-               className="min-w-[160px] rounded-xl border border-neutral-1000/60 bg-background/80 backdrop-blur-md shadow-sm p-1.5"
-             >
-               <DropdownMenuItem asChild className="rounded-lg hover:bg-neutral-100/80 focus:bg-neutral-100/80 text-foreground hover:text-primary-600 cursor-pointer">
-                 <Link to="/profile" className="w-full px-3 py-2">My Profile</Link>
-               </DropdownMenuItem>
-              <DropdownMenuItem
-                className="rounded-lg hover:bg-neutral-100/80 focus:bg-neutral-100/80 text-foreground hover:text-primary-600 cursor-pointer"
-                onSelect={() => void handleSignOut()}
-              >
-                 <span className="w-full px-3 py-2">Sign Out</span>
-               </DropdownMenuItem>
-             </DropdownMenuContent>
-           </DropdownMenu>
-          ) : (
-            <Button variant="ghost" className="hover:text-primary-600" onClick={() => void login(profileReturnTo)}>
-              Sign In
-            </Button>
-          )}
+          <Button variant="ghost" className="hover:text-primary-600" onClick={() => void login()}>
+            Sign In
+          </Button>
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -160,11 +125,9 @@ export const Navbar = memo(function Navbar() {
         </nav>
 
         <div className="hidden items-center gap-4 lg:flex">
-          {!isAuthenticated && (
-             <Link to="/signup">
-               <Button>Request Access</Button>
-             </Link>
-          )}
+          <Link to="/signup">
+            <Button>Request Access</Button>
+          </Link>
         </div>
 
         {/* Mobile Menu */}
@@ -197,32 +160,16 @@ export const Navbar = memo(function Navbar() {
                 )}
               </div>
               <Button variant="ghost" className="justify-start h-12 text-lg hover:text-primary-600" onClick={() => handleHashNavigation('#how-it-works')}>How It Works</Button>
-              {isAuthenticated ? (
-                <>
-                   <Link to="/profile" onClick={handleMobileNavClick}>
-                    <Button variant="ghost" className="justify-start h-12 text-lg hover:text-primary-600 w-full">Profile</Button>
-                  </Link>
-                  <Button
-                    variant="ghost"
-                    className="justify-start h-12 text-lg hover:text-primary-600 w-full"
-                    onClick={() => void handleSignOut()}
-                    disabled={isLoggingOut}
-                  >
-                    Sign Out
-                  </Button>
-                </>
-              ) : (
-                <Button
-                  variant="ghost"
-                  className="justify-start h-12 text-lg hover:text-primary-600 w-full"
-                  onClick={() => {
-                    handleMobileNavClick()
-                    void login(profileReturnTo)
-                  }}
-                >
-                  Sign In
-                </Button>
-              )}
+              <Button
+                variant="ghost"
+                className="justify-start h-12 text-lg hover:text-primary-600 w-full"
+                onClick={() => {
+                  handleMobileNavClick()
+                  void login()
+                }}
+              >
+                Sign In
+              </Button>
              
               <div>
                 <Button 
@@ -253,15 +200,11 @@ export const Navbar = memo(function Navbar() {
               <Link to="/faq" onClick={handleMobileNavClick}>
                 <Button variant="ghost" className="justify-start h-12 text-lg hover:text-primary-600">FAQ</Button>
               </Link>
-              
-              {!isAuthenticated && (
-                <>
-                  <div className="my-4 border-t border-neutral-1000/60" />
-                  <Link to="/signup" onClick={handleMobileNavClick}>
-                    <Button className="w-full h-12 text-lg">Request Access</Button>
-                  </Link>
-                </>
-              )}
+
+              <div className="my-4 border-t border-neutral-1000/60" />
+              <Link to="/signup" onClick={handleMobileNavClick}>
+                <Button className="w-full h-12 text-lg">Request Access</Button>
+              </Link>
             </nav>
           </SheetContent>
         </Sheet>

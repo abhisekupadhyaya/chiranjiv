@@ -19,7 +19,6 @@ export function Hero() {
   const [searchParams] = useSearchParams();
   const { login } = useAuth();
   const referralCode = searchParams.get('ref') || '';
-  const profileReturnTo = `${window.location.origin}/profile`;
 
   const handleFormSubmit = (data: Step1Data) => {
     console.log('Form submitted with data:', data);
@@ -279,7 +278,7 @@ export function Hero() {
                   <button
                     type="button"
                     className="ml-1 font-medium text-primary-600 hover:text-primary-500 hover:underline"
-                    onClick={() => void login(profileReturnTo)}
+                    onClick={() => void login()}
                   >
                     Sign in
                   </button>

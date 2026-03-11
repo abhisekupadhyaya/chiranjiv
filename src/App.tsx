@@ -3,7 +3,6 @@ import { Suspense, lazy } from "react"
 import { Navbar } from "@/components/Navbar"
 import { Footer } from "@/components/Footer"
 import { ScrollToTop } from "@/components/ScrollToTop"
-import { ProtectedRoute } from "@/auth"
 import { LoadingSpinner } from "@/components/ui/loading-spinner"
 
 const Home = lazy(() => import("@/pages/Home"))
@@ -15,7 +14,6 @@ const Mission = lazy(() => import("@/pages/Mission"))
 const Blog = lazy(() => import("@/pages/Blog"))
 const FAQ = lazy(() => import("@/pages/FAQ"))
 const SignUp = lazy(() => import("@/pages/SignUp"))
-const Profile = lazy(() => import("@/pages/Profile"))
 const SampleReport = lazy(() => import("@/pages/SampleReport"))
 const KnowledgeHub = lazy(() => import("@/pages/KnowledgeHub"))
 const KnowledgeHubPost = lazy(() => import("@/pages/KnowledgeHubPost"))
@@ -62,14 +60,6 @@ function App() {
             <Route path="/careers/software-engineering-intern" element={<SoftwareEngineeringIntern />} />
             <Route path="/careers/chief-scientific-officer" element={<ChiefScientificOfficer />} />
             <Route path="/careers/chief-technology-officer" element={<ChiefTechnologyOfficer />} />
-            <Route 
-              path="/profile" 
-              element={
-                <ProtectedRoute>
-                  <Profile />
-                </ProtectedRoute>
-              } 
-            />
           </Routes>
           </Suspense>
         </div>
