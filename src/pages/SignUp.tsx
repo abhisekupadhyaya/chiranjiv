@@ -557,10 +557,9 @@ const SignUp = () => {
                 )}
 
                 <Button
-                  variant="ghost"
                   onClick={handleResendVerification}
                   disabled={resending}
-                  className="w-full text-sm"
+                  className="w-full text-sm bg-green-600 text-white hover:bg-green-700 focus-visible:ring-green-600"
                 >
                   {resending ? 'Sending...' : 'Resend verification email'}
                 </Button>
