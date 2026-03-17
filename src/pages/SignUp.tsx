@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import type { FormEvent, ChangeEvent } from 'react';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { useAuth } from '@/auth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
-import { Eye, EyeOff, MapPin, Calendar, Lock, Mail, Copy } from 'lucide-react';
+import { Eye, EyeOff, MapPin, Calendar, Lock, Mail } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { SignUpStep1Form, type Step1Data } from '@/components/auth/SignUpStep1Form';
 import { postWaitlistSignup, type WaitlistSignupRequest } from '@/services/api';
@@ -15,10 +15,48 @@ const toE164 = (countryCode: string, localNumber: string): string => {
   return countryCode + digitsOnly
 }
 
+const INDIAN_STATES_AND_UT: string[] = [
+  'Andhra Pradesh',
+  'Arunachal Pradesh',
+  'Assam',
+  'Bihar',
+  'Chhattisgarh',
+  'Goa',
+  'Gujarat',
+  'Haryana',
+  'Himachal Pradesh',
+  'Jharkhand',
+  'Karnataka',
+  'Kerala',
+  'Madhya Pradesh',
+  'Maharashtra',
+  'Manipur',
+  'Meghalaya',
+  'Mizoram',
+  'Nagaland',
+  'Odisha',
+  'Punjab',
+  'Rajasthan',
+  'Sikkim',
+  'Tamil Nadu',
+  'Telangana',
+  'Tripura',
+  'Uttar Pradesh',
+  'Uttarakhand',
+  'West Bengal',
+  'Andaman and Nicobar Islands',
+  'Chandigarh',
+  'Dadra and Nagar Haveli and Daman and Diu',
+  'Delhi',
+  'Jammu and Kashmir',
+  'Ladakh',
+  'Lakshadweep',
+  'Puducherry',
+]
+
 const SignUp = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const navigate = useNavigate();
-  const { register, error, setError } = useAuth();
+  const { register, error, setError, resendVerificationCode } = useAuth();
   
   // Read URL params once at component initialization
   const initialStep = parseInt(searchParams.get('step') || '1');
@@ -63,9 +101,9 @@ const SignUp = () => {
   // Validation State
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
-  // Success State
-  const [generatedReferralCode, setGeneratedReferralCode] = useState('');
-  const [referralLinkCopied, setReferralLinkCopied] = useState(false);
+  // Resend verification (step 3)
+  const [resending, setResending] = useState(false);
+  const [resendMessage, setResendMessage] = useState<'success' | 'error' | null>(null);
 
   // Sync key state to URL so it persists on refresh
   useEffect(() => {
@@ -148,15 +186,6 @@ const SignUp = () => {
     if (!ok) {
       // We log the error but still proceed to step 3 as the account is created
       console.error('Waitlist API error:', data);
-      // Optional: setError('Account created but waitlist registration failed.');
-    } else {
-       // @ts-ignore
-       if (data.referralCode) {
-         // @ts-ignore
-         setGeneratedReferralCode(data.referralCode);
-         // @ts-ignore
-         try { localStorage.setItem('cjv_referral_code', data.referralCode); } catch(e) {}
-       }
     }
   };
 
@@ -233,11 +262,13 @@ const SignUp = () => {
     }
   };
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target;
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const target = e.target;
+    const name = target.name;
+    const value = target instanceof HTMLInputElement && target.type === 'checkbox' ? target.checked : target.value;
     setFormData(prev => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: value
     }));
     if (fieldErrors[name]) {
       setFieldErrors(prev => {
@@ -248,11 +279,18 @@ const SignUp = () => {
     }
   };
 
-  const copyReferralMessage = () => {
-    const message = `Join me on Project Chiranjiv - India's first free full-genome sequencing platform! Use my referral code ${generatedReferralCode} to skip the queue. https://chiranjiv.com`;
-    navigator.clipboard.writeText(message);
-    setReferralLinkCopied(true);
-    setTimeout(() => setReferralLinkCopied(false), 2000);
+  const handleResendVerification = async () => {
+    setResendMessage(null);
+    setResending(true);
+    try {
+      await resendVerificationCode(formData.email);
+      setResendMessage('success');
+    } catch (err: any) {
+      setResendMessage('error');
+      console.error('Failed to resend verification email:', err);
+    } finally {
+      setResending(false);
+    }
   };
 
   return (
@@ -324,13 +362,22 @@ const SignUp = () => {
                     </div>
                     <div className="space-y-2">
                        <label htmlFor="state" className="text-sm font-medium leading-none">State <span className="text-red-500">*</span></label>
-                       <Input 
-                        name="state" 
-                        placeholder="State" 
-                        value={formData.state} 
+                       <select
+                        id="state"
+                        name="state"
+                        value={formData.state}
                         onChange={handleInputChange}
-                        className={fieldErrors.state ? "border-red-500" : ""}
-                       />
+                        className={cn(
+                          "flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+                          fieldErrors.state && "border-red-500"
+                        )}
+                       >
+                         <option value="">Select state</option>
+                         {INDIAN_STATES_AND_UT.map((s) => (
+                           <option key={s} value={s}>{s}</option>
+                         ))}
+                       </select>
+                       {fieldErrors.state && <p className="text-xs text-red-500">{fieldErrors.state}</p>}
                     </div>
                   </div>
                   
@@ -459,20 +506,6 @@ const SignUp = () => {
                     <div className="flex items-start gap-2">
                       <input 
                         type="checkbox" 
-                        id="researchConsent" 
-                        name="researchConsent"
-                        checked={formData.researchConsent}
-                        onChange={handleInputChange}
-                        className="mt-1 h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
-                      />
-                      <label htmlFor="researchConsent" className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                        I agree to be contacted about participating in medical research studies <span className="text-muted-foreground font-normal">(Optional)</span>
-                      </label>
-                    </div>
-
-                    <div className="flex items-start gap-2">
-                      <input 
-                        type="checkbox" 
                         id="marketingConsent" 
                         name="marketingConsent"
                         checked={formData.marketingConsent}
@@ -516,32 +549,21 @@ const SignUp = () => {
                   </p>
                 </div>
 
-                {generatedReferralCode && (
-                  <div className="w-full bg-secondary/10 backdrop-blur-sm rounded-xl p-6 border border-secondary/20 shadow-inner">
-                    <p className="text-xs sm:text-sm text-muted-foreground font-light mb-3 tracking-tight">Your Referral Code</p>
-                    <p className="text-3xl sm:text-4xl font-light text-primary font-mono tracking-tight mb-3">{generatedReferralCode}</p>
-                    <p className="text-xs text-muted-foreground font-light mb-4">Share this code with friends to move up the waitlist</p>
-                    
-                    <Button 
-                      variant="outline" 
-                      size="sm"
-                      onClick={copyReferralMessage} 
-                      className="w-full gap-2"
-                    >
-                      <Copy className="h-3 w-3" />
-                      {referralLinkCopied ? "Copied!" : "Copy Referral Message"}
-                    </Button>
-                  </div>
+                {resendMessage === 'success' && (
+                  <p className="text-sm text-green-600">Verification email sent! Please check your inbox and spam folder.</p>
+                )}
+                {resendMessage === 'error' && (
+                  <p className="text-sm text-red-500">Failed to resend. Please try again later.</p>
                 )}
 
-                <div className="flex flex-col gap-3 w-full">
-                  <Button onClick={() => navigate('/signin')} className="w-full">
-                    Go to Sign In
-                  </Button>
-                  <Button variant="ghost" onClick={() => setStep(1)} className="text-sm">
-                    Resend or change email
-                  </Button>
-                </div>
+                <Button
+                  variant="ghost"
+                  onClick={handleResendVerification}
+                  disabled={resending}
+                  className="w-full text-sm"
+                >
+                  {resending ? 'Sending...' : 'Resend verification email'}
+                </Button>
              </div>
           )}
         </CardContent>
