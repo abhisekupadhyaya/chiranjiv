@@ -422,14 +422,14 @@ const Profile = () => {
           
           <div className="text-center mb-8">
             <h2 className="text-xl sm:text-2xl font-light text-foreground mb-2">
-              Share your personal link with friends, family, or your fitness groups.
+              Share your referral link with friends, family, or fitness groups
             </h2>
           </div>
 
           {/* Always visible announcement text */}
           <div className="relative text-left mb-8">
             <p className="text-base sm:text-lg text-muted-foreground font-light leading-relaxed">
-              The more people you invite, the faster you move up! Jump the queue for free kits and priority reports by spreading the word.
+              The more people you invite, the faster you move up! Jump the queue for priority testing and report by spreading the word.
             </p>
           </div>
 
@@ -527,7 +527,7 @@ const Profile = () => {
           {/* Always visible timeline banner */}
           <div className="text-center pt-8 mt-8 border-t border-border/20">
             <p className="text-sm font-medium text-muted-foreground/80">
-              Testing kits to be sent out in Q1 to early registrants & top referrers
+              Testing to start in Q1 for early registrants and top referrers
             </p>
           </div>
         </Card>
