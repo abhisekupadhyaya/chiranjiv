@@ -121,3 +121,8 @@
     transform: rotate(360deg);
   }
 }
+
+/* Home hero: hide referral input; value still comes from ?ref= and submits with form */
+.home-hero-step1 form > div:has(#referralCode) {
+  display: none;
+}

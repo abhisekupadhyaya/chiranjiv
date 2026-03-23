@@ -262,12 +262,14 @@ export function Hero() {
                 </p>
               </CardHeader>
               <CardContent className="px-4 pb-4 pt-0 sm:px-6 sm:pb-6 sm:pt-0">
-                <SignUpStep1Form 
-                  key={referralCode}
-                  defaultValues={{ referralCode }}
-                  onSubmit={handleFormSubmit} 
-                  submitLabel="Request Access"
-                />
+                <div className="home-hero-step1">
+                  <SignUpStep1Form
+                    key={referralCode}
+                    defaultValues={{ referralCode }}
+                    onSubmit={handleFormSubmit}
+                    submitLabel="Request Access"
+                  />
+                </div>
               </CardContent>
               <CardFooter className="flex flex-col items-center gap-1 p-4 pt-0 sm:p-6 sm:pt-0 text-xs sm:text-sm text-foreground">
                 <div>

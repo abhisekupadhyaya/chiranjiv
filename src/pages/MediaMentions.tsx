@@ -1,27 +1,7 @@
-import { Link } from 'react-router-dom'
 import { mediaMentions } from '@/data/media'
-import { Badge } from '@/components/ui/badge'
+import { ExternalLink } from 'lucide-react'
 
 export default function MediaMentions() {
-  const getPlatformBadgeColor = (platform: string) => {
-    switch (platform) {
-      case 'workshop':
-        return 'bg-purple-500/10 text-purple-600 border-purple-500/20'
-      case 'article':
-        return 'bg-blue-500/10 text-blue-600 border-blue-500/20'
-      case 'event':
-        return 'bg-green-500/10 text-green-600 border-green-500/20'
-      case 'press':
-        return 'bg-orange-500/10 text-orange-600 border-orange-500/20'
-      default:
-        return 'bg-neutral-500/10 text-neutral-600 border-neutral-500/20'
-    }
-  }
-
-  const getPlatformLabel = (platform: string) => {
-    return platform.charAt(0).toUpperCase() + platform.slice(1)
-  }
-
   return (
     <main className="relative w-full min-h-screen overflow-hidden">
       {/* Background gradient */}
@@ -43,7 +23,7 @@ export default function MediaMentions() {
             </h1>
             <div className="max-w-3xl mx-auto">
               <p className="text-lg sm:text-xl text-neutral-600 text-pretty leading-relaxed font-light">
-                Stay updated with our workshops, interviews, and efforts to make genomic health accessible to all Indians.
+                External coverage and third-party validation of Chiranjiv's work in genomics and preventive healthcare.
               </p>
             </div>
           </div>
@@ -51,61 +31,57 @@ export default function MediaMentions() {
           {/* Media Grid */}
           <div className="flex flex-wrap gap-6 max-w-7xl mx-auto">
             {mediaMentions.map((media) => (
-              <Link 
+              <a
                 key={media.id} 
-                to={`/media-mentions/${media.slug}`} 
+                href={media.externalUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group block w-full md:w-[calc(50%-0.75rem)]"
               >
                 <article className="relative overflow-hidden rounded-2xl border border-white/40 bg-white/40 shadow-lg shadow-black/5 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-white/60 hover:bg-white/60 hover:shadow-xl hover:shadow-black/10 h-full flex flex-col">
                   {/* Glass highlight effect on top edge */}
                   <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent opacity-50" />
-                  
-                  {/* Thumbnail Image */}
-                  {media.thumbnailUrl ? (
-                    <div className="relative aspect-video w-full overflow-hidden bg-neutral-900">
-                      <img
-                        src={media.thumbnailUrl}
-                        alt={media.title}
-                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                        loading="lazy"
-                      />
-                      {/* Subtle overlay on hover */}
-                      <div className="absolute inset-0 bg-black/0 transition-colors group-hover:bg-black/10" />
+
+                  <div className="relative aspect-video w-full overflow-hidden border-b border-white/30">
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-secondary/10 to-accent/15" />
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.25),transparent_60%)]" />
+                    <div className="relative h-full w-full p-5 flex items-end">
+                      <p className="text-sm sm:text-base font-medium tracking-wide text-neutral-200/90">
+                        {media.publication}
+                      </p>
                     </div>
-                  ) : (
-                    <div className="relative aspect-video w-full overflow-hidden bg-gradient-to-br from-primary/15 via-secondary/10 to-accent/15 border-b border-white/30">
-                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.25),transparent_60%)]" />
-                      <div className="relative h-full w-full flex items-end p-6">
-                        <p className="text-sm sm:text-base font-medium tracking-wide text-neutral-200/90">
-                          Media Coverage
-                        </p>
-                      </div>
-                    </div>
-                  )}
-                  
+                    <img
+                      src={media.coverImage || media.publicationLogo}
+                      alt={`${media.publication} cover`}
+                      className="absolute inset-0 h-full w-full object-cover"
+                      loading="lazy"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none'
+                      }}
+                    />
+                  </div>
+
                   {/* Content */}
                   <div className="p-6 sm:p-8 flex-1 flex flex-col">
-                    <div className="flex items-center gap-3 mb-4">
-                      <Badge className={`${getPlatformBadgeColor(media.platform)} border font-medium`}>
-                        {getPlatformLabel(media.platform)}
-                      </Badge>
+                    <div className="mb-4">
                       <span className="text-xs sm:text-sm text-neutral-500 font-light">{media.date}</span>
                     </div>
                     
                     <h2 className="text-xl sm:text-2xl font-light text-neutral-200 mb-3 group-hover:text-primary-600 transition-colors text-balance leading-tight tracking-tight">
-                      {media.title}
+                      {media.headline}
                     </h2>
                     
                     <p className="text-sm sm:text-base text-neutral-600 mb-4 leading-relaxed font-light flex-1">
-                      {media.description}
+                      {media.excerpt}
                     </p>
                     
-                    <div className="text-sm font-medium text-primary-600 mt-auto">
-                      View Coverage →
+                    <div className="inline-flex items-center gap-2 text-sm font-medium text-primary-600 mt-auto">
+                      {media.ctaLabel} →
+                      <ExternalLink className="h-4 w-4" />
                     </div>
                   </div>
                 </article>
-              </Link>
+              </a>
             ))}
           </div>
 

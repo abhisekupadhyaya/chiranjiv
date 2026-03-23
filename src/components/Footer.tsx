@@ -65,10 +65,10 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  to="/blog"
+                  to="/learn/insights"
                   className="hover:text-primary-300 transition-colors text-left"
                 >
-                  Blogs
+                  Insights
                 </Link>
               </li>
             </ul>

@@ -126,7 +126,7 @@ export const Navbar = memo(function Navbar() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="hover:text-primary-600 flex items-center gap-1">
-                Media & Insights
+                Learn
                 <ChevronDown className="w-4 h-4" />
               </Button>
             </DropdownMenuTrigger>
@@ -135,13 +135,10 @@ export const Navbar = memo(function Navbar() {
               className="min-w-[160px] rounded-xl border border-neutral-1000/60 bg-background/80 backdrop-blur-md shadow-sm p-1.5"
             >
               <DropdownMenuItem asChild className="rounded-lg hover:bg-neutral-100/80 focus:bg-neutral-100/80 text-foreground hover:text-primary-600 cursor-pointer">
-                <Link to="/blog" className="w-full px-3 py-2">Blog</Link>
+                <Link to="/learn/insights" className="w-full px-3 py-2">Insights</Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild className="rounded-lg hover:bg-neutral-100/80 focus:bg-neutral-100/80 text-foreground hover:text-primary-600 cursor-pointer">
-                <Link to="/knowledge-hub" className="w-full px-3 py-2">Knowledge Hub</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild className="rounded-lg hover:bg-neutral-100/80 focus:bg-neutral-100/80 text-foreground hover:text-primary-600 cursor-pointer">
-                <Link to="/media-mentions" className="w-full px-3 py-2">Media Mentions</Link>
+                <Link to="/learn/media-mentions" className="w-full px-3 py-2">Media Mentions</Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -210,18 +207,15 @@ export const Navbar = memo(function Navbar() {
                   className="justify-start h-12 text-lg hover:text-primary-600 w-full flex items-center justify-between"
                   onClick={() => setMediaInsightsOpen(!mediaInsightsOpen)}
                 >
-                  Media & Insights
+                  Learn
                   <ChevronDown className={cn("w-4 h-4 transition-transform", mediaInsightsOpen && "rotate-180")} />
                 </Button>
                 {mediaInsightsOpen && (
                   <div className="ml-4 mt-2 flex flex-col gap-2">
-                    <Link to="/blog" onClick={handleMobileNavClick}>
-                      <Button variant="ghost" className="justify-start h-10 text-base hover:text-primary-600 w-full">Blog</Button>
+                    <Link to="/learn/insights" onClick={handleMobileNavClick}>
+                      <Button variant="ghost" className="justify-start h-10 text-base hover:text-primary-600 w-full">Insights</Button>
                     </Link>
-                    <Link to="/knowledge-hub" onClick={handleMobileNavClick}>
-                      <Button variant="ghost" className="justify-start h-10 text-base hover:text-primary-600 w-full">Knowledge Hub</Button>
-                    </Link>
-                    <Link to="/media-mentions" onClick={handleMobileNavClick}>
+                    <Link to="/learn/media-mentions" onClick={handleMobileNavClick}>
                       <Button variant="ghost" className="justify-start h-10 text-base hover:text-primary-600 w-full">Media Mentions</Button>
                     </Link>
                   </div>

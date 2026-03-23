@@ -93,9 +93,7 @@ const SignUp = () => {
     privacyPolicy: false,
     termsOfService: false,
     referralCode: initialRef,
-    dataUsagePolicy: false,
     researchConsent: false,
-    marketingConsent: false,
   });
 
   // Validation State
@@ -140,7 +138,6 @@ const SignUp = () => {
 
     if (!formData.privacyPolicy) errors.privacyPolicy = 'You must accept the Privacy Policy';
     if (!formData.termsOfService) errors.termsOfService = 'You must accept the Terms of Service';
-    if (!formData.dataUsagePolicy) errors.dataUsagePolicy = 'You must accept the Data Usage Policy';
 
     setFieldErrors(errors);
     return Object.keys(errors).length === 0;
@@ -175,9 +172,7 @@ const SignUp = () => {
       age: parseInt(formData.age),
       consentPrivacyPolicy: formData.privacyPolicy ? 'v0.1' : null,
       consentTermsOfService: formData.termsOfService ? 'v0.1' : null,
-      consentDataUsagePolicy: formData.dataUsagePolicy ? 'v0.1' : null,
       consentResearchContact: formData.researchConsent ? 'v0.1' : null,
-      consentMarketing: formData.marketingConsent ? 'v0.1' : null,
       referralCode: formData.referralCode || undefined,
     };
 
@@ -214,9 +209,7 @@ const SignUp = () => {
         address: fullAddress,
         'custom:age': formData.age,
         'custom:referral_code': formData.referralCode || '',
-        'custom:consent_data': formData.dataUsagePolicy ? 'true' : 'false',
         'custom:consent_research': formData.researchConsent ? 'true' : 'false',
-        'custom:consent_marketing': formData.marketingConsent ? 'true' : 'false',
       };
 
       let result;
@@ -458,64 +451,36 @@ const SignUp = () => {
                   </div>
 
                   <div className="space-y-3 pt-2">
-                    <div className="flex items-start gap-2">
+                    <div className="flex items-center gap-2">
                       <input 
                         type="checkbox" 
                         id="privacyPolicy" 
                         name="privacyPolicy"
                         checked={formData.privacyPolicy}
                         onChange={handleInputChange}
-                        className="mt-1 h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                        className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
                       />
                       <label htmlFor="privacyPolicy" className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                        I accept the <Link to="/privacy-policy" className="text-primary hover:underline">Privacy Policy</Link> <span className="text-red-500">*</span>
+                        I accept the <Link to="/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Privacy Policy</Link> <span className="text-red-500">*</span>
                       </label>
                     </div>
                     {fieldErrors.privacyPolicy && <p className="text-xs text-red-500 ml-6">{fieldErrors.privacyPolicy}</p>}
 
-                    <div className="flex items-start gap-2">
+                    <div className="flex items-center gap-2">
                       <input 
                         type="checkbox" 
                         id="termsOfService" 
                         name="termsOfService"
                         checked={formData.termsOfService}
                         onChange={handleInputChange}
-                        className="mt-1 h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                        className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
                       />
                       <label htmlFor="termsOfService" className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                        I accept the <Link to="/terms-of-service" className="text-primary hover:underline">Terms of Service</Link> <span className="text-red-500">*</span>
+                        I accept the <Link to="/terms-of-service" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Terms of Service</Link> <span className="text-red-500">*</span>
                       </label>
                     </div>
                     {fieldErrors.termsOfService && <p className="text-xs text-red-500 ml-6">{fieldErrors.termsOfService}</p>}
 
-                    <div className="flex items-start gap-2">
-                      <input 
-                        type="checkbox" 
-                        id="dataUsagePolicy" 
-                        name="dataUsagePolicy"
-                        checked={formData.dataUsagePolicy}
-                        onChange={handleInputChange}
-                        className="mt-1 h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
-                      />
-                      <label htmlFor="dataUsagePolicy" className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                        I accept the <Link to="/data-usage-policy" className="text-primary hover:underline">Data Usage Policy</Link> <span className="text-red-500">*</span>
-                      </label>
-                    </div>
-                    {fieldErrors.dataUsagePolicy && <p className="text-xs text-red-500 ml-6">{fieldErrors.dataUsagePolicy}</p>}
-
-                    <div className="flex items-start gap-2">
-                      <input 
-                        type="checkbox" 
-                        id="marketingConsent" 
-                        name="marketingConsent"
-                        checked={formData.marketingConsent}
-                        onChange={handleInputChange}
-                        className="mt-1 h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
-                      />
-                      <label htmlFor="marketingConsent" className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                        I agree to receive marketing communications and product updates <span className="text-muted-foreground font-normal">(Optional)</span>
-                      </label>
-                    </div>
                   </div>
                </div>
 

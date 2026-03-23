@@ -1,80 +1,117 @@
 export interface MediaMention {
   id: string
   slug: string
-  title: string
-  description: string  // Short summary for listing page
+  publication: string
+  publicationLogo: string
+  coverImage?: string
+  headline: string
+  excerpt: string
   date: string
-  platform: 'article' | 'workshop' | 'event' | 'press'
-  thumbnailUrl?: string  // For listing page thumbnail
-  externalUrl?: string  // For articles/external content
-  tags?: string[]
-  
-  // Detail page fields
-  fullContent?: string  // Full article content with line breaks
-  heroImage?: string  // Main hero image for detail page
-  eventDetails?: {
-    location?: string
-    attendees?: string
-    duration?: string
-    organizer?: string
-    speaker?: string
-  }
+  type: 'article' | 'video' | 'social' | 'podcast'
+  ctaLabel: string
+  externalUrl: string
 }
 
 export const mediaMentions: MediaMention[] = [
   {
-    id: '3',
-    slug: 'linkedin-aipod-startup-showcase',
-    title: 'Chiranjiv Life OS Featured in AIPod Startups Showcase on LinkedIn',
-    description: 'M D Ramaswami highlighted Chiranjiv in the AIPod Startups showcase, featuring our India-first genomic health approach and Life OS vision for proactive care.',
-    date: '2026',
-    platform: 'article',
-    thumbnailUrl: '/media/chiranjiv-linkedin-aipod.jpg',
-    heroImage: '/media/chiranjiv-linkedin-aipod.jpg',
-    externalUrl: 'https://www.linkedin.com/posts/m-d-ramaswami_aipod-aipodstartups-startupshowcase-activity-7427205746875973632-9nj2?utm_source=share&utm_medium=member_ios&rcm=ACoAAAAmcy8BDFZHifnkC2L1H2s1ioqRB-nKUFs',
-    tags: ['linkedin', 'startup-showcase', 'aipod', 'genomics', 'life-os'],
-    fullContent: `This LinkedIn startup showcase features Chiranjiv Life OS and the team’s vision to make healthcare more proactive, personalized, and India-first through whole-genome insights.
-
-The post discusses how Chiranjiv combines genomic intelligence with AI-driven interpretation to turn one-time sequencing into lifelong, actionable health guidance.
-
-It also reinforces the broader mission: building representative Indian genomic data so health recommendations and preventive strategies better reflect local biology and real-world outcomes.`
+    id: '1',
+    slug: 'onmanorama-health-genes-coverage',
+    publication: 'Onmanorama',
+    publicationLogo: '/media/logos/onmanorama.svg',
+    coverImage: '/media/workshop-hero.jpg',
+    headline: 'Is your health written in your genes? Chiranjiv seeks to redefine India’s healthcare',
+    excerpt:
+      'Chiranjiv is building India’s largest genetic database to shift healthcare from reactive treatment to predictive, personalized prevention.',
+    date: 'Mar 2026',
+    type: 'article',
+    ctaLabel: 'Read Coverage',
+    externalUrl:
+      'https://www.onmanorama.com/health/healthcare/2026/03/19/chiranjiv-genomics-dna-preventive-healthcare-india-genetics.html',
   },
   {
     id: '2',
-    slug: 'boldsky-your-wellness-lies-in-your-genes',
-    title: 'Your Wellness Lies in Your Genes? How Chiranjiv Is Changing the Future of India’s Health System',
-    description: 'Boldsky features Chiranjiv\'s population-scale genomics vision for India, highlighting how preventive, personalized healthcare can be guided by DNA insights.',
-    date: 'February 2026',
-    platform: 'article',
-    thumbnailUrl: '/media/chiranjiv-boldsky-genes.webp',
-    heroImage: '/media/chiranjiv-boldsky-genes.webp',
-    externalUrl: 'https://www.boldsky.com/health/your-wellness-lies-in-your-genes-how-chiranjiv-is-changing-the-future-of-indias-health-system-167983.html',
-    tags: ['article', 'boldsky', 'genomics', 'preventive-care', 'personalized-health'],
-    fullContent: `This Boldsky feature explores how Chiranjiv is helping shift Indian healthcare from reactive treatment toward predictive, preventive, and personalized care through genomics.
-
-The article highlights Chiranjiv’s mission to build a large indigenous genomic database, improve India-relevant health insights, and enable tailored wellness guidance through whole-genome analysis and AI-powered interpretation.
-
-It also emphasizes the larger public-health opportunity: using earlier genetic risk awareness for lifestyle diseases such as diabetes, obesity, and cardiovascular conditions to support proactive interventions before symptoms appear.`
+    slug: 'youtube-techspectations-future-jobs-ai',
+    publication: 'YouTube (Manorama Online)',
+    publicationLogo: '/media/logos/youtube.svg',
+    coverImage: '/media/workshop-thumbnail.jpg',
+    headline:
+      'Electricians May Earn More Than Engineers! | Future Jobs & AI Debate at Techspectations 2026',
+    excerpt:
+      'A discussion on future careers and AI where emerging fields like genomics and preventive healthcare are part of the evolving conversation.',
+    date: 'Mar 2026',
+    type: 'video',
+    ctaLabel: 'Watch',
+    externalUrl: 'https://www.youtube.com/watch?v=wybFNAOYX4I',
   },
   {
-    id: '1',
-    slug: 'health-awareness-workshop',
-    title: 'Awareness Session on Genome Studies at DM Hospitals',
-    description: 'Awareness session on genome studies conducted by Ms. Atreyee Bose at DM Hospitals, highlighting the importance of genome research and Indian body composition in shaping the future of healthcare.',
-    date: '06 January 2026',
-    platform: 'workshop',
-    thumbnailUrl: '/media/workshop-thumbnail.jpg',
-    heroImage: '/media/workshop-hero.jpg',
-    tags: ['workshop', 'community', 'health-education', 'genomics'],
-    externalUrl: 'https://www.dmhospitals.com/home/event-details/T0002/EVNT0000000000000292',
-    fullContent: `Chiranjiv was pleased to participate in an Awareness Session on Genome Studies organized by DM Hospitals on 06 January 2026. The session, conducted by Ms. Atreyee Bose, highlighted the importance of genome research, Indian body composition, and its crucial role in shaping the future of healthcare.
-
-The program saw enthusiastic participation from hospital HODs, resident doctors, technicians, and staff, reinforcing a shared commitment to continuous learning and scientific advancement. Chiranjiv sincerely thanks DM Hospitals for the invitation and the opportunity to engage with their medical community through this meaningful knowledge-sharing session.`,
-    eventDetails: {
-      location: 'DM Hospitals, Seminar Hall',
-      attendees: 'Hospital HODs, resident doctors, technicians, and staff',
-      speaker: 'Ms. Atreyee Bose (Chiranjiv)',
-      organizer: 'DM Hospitals'
-    }
-  }
+    id: '3',
+    slug: 'linkedin-techspectations-healthcare-ai',
+    publication: 'LinkedIn (Techspectations / Manorama Online)',
+    publicationLogo: '/media/logos/linkedin.svg',
+    headline:
+      'AI will transform the healthcare sector – Hemant Jain, Founder & CEO Chiranjiv | Techspectations 2026',
+    excerpt:
+      'Highlights Chiranjiv’s role in the future of healthcare, with a focus on how AI and genomics will reshape personalized health and preventive care.',
+    date: 'Mar 2026',
+    type: 'social',
+    ctaLabel: 'View Post',
+    externalUrl: 'https://www.linkedin.com/posts/m-d-ramaswami_aipod-aipodstartups-startupshowcase-activity-7427205746875973632-9nj2?utm_source=share&utm_medium=member_ios&rcm=ACoAAAAmcy8BDFZHifnkC2L1H2s1ioqRB-nKUFs',
+  },
+  {
+    id: '4',
+    slug: 'boldsky-your-wellness-lies-in-your-genes',
+    publication: 'Boldsky',
+    publicationLogo: '/media/logos/boldsky.svg',
+    coverImage: '/media/chiranjiv-boldsky-genes.webp',
+    headline:
+      'Your Wellness Lies in Your Genes? How Chiranjiv Is Changing the Future of India’s Health System',
+    excerpt:
+      'Chiranjiv is building a large-scale genomic database to shift India’s healthcare from reactive treatment to personalized, preventive care using DNA insights.',
+    date: 'Feb 2026',
+    type: 'article',
+    ctaLabel: 'Read Coverage',
+    externalUrl: 'https://www.boldsky.com/health/your-wellness-lies-in-your-genes-how-chiranjiv-is-changing-the-future-of-indias-health-system-167983.html',
+  },
+  {
+    id: '5',
+    slug: 'founders-corner-podcast-ep1',
+    publication: 'YouTube (Chiranjiv)',
+    publicationLogo: '/media/logos/youtube.svg',
+    headline: "Founder’s Corner Podcast Ep.1 | Chiranjiv’s Mission & Startup Journey",
+    excerpt:
+      'A deep dive into Chiranjiv’s vision, mission, and journey, exploring how genomics can transform preventive healthcare and decision-making.',
+    date: 'Mar 2026',
+    type: 'podcast',
+    ctaLabel: 'Watch',
+    externalUrl: 'https://www.youtube.com/watch?v=n2mfYVtb8K8',
+  },
+  {
+    id: '6',
+    slug: 'manoramaonline-genomic-health-india',
+    publication: 'Manorama Online',
+    publicationLogo: '/media/logos/manorama.svg',
+    coverImage: '/media/workshop-hero.jpg',
+    headline: 'Chiranjiv: A new era of genomic health in India',
+    excerpt:
+      'Chiranjiv is leading a shift in Indian healthcare from symptom-based treatment to DNA-driven, personalized and preventive care by building one of the country’s largest genomic databases.',
+    date: 'Mar 2026',
+    type: 'article',
+    ctaLabel: 'Read Coverage',
+    externalUrl: 'https://www.manoramaonline.com/technology/science/2026/03/20/chiranjiv-genomic-health-india.html',
+  },
+  {
+    id: '7',
+    slug: 'linkedin-aipod-startup-showcase',
+    publication: 'LinkedIn (M.D. Ramaswami / AIPod)',
+    publicationLogo: '/media/logos/linkedin.svg',
+    coverImage: '/media/chiranjiv-linkedin-aipod.jpg',
+    headline: 'AIPod Startup Showcase featuring Chiranjiv',
+    excerpt:
+      'Chiranjiv is featured as part of AIPod’s startup showcase, highlighting its role in shaping the future of healthcare through genomics and AI-led innovation.',
+    date: 'Mar 2026',
+    type: 'social',
+    ctaLabel: 'View Post',
+    externalUrl:
+      'https://www.linkedin.com/posts/m-d-ramaswami_aipod-aipodstartups-startupshowcase-activity-7427205746875973632-9nj2/?utm_source=share&utm_medium=member_ios&rcm=ACoAAAAmcy8BDFZHifnkC2L1H2s1ioqRB-nKUFs&skipRedirect=true',
+  },
 ]
