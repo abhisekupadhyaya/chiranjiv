@@ -42,7 +42,7 @@ export default function MediaMentions() {
                   {/* Glass highlight effect on top edge */}
                   <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent opacity-50" />
 
-                  <div className="relative aspect-video w-full overflow-hidden border-b border-white/30">
+                  <div className="relative h-56 sm:h-64 w-full overflow-hidden border-b border-white/30 bg-neutral-950/5">
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-secondary/10 to-accent/15" />
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.25),transparent_60%)]" />
                     <div className="relative h-full w-full p-5 flex items-end">
@@ -53,7 +53,7 @@ export default function MediaMentions() {
                     <img
                       src={media.coverImage || media.publicationLogo}
                       alt={`${media.publication} cover`}
-                      className="absolute inset-0 h-full w-full object-cover"
+                      className="absolute inset-0 h-full w-full object-cover object-top"
                       loading="lazy"
                       onError={(e) => {
                         e.currentTarget.style.display = 'none'

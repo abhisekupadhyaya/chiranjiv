@@ -18,7 +18,7 @@ export const mediaMentions: MediaMention[] = [
     slug: 'onmanorama-health-genes-coverage',
     publication: 'Onmanorama',
     publicationLogo: '/media/logos/onmanorama.svg',
-    coverImage: '/media/workshop-hero.jpg',
+    coverImage: '/media/Techspectations_Hemant_Jain_english.jpeg',
     headline: 'Is your health written in your genes? Chiranjiv seeks to redefine India’s healthcare',
     excerpt:
       'Chiranjiv is building India’s largest genetic database to shift healthcare from reactive treatment to predictive, personalized prevention.',
@@ -33,7 +33,7 @@ export const mediaMentions: MediaMention[] = [
     slug: 'youtube-techspectations-future-jobs-ai',
     publication: 'YouTube (Manorama Online)',
     publicationLogo: '/media/logos/youtube.svg',
-    coverImage: '/media/workshop-thumbnail.jpg',
+    coverImage: '/media/TechspectaionsPanelTopic.jpeg',
     headline:
       'Electricians May Earn More Than Engineers! | Future Jobs & AI Debate at Techspectations 2026',
     excerpt:
@@ -42,20 +42,6 @@ export const mediaMentions: MediaMention[] = [
     type: 'video',
     ctaLabel: 'Watch',
     externalUrl: 'https://www.youtube.com/watch?v=wybFNAOYX4I',
-  },
-  {
-    id: '3',
-    slug: 'linkedin-techspectations-healthcare-ai',
-    publication: 'LinkedIn (Techspectations / Manorama Online)',
-    publicationLogo: '/media/logos/linkedin.svg',
-    headline:
-      'AI will transform the healthcare sector – Hemant Jain, Founder & CEO Chiranjiv | Techspectations 2026',
-    excerpt:
-      'Highlights Chiranjiv’s role in the future of healthcare, with a focus on how AI and genomics will reshape personalized health and preventive care.',
-    date: 'Mar 2026',
-    type: 'social',
-    ctaLabel: 'View Post',
-    externalUrl: 'https://www.linkedin.com/posts/m-d-ramaswami_aipod-aipodstartups-startupshowcase-activity-7427205746875973632-9nj2?utm_source=share&utm_medium=member_ios&rcm=ACoAAAAmcy8BDFZHifnkC2L1H2s1ioqRB-nKUFs',
   },
   {
     id: '4',
@@ -77,6 +63,7 @@ export const mediaMentions: MediaMention[] = [
     slug: 'founders-corner-podcast-ep1',
     publication: 'YouTube (Chiranjiv)',
     publicationLogo: '/media/logos/youtube.svg',
+    coverImage: "/media/Founder's Corner Podcast.jpeg",
     headline: "Founder’s Corner Podcast Ep.1 | Chiranjiv’s Mission & Startup Journey",
     excerpt:
       'A deep dive into Chiranjiv’s vision, mission, and journey, exploring how genomics can transform preventive healthcare and decision-making.',
@@ -90,7 +77,7 @@ export const mediaMentions: MediaMention[] = [
     slug: 'manoramaonline-genomic-health-india',
     publication: 'Manorama Online',
     publicationLogo: '/media/logos/manorama.svg',
-    coverImage: '/media/workshop-hero.jpg',
+    coverImage: '/media/Techspectations_Hemant_Jain_malayanam.jpeg',
     headline: 'Chiranjiv: A new era of genomic health in India',
     excerpt:
       'Chiranjiv is leading a shift in Indian healthcare from symptom-based treatment to DNA-driven, personalized and preventive care by building one of the country’s largest genomic databases.',
@@ -104,7 +91,7 @@ export const mediaMentions: MediaMention[] = [
     slug: 'linkedin-aipod-startup-showcase',
     publication: 'LinkedIn (M.D. Ramaswami / AIPod)',
     publicationLogo: '/media/logos/linkedin.svg',
-    coverImage: '/media/chiranjiv-linkedin-aipod.jpg',
+    coverImage: "/media/Founder's Corner Podcast.jpeg",
     headline: 'AIPod Startup Showcase featuring Chiranjiv',
     excerpt:
       'Chiranjiv is featured as part of AIPod’s startup showcase, highlighting its role in shaping the future of healthcare through genomics and AI-led innovation.',
