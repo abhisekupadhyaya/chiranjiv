@@ -14,33 +14,47 @@ export function startLoginRedirect(returnTo?: string): void {
   window.location.assign(url.toString())
 }
 
-export type SignupAddressInput = {
-  label: "home" | "work" | "other"
-  street: string
-  city: string
-  state: string
-  zipCode: string
-  country: string
-  isDefault?: boolean
-}
-
 export type SignupInput = {
-  email: string
-  phone: string
   firstName: string
   lastName: string
-  biologicalSex: "male" | "female"
-  dateOfBirth: string
+  email: string
+  phoneNumber: string
+  yearOfBirth: number
+  password: string
+  confirmPassword: string
+  referralCode?: string
   consentPrivacyPolicy: boolean
   consentTermsOfService: boolean
-  consentDataUsagePolicy: boolean
-  consentMarketing: boolean
-  referralCode?: string
-  address: SignupAddressInput
+}
+
+export type SignupResponse = {
+  success: boolean
+  message: string
+  userId: string
+  pendingSignupToken: string
+}
+
+export type ChangePendingEmailInput = {
+  userId: string
+  newEmail: string
+  pendingSignupToken: string
+}
+
+export type ChangePendingEmailResponse = {
+  success: boolean
+  message: string
+  pendingSignupToken: string
 }
 
 export async function signupUser(payload: SignupInput) {
-  return apiFetch<{ success: boolean; message: string }>("/auth/signup", {
+  return apiFetch<SignupResponse>("/auth/signup", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  })
+}
+
+export async function changePendingEmail(payload: ChangePendingEmailInput) {
+  return apiFetch<ChangePendingEmailResponse>("/auth/change-pending-email", {
     method: "POST",
     body: JSON.stringify(payload),
   })

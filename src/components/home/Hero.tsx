@@ -1,4 +1,4 @@
-import { useNavigate, Link, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/auth";
@@ -11,27 +11,36 @@ import {
   DialogDescription,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { SignUpStep1Form, type Step1Data } from "@/components/auth/SignUpStep1Form";
+import { SignupForm, type SignupFormValues } from "@/components/auth/SignupForm";
 import { DNAHelix } from "@/components/home/DNAHelix";
 
 export function Hero() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const { login } = useAuth();
+  const { login, signup, error, setError } = useAuth();
   const referralCode = searchParams.get('ref') || '';
 
-  const handleFormSubmit = (data: Step1Data) => {
-    console.log('Form submitted with data:', data);
-    const params = new URLSearchParams();
-    params.set('step', '2');
-    if (data.firstName) params.set('firstName', data.firstName);
-    if (data.lastName) params.set('lastName', data.lastName);
-    if (data.email) params.set('email', data.email);
-    if (data.phoneLocal) params.set('phone', data.phoneLocal);
-    if (data.referralCode) params.set('ref', data.referralCode);
-    
-    console.log('URL params:', params.toString());
-    navigate(`/signup?${params.toString()}`);
+  const handleFormSubmit = async (values: SignupFormValues) => {
+    setError(null);
+    const phoneNumber = `${values.countryCode}${values.phoneLocal.replace(/\D/g, "")}`;
+    const result = await signup({
+      firstName: values.firstName.trim(),
+      lastName: values.lastName.trim(),
+      email: values.email.trim(),
+      phoneNumber,
+      yearOfBirth: Number(values.yearOfBirth),
+      password: values.password,
+      confirmPassword: values.confirmPassword,
+      referralCode: values.referralCode.trim() || undefined,
+      consentTermsOfService: values.consentTermsOfService,
+      consentPrivacyPolicy: values.consentPrivacyPolicy,
+    });
+    const params = new URLSearchParams({
+      userId: result.userId,
+      pendingSignupToken: result.pendingSignupToken,
+      email: values.email.trim(),
+    });
+    navigate(`/thank-you?${params.toString()}`);
   };
 
   const viewSampleReport = () => {
@@ -46,7 +55,7 @@ export function Hero() {
       </div>
       
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid items-center gap-6 sm:gap-8 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] lg:gap-8 xl:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)]">
+          <div className="grid items-center gap-6 sm:gap-8 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1.1fr)] lg:gap-8 xl:grid-cols-[minmax(0,1.3fr)_minmax(0,1.15fr)]">
           
             {/* Left Column: Text Content */}
             <div className="z-10 flex w-full flex-col items-start justify-center space-y-5 text-left">
@@ -257,19 +266,20 @@ export function Hero() {
 
             {/* Right Column: Sign Up Form */}
             <div id="waitlist" className="flex w-full items-center justify-center lg:justify-end">
-              <Card className="w-full max-w-md rounded-2xl border border-white/60 bg-white/50 shadow-2xl backdrop-blur-xl sm:rounded-3xl">
+              <Card className="w-full max-w-lg rounded-2xl border border-white/60 bg-white/50 shadow-2xl backdrop-blur-xl sm:rounded-3xl">
               <CardHeader className="space-y-1 p-4 pb-2 sm:p-6 sm:pb-4 text-center items-center">
-                <CardTitle className="text-xl sm:text-2xl font-bold">Join Early Access</CardTitle>
+                <CardTitle className="text-xl sm:text-2xl font-bold">India's Master Health Checkup</CardTitle>
                 <p className="text-xs sm:text-sm text-muted-foreground">
-                  Secure your spot in the waitlist and unlock your genetic blueprint
+                  Start your journey to personalized health. Join the Chiranjiv Health Program to build India's own health intelligence and receive a personalized health roadmap-a comprehensive blueprint encompassing your whole genome analysis, blood tests, medical imaging and lifestyle.
                 </p>
               </CardHeader>
               <CardContent className="px-4 pb-4 pt-0 sm:px-6 sm:pb-6 sm:pt-0">
-                <SignUpStep1Form 
+                <SignupForm
                   key={referralCode}
                   defaultValues={{ referralCode }}
-                  onSubmit={handleFormSubmit} 
-                  submitLabel="Request Access"
+                  onSubmit={handleFormSubmit}
+                  errorMessage={error}
+                  submitLabel="Register for Genome Check"
                 />
               </CardContent>
               <CardFooter className="flex flex-col items-center gap-1 p-4 pt-0 sm:p-6 sm:pt-0 text-xs sm:text-sm text-foreground">
@@ -283,15 +293,6 @@ export function Hero() {
                     Sign in
                   </button>
                 </div>
-                <p className="text-xs text-muted-foreground text-center">
-                  Your data is encrypted and never shared.{" "}
-                  <Link
-                    to="/privacy-policy"
-                    className="font-medium text-primary-600 hover:text-primary-500 hover:underline"
-                  >
-                    Privacy Policy
-                  </Link>
-                </p>
               </CardFooter>
               </Card>
             </div>

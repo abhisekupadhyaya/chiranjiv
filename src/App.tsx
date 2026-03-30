@@ -14,6 +14,9 @@ const Mission = lazy(() => import("@/pages/Mission"))
 const Blog = lazy(() => import("@/pages/Blog"))
 const FAQ = lazy(() => import("@/pages/FAQ"))
 const SignUp = lazy(() => import("@/pages/SignUp"))
+const VerifyEmail = lazy(() => import("@/pages/VerifyEmail"))
+const ChangeEmail = lazy(() => import("@/pages/ChangeEmail"))
+const VerifyEmailComplete = lazy(() => import("@/pages/VerifyEmailComplete"))
 const SampleReport = lazy(() => import("@/pages/SampleReport"))
 const KnowledgeHub = lazy(() => import("@/pages/KnowledgeHub"))
 const KnowledgeHubPost = lazy(() => import("@/pages/KnowledgeHubPost"))
@@ -50,6 +53,10 @@ function App() {
             <Route path="/blog/:slug" element={<Blog />} />
             <Route path="/faq" element={<FAQ />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/thank-you" element={<VerifyEmail />} />
+            <Route path="/change-email" element={<ChangeEmail />} />
+            <Route path="/verify-email" element={<VerifyEmail />} />
+            <Route path="/verify-email-complete" element={<VerifyEmailComplete />} />
             <Route path="/sample-report" element={<SampleReport />} />
             <Route path="/knowledge-hub" element={<KnowledgeHub />} />
             <Route path="/knowledge-hub/:slug" element={<KnowledgeHubPost />} />

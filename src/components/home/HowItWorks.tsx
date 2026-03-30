@@ -5,7 +5,7 @@ export const HowItWorks = memo(function HowItWorks() {
   const steps = [
     {
       number: "01",
-      title: "Request Access",
+      title: "Register for Genome Check",
       description: "Sign up and secure your spot for a free genome test. No payment, no commitment — just your interest.",
       barColor: "bg-primary-600",
       numberColorClass: "text-primary-600",
@@ -87,7 +87,7 @@ export const HowItWorks = memo(function HowItWorks() {
             className="h-12 px-8 text-base"
             onClick={() => document.getElementById('waitlist')?.scrollIntoView({ behavior: 'smooth' })}
           >
-            Request Access
+            Register for Genome Check
           </Button>
         </div>
 

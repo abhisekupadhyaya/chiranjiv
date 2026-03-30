@@ -126,7 +126,7 @@ export const Navbar = memo(function Navbar() {
 
         <div className="hidden items-center gap-4 lg:flex">
           <Link to="/signup">
-            <Button>Request Access</Button>
+            <Button>Register for Genome Check</Button>
           </Link>
         </div>
 
@@ -203,7 +203,7 @@ export const Navbar = memo(function Navbar() {
 
               <div className="my-4 border-t border-neutral-1000/60" />
               <Link to="/signup" onClick={handleMobileNavClick}>
-                <Button className="w-full h-12 text-lg">Request Access</Button>
+                <Button className="w-full h-12 text-lg">Register for Genome Check</Button>
               </Link>
             </nav>
           </SheetContent>
