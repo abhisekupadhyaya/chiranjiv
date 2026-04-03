@@ -42,8 +42,27 @@ export type SignupResponse = {
   pendingSignupToken: string
 }
 
+export type ChangePendingEmailInput = {
+  userId: string
+  newEmail: string
+  pendingSignupToken: string
+}
+
+export type ChangePendingEmailResponse = {
+  success: boolean
+  message: string
+  pendingSignupToken: string
+}
+
 export async function signupUser(payload: SignupInput) {
   return apiFetch<SignupResponse>("/auth/signup", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  })
+}
+
+export async function changePendingEmail(payload: ChangePendingEmailInput) {
+  return apiFetch<ChangePendingEmailResponse>("/auth/change-pending-email", {
     method: "POST",
     body: JSON.stringify(payload),
   })

@@ -9,9 +9,21 @@ const VerifyEmail = () => {
   const { login, error } = useAuth()
 
   const email = searchParams.get("email")?.trim() ?? ""
+  const userId = searchParams.get("userId")?.trim() ?? ""
+  const pendingSignupToken = searchParams.get("pendingSignupToken")?.trim() ?? ""
 
   const handleChangeEmail = () => {
-    navigate("/change-email")
+    const params = new URLSearchParams()
+    if (userId) {
+      params.set("userId", userId)
+    }
+    if (pendingSignupToken) {
+      params.set("pendingSignupToken", pendingSignupToken)
+    }
+    if (email) {
+      params.set("email", email)
+    }
+    navigate(params.toString() ? `/change-email?${params.toString()}` : "/change-email")
   }
 
   return (
