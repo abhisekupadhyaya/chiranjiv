@@ -8,22 +8,10 @@ const VerifyEmail = () => {
   const [searchParams] = useSearchParams()
   const { login, error } = useAuth()
 
-  const userId = searchParams.get("userId")?.trim() ?? ""
-  const pendingSignupToken = searchParams.get("pendingSignupToken")?.trim() ?? ""
   const email = searchParams.get("email")?.trim() ?? ""
-  const hasContext = Boolean(userId && pendingSignupToken)
 
   const handleChangeEmail = () => {
-    if (!hasContext) {
-      navigate("/signup")
-      return
-    }
-    const params = new URLSearchParams({
-      userId,
-      pendingSignupToken,
-      email,
-    })
-    navigate(`/change-email?${params.toString()}`)
+    navigate("/change-email")
   }
 
   return (
@@ -47,11 +35,6 @@ const VerifyEmail = () => {
           <Button type="button" variant="outline" className="w-full" onClick={handleChangeEmail}>
             Change email address
           </Button>
-          {!hasContext && (
-            <div className="text-sm text-red-500 text-center bg-red-50 p-2 rounded border border-red-100">
-              Missing signup context. Please restart signup.
-            </div>
-          )}
           {error && (
             <div className="text-sm text-red-500 text-center bg-red-50 p-2 rounded border border-red-100">
               {error}

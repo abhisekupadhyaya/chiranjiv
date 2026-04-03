@@ -1,11 +1,9 @@
 import React, { createContext, useCallback, useContext, useMemo, useState } from "react"
 import type { ReactNode } from "react"
 import {
-  changePendingEmail,
   signupUser,
   startLoginRedirect,
-  type ChangePendingEmailInput,
-  type ChangePendingEmailResponse,
+  startUpdateEmailRedirect,
   type SignupResponse,
   type SignupInput,
 } from "./session"
@@ -13,8 +11,8 @@ import {
 interface AuthContextType {
   error: string | null
   login: (returnTo?: string) => Promise<void>
+  startUpdateEmail: (returnTo?: string) => Promise<void>
   signup: (payload: SignupInput) => Promise<SignupResponse>
-  changePendingEmail: (payload: ChangePendingEmailInput) => Promise<ChangePendingEmailResponse>
   setError: (error: string | null) => void
 }
 
@@ -39,26 +37,20 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   }, [])
 
-  const changePendingEmailAction = useCallback(async (payload: ChangePendingEmailInput) => {
+  const startUpdateEmail = useCallback(async (returnTo?: string) => {
     setError(null)
-    try {
-      return await changePendingEmail(payload)
-    } catch (err) {
-      const message = err instanceof Error ? err.message : "Change email failed"
-      setError(message)
-      throw err
-    }
+    startUpdateEmailRedirect(returnTo)
   }, [])
 
   const value = useMemo<AuthContextType>(
     () => ({
       error,
       login,
+      startUpdateEmail,
       signup,
-      changePendingEmail: changePendingEmailAction,
       setError,
     }),
-    [changePendingEmailAction, error, login, signup]
+    [error, login, startUpdateEmail, signup]
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
