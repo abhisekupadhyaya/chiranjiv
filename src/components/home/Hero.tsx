@@ -24,8 +24,7 @@ export function Hero() {
     setError(null);
     const phoneNumber = `${values.countryCode}${values.phoneLocal.replace(/\D/g, "")}`;
     const result = await signup({
-      firstName: values.firstName.trim(),
-      lastName: values.lastName.trim(),
+      fullName: values.fullName.trim(),
       email: values.email.trim(),
       phoneNumber,
       yearOfBirth: Number(values.yearOfBirth),

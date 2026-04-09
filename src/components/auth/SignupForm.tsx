@@ -6,8 +6,7 @@ import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
 
 export type SignupFormValues = {
-  firstName: string
-  lastName: string
+  fullName: string
   email: string
   phoneLocal: string
   countryCode: string
@@ -32,8 +31,7 @@ const MIN_YEAR = 1900
 
 function initialValues(defaultValues?: Partial<SignupFormValues>): SignupFormValues {
   return {
-    firstName: defaultValues?.firstName ?? "",
-    lastName: defaultValues?.lastName ?? "",
+    fullName: defaultValues?.fullName ?? "",
     email: defaultValues?.email ?? "",
     phoneLocal: defaultValues?.phoneLocal ?? "",
     countryCode: defaultValues?.countryCode ?? "+91",
@@ -69,8 +67,7 @@ export function SignupForm({
 
   const validate = () => {
     const errors: Record<string, string> = {}
-    if (!formData.firstName.trim()) errors.firstName = "First name is required"
-    if (!formData.lastName.trim()) errors.lastName = "Last name is required"
+    if (!formData.fullName.trim()) errors.fullName = "Full name is required"
     if (!formData.email.trim()) errors.email = "Email is required"
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) errors.email = "Invalid email address"
 
@@ -126,33 +123,18 @@ export function SignupForm({
 
   return (
     <form onSubmit={handleSubmit} className={cn("space-y-4", className)}>
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-        <div className="space-y-1 text-left">
-          <label htmlFor="firstName" className="text-sm font-medium leading-none">
-            First Name <span className="text-red-500">*</span>
-          </label>
-          <Input
-            id="firstName"
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleInputChange}
-            className={cn(fieldErrors.firstName && "border-red-500 focus-visible:ring-red-500")}
-          />
-          {fieldErrors.firstName && <p className="text-xs text-red-500">{fieldErrors.firstName}</p>}
-        </div>
-        <div className="space-y-1 text-left">
-          <label htmlFor="lastName" className="text-sm font-medium leading-none">
-            Last Name <span className="text-red-500">*</span>
-          </label>
-          <Input
-            id="lastName"
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleInputChange}
-            className={cn(fieldErrors.lastName && "border-red-500 focus-visible:ring-red-500")}
-          />
-          {fieldErrors.lastName && <p className="text-xs text-red-500">{fieldErrors.lastName}</p>}
-        </div>
+      <div className="space-y-1 text-left">
+        <label htmlFor="fullName" className="text-sm font-medium leading-none">
+          Full Name <span className="text-red-500">*</span>
+        </label>
+        <Input
+          id="fullName"
+          name="fullName"
+          value={formData.fullName}
+          onChange={handleInputChange}
+          className={cn(fieldErrors.fullName && "border-red-500 focus-visible:ring-red-500")}
+        />
+        {fieldErrors.fullName && <p className="text-xs text-red-500">{fieldErrors.fullName}</p>}
       </div>
 
       <div className="space-y-1 text-left">

@@ -5,8 +5,7 @@ import { User, Mail, Phone, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export interface Step1Data {
-  firstName: string;
-  lastName: string;
+  fullName: string;
   email: string;
   phoneLocal: string;
   countryCode: string;
@@ -27,8 +26,7 @@ export function SignUpStep1Form({
   submitLabel = "Next Step"
 }: SignUpStep1FormProps) {
   const [formData, setFormData] = useState<Step1Data>({
-    firstName: defaultValues?.firstName || '',
-    lastName: defaultValues?.lastName || '',
+    fullName: defaultValues?.fullName || '',
     email: defaultValues?.email || '',
     phoneLocal: defaultValues?.phoneLocal || '',
     countryCode: defaultValues?.countryCode || '+91',
@@ -40,8 +38,7 @@ export function SignUpStep1Form({
   const validateStep1 = () => {
     const errors: Record<string, string> = {};
     
-    if (!formData.firstName.trim()) errors.firstName = 'First name is required';
-    if (!formData.lastName.trim()) errors.lastName = 'Last name is required';
+    if (!formData.fullName.trim()) errors.fullName = 'Full name is required';
     if (!formData.email.trim()) errors.email = 'Email is required';
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) errors.email = 'Invalid email address';
     
@@ -76,36 +73,19 @@ export function SignUpStep1Form({
 
   return (
     <form onSubmit={handleSubmit} className={cn("space-y-4", className)}>
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-        <div className="space-y-1 text-left">
-          <div className="relative">
-            <User className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input
-              id="firstName"
-              name="firstName"
-              placeholder="First Name *"
-              value={formData.firstName}
-              onChange={handleInputChange}
-              className={cn("pl-9", fieldErrors.firstName && "border-red-500 focus-visible:ring-red-500")}
-            />
-          </div>
-          {fieldErrors.firstName && <p className="text-xs text-red-500">{fieldErrors.firstName}</p>}
+      <div className="space-y-1 text-left">
+        <div className="relative">
+          <User className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Input
+            id="fullName"
+            name="fullName"
+            placeholder="Full Name *"
+            value={formData.fullName}
+            onChange={handleInputChange}
+            className={cn("pl-9", fieldErrors.fullName && "border-red-500 focus-visible:ring-red-500")}
+          />
         </div>
-
-        <div className="space-y-1 text-left">
-          <div className="relative">
-            <User className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input
-              id="lastName"
-              name="lastName"
-              placeholder="Last Name *"
-              value={formData.lastName}
-              onChange={handleInputChange}
-              className={cn("pl-9", fieldErrors.lastName && "border-red-500 focus-visible:ring-red-500")}
-            />
-          </div>
-          {fieldErrors.lastName && <p className="text-xs text-red-500">{fieldErrors.lastName}</p>}
-        </div>
+        {fieldErrors.fullName && <p className="text-xs text-red-500">{fieldErrors.fullName}</p>}
       </div>
 
       <div className="space-y-1 text-left">

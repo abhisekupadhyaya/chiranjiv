@@ -23,8 +23,7 @@ export function startUpdateEmailRedirect(returnTo?: string): void {
 }
 
 export type SignupInput = {
-  firstName: string
-  lastName: string
+  fullName: string
   email: string
   phoneNumber: string
   yearOfBirth: number

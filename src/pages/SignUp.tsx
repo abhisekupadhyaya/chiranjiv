@@ -11,8 +11,7 @@ const SignUp = () => {
 
   const defaultValues = useMemo<Partial<SignupFormValues>>(
     () => ({
-      firstName: searchParams.get("firstName")?.trim() ?? "",
-      lastName: searchParams.get("lastName")?.trim() ?? "",
+      fullName: searchParams.get("fullName")?.trim() ?? "",
       email: searchParams.get("email")?.trim() ?? "",
       phoneLocal: searchParams.get("phone")?.trim() ?? searchParams.get("phoneLocal")?.trim() ?? "",
       referralCode: searchParams.get("ref")?.trim() ?? "",
@@ -25,8 +24,7 @@ const SignUp = () => {
     setError(null)
     const phoneNumber = `${values.countryCode}${values.phoneLocal.replace(/\D/g, "")}`
     const result = await signup({
-      firstName: values.firstName.trim(),
-      lastName: values.lastName.trim(),
+      fullName: values.fullName.trim(),
       email: values.email.trim(),
       phoneNumber,
       yearOfBirth: Number(values.yearOfBirth),
